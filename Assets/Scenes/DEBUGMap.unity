@@ -566,6 +566,7 @@ GameObject:
   - component: {fileID: 1746337605}
   - component: {fileID: 1746337609}
   - component: {fileID: 1746337610}
+  - component: {fileID: 1746337611}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -698,6 +699,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ToolTipObject
   text: Salut je suis l'objet de test
+--- !u!114 &1746337611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1746337603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d303e7540a157264e8ad07b679862227, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InteractableObject
+  interactionDistance: 1
+  highlightOnHover: 1
 --- !u!1 &2017946987
 GameObject:
   m_ObjectHideFlags: 0

@@ -219,9 +219,36 @@ namespace PlayerControl
             }
         }
 
+        /// <summary>
+        /// Déplace le joueur vers une position spécifique (utilisé par les objets interactifs).
+        /// </summary>
+        public void MoveToPosition(Vector3 targetPosition)
+        {
+            // Vérifier que la position est sur le NavMesh
+            NavMeshHit navHit;
+            if (!NavMesh.SamplePosition(targetPosition, out navHit, 5f, NavMesh.AllAreas))
+            {
+                Debug.LogWarning("PlayerController: La position cible n'est pas sur le NavMesh!");
+                return;
+            }
+
+            // Effacer la file d'attente et ajouter la nouvelle destination
+            destinationQueue.Clear();
+            destinationQueue.Add(navHit.position);
+
+            // Calculer le chemin
+            if (NavMesh.CalculatePath(transform.position, navHit.position, NavMesh.AllAreas, path))
+            {
+                if (path.corners.Length > 1)
+                {
+                    currentPathIndex = 1;
+                    isMoving = true;
+                }
+            }
+        }
+
         void OnDestroy()
         {
-            // Se désabonner des événements pour éviter les fuites de mémoire
             if (InputManager.Instance != null)
             {
                 InputManager.Instance.RightClickMovement.started -= OnRightClickStarted;
