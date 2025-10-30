@@ -247,6 +247,14 @@ namespace PlayerControl
             }
         }
 
+        /// <summary>
+        /// Vérifie si le joueur est en train de se déplacer.
+        /// </summary>
+        public bool IsMoving()
+        {
+            return isMoving;
+        }
+
         void OnDestroy()
         {
             if (InputManager.Instance != null)

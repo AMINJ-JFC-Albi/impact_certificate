@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 /// <summary>
 /// Objet interactif sur lequel on peut cliquer pour déplacer le joueur à proximité.
@@ -9,7 +10,7 @@ public class InteractableObject : MonoBehaviour
 {
     [Header("Paramètres d'interaction")]
     [Tooltip("Distance à laquelle le joueur s'arrêtera de l'objet")]
-    [SerializeField] private float interactionDistance = 1f;
+    [SerializeField] protected float interactionDistance = 1f;
 
     [Tooltip("Afficher un outline ou un effet visuel au survol")]
     [SerializeField] private bool highlightOnHover = true;
@@ -17,7 +18,7 @@ public class InteractableObject : MonoBehaviour
     private Outline outlineComponent;
     private bool isHovered = false;
 
-    private void Start()
+    protected virtual void Start()
     {
         // Récupérer le composant Outline s'il existe
         outlineComponent = GetComponent<Outline>();
@@ -36,15 +37,34 @@ public class InteractableObject : MonoBehaviour
         }
     }
 
-    private void Update()
+    protected virtual void Update()
     {
-        if (Mouse.current == null) return;
+        if (Mouse.current == null)
+        {
+            Debug.LogWarning($"InteractableObject ({gameObject.name}): Mouse.current est null!");
+            return;
+        }
 
         Camera mainCamera = Camera.main;
-        if (mainCamera == null) return;
+        if (mainCamera == null)
+        {
+            Debug.LogWarning($"InteractableObject ({gameObject.name}): Camera.main est null!");
+            return;
+        }
+
+        // Vérifier si la souris est au-dessus d'un élément UI
+        Vector2 mousePos = Mouse.current.position.ReadValue();
+        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+        {
+            // La souris est sur l'UI, ne pas traiter les interactions avec les objets 3D
+            if (isHovered)
+            {
+                OnHoverExit();
+            }
+            return;
+        }
 
         // Vérifier si la souris survole cet objet
-        Vector2 mousePos = Mouse.current.position.ReadValue();
         Ray ray = mainCamera.ScreenPointToRay(mousePos);
 
         if (Physics.Raycast(ray, out RaycastHit hit, 100f))
@@ -105,10 +125,8 @@ public class InteractableObject : MonoBehaviour
         }
     }
 
-    private void OnClicked()
+    protected virtual void OnClicked()
     {
-        Debug.Log($"Clic sur l'objet interactif: {gameObject.name}");
-
         // Trouver le joueur
         PlayerControl.PlayerController player = FindObjectOfType<PlayerControl.PlayerController>();
 
@@ -123,6 +141,17 @@ public class InteractableObject : MonoBehaviour
 
         // Demander au joueur de se déplacer vers cette position
         player.MoveToPosition(targetPosition);
+
+        // Appeler l'action après le déplacement
+        OnPlayerReachedDestination(player);
+    }
+
+    /// <summary>
+    /// Appelé quand le joueur atteint la destination. Peut être override par les classes enfants.
+    /// </summary>
+    protected virtual void OnPlayerReachedDestination(PlayerControl.PlayerController player)
+    {
+        // Rien par défaut - les classes enfants peuvent override cette méthode
     }
 
     /// <summary>
