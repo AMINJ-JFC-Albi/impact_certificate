@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 /// Objet interactif sur lequel on peut cliquer pour déplacer le joueur à proximité.
 /// </summary>
 [RequireComponent(typeof(Collider))]
+[RequireComponent(typeof(CanInteractWithIt))]
 public class InteractableObject : MonoBehaviour
 {
     [Header("Paramètres d'interaction")]
@@ -17,9 +18,17 @@ public class InteractableObject : MonoBehaviour
 
     private Outline outlineComponent;
     private bool isHovered = false;
+    private CanInteractWithIt canInteractComponent;
 
     protected virtual void Start()
     {
+        // Récupérer le composant CanInteractWithIt (requis)
+        canInteractComponent = GetComponent<CanInteractWithIt>();
+        if (canInteractComponent == null)
+        {
+            Debug.LogError($"InteractableObject sur {gameObject.name}: CanInteractWithIt manquant!");
+        }
+
         // Récupérer le composant Outline s'il existe
         outlineComponent = GetComponent<Outline>();
 
@@ -39,6 +48,17 @@ public class InteractableObject : MonoBehaviour
 
     protected virtual void Update()
     {
+        // Vérifier si l'objet peut être interagi AVANT tout le reste
+        if (canInteractComponent == null || !canInteractComponent.CanInteract())
+        {
+            // Désactiver le hover si l'objet n'est plus interactif
+            if (isHovered)
+            {
+                OnHoverExit();
+            }
+            return;
+        }
+
         if (Mouse.current == null)
         {
             Debug.LogWarning($"InteractableObject ({gameObject.name}): Mouse.current est null!");
@@ -52,17 +72,8 @@ public class InteractableObject : MonoBehaviour
             return;
         }
 
-        // Vérifier si la souris est au-dessus d'un élément UI
+        // Note: La vérification UI est déjà faite dans CanInteractWithIt.CanInteract()
         Vector2 mousePos = Mouse.current.position.ReadValue();
-        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
-        {
-            // La souris est sur l'UI, ne pas traiter les interactions avec les objets 3D
-            if (isHovered)
-            {
-                OnHoverExit();
-            }
-            return;
-        }
 
         // Vérifier si la souris survole cet objet
         Ray ray = mainCamera.ScreenPointToRay(mousePos);
@@ -127,12 +138,17 @@ public class InteractableObject : MonoBehaviour
 
     protected virtual void OnClicked()
     {
+        // Double vérification avant d'accepter le clic
+        if (canInteractComponent == null || !canInteractComponent.CanInteract())
+        {
+            return;
+        }
+
         // Trouver le joueur
-        PlayerControl.PlayerController player = FindObjectOfType<PlayerControl.PlayerController>();
+        PlayerControl.PlayerController player = Object.FindFirstObjectByType<PlayerControl.PlayerController>();
 
         if (player == null)
         {
-            Debug.LogError("InteractableObject: Aucun PlayerController trouvé dans la scène!");
             return;
         }
 

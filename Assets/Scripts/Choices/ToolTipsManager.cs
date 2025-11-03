@@ -56,14 +56,12 @@ public class ToolTipsManager : MonoBehaviour
     /// Affiche l'infobulle avec le texte spécifié.
     /// </summary>
     /// <param name="text">Le texte à afficher dans l'infobulle.</param>
-
     public void ShowToolTip(string text)
     {
         // Affiche l'infobulle avec le texte spécifié
         textComponent.text = text;
         Move();
         transformToolTips.SetActive(true);
-
     }
 
     /// <summary>
@@ -73,7 +71,6 @@ public class ToolTipsManager : MonoBehaviour
     {
         // Cache l'infobulle
         transformToolTips.SetActive(false);
-
     }
 
 

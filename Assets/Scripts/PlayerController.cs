@@ -113,6 +113,12 @@ namespace PlayerControl
 
         private void HandleMovement()
         {
+            // Bloquer la création de nouveaux mouvements si les interactions sont désactivées
+            if (!GameManager.InteractionsEnabled)
+            {
+                return;
+            }
+
             if (mainCamera == null || Mouse.current == null || InputManager.Instance == null)
                 return;
 

@@ -16,7 +16,7 @@ public class DialogueTrigger : InteractableObject
     protected override void Start()
     {
         base.Start(); // Appelle l'initialisation de la classe parente
-        player = FindObjectOfType<PlayerControl.PlayerController>();
+        player = Object.FindFirstObjectByType<PlayerControl.PlayerController>();
     }
 
     protected override void Update()

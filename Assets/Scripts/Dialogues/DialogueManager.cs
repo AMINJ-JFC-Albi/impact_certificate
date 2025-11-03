@@ -106,6 +106,12 @@ public class DialogueManager : MonoBehaviour
     /// <param name="waitALittle">Indique s'il faut attendre un peu avant de commencer.</param>
     public void EnterDialogueMode(TextAsset inkJson, bool waitALittle = true)
     {
+        // Désactiver toutes les interactions dans le jeu
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.ChangeInteractionMode(false);
+        }
+
         if (waitALittle)
         {
             CanPassDialogue(false);
@@ -134,6 +140,11 @@ public class DialogueManager : MonoBehaviour
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
 
+        // Réactiver toutes les interactions dans le jeu
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.ChangeInteractionMode(true);
+        }
 
         if (activeDialogueTrigger)
         {
