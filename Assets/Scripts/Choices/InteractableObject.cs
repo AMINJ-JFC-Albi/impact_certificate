@@ -22,14 +22,22 @@ public class InteractableObject : MonoBehaviour
     // Système de compteur pour gérer l'interactivité
     private int canInteract = 0;
 
-    private void Awake()
+    private void OnEnable()
     {
+        // S'enregistrer quand l'objet est activé
         GameManager.RegisterInteractable(this);
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
+        // Se désenregistrer quand l'objet est désactivé
         GameManager.UnregisterInteractable(this);
+
+        if (isHovered && outlineComponent != null)
+        {
+            outlineComponent.enabled = false;
+            isHovered = false;
+        }
     }
 
     protected virtual void Start()
@@ -190,16 +198,6 @@ public class InteractableObject : MonoBehaviour
         targetPos.y = playerPosition.y;
 
         return targetPos;
-    }
-
-    private void OnDisable()
-    {
-        // S'assurer de désactiver l'outline
-        if (isHovered && outlineComponent != null)
-        {
-            outlineComponent.enabled = false;
-            isHovered = false;
-        }
     }
 
     // Gizmo pour visualiser la distance d'interaction
