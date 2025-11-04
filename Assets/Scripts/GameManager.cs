@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     // Liste statique de tous les objets interactifs enregistrés
-    private static List<CanInteractWithIt> registeredInteractables = new List<CanInteractWithIt>();
+    private static List<InteractableObject> registeredInteractables = new List<InteractableObject>();
 
     // Flag global pour savoir si les interactions sont bloquées
     private static bool interactionsEnabled = true;
@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Enregistre un objet interactif dans la liste globale.
     /// </summary>
-    public static void RegisterInteractable(CanInteractWithIt interactable)
+    public static void RegisterInteractable(InteractableObject interactable)
     {
         if (!registeredInteractables.Contains(interactable))
         {
@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Désenregistre un objet interactif de la liste globale.
     /// </summary>
-    public static void UnregisterInteractable(CanInteractWithIt interactable)
+    public static void UnregisterInteractable(InteractableObject interactable)
     {
         registeredInteractables.Remove(interactable);
     }

@@ -4,9 +4,9 @@ using UnityEngine.EventSystems;
 
 /// <summary>
 /// Objet interactif sur lequel on peut cliquer pour déplacer le joueur à proximité.
+/// Utilise un système de compteur pour gérer plusieurs sources de blocage.
 /// </summary>
 [RequireComponent(typeof(Collider))]
-[RequireComponent(typeof(CanInteractWithIt))]
 public class InteractableObject : MonoBehaviour
 {
     [Header("Paramètres d'interaction")]
@@ -18,17 +18,22 @@ public class InteractableObject : MonoBehaviour
 
     private Outline outlineComponent;
     private bool isHovered = false;
-    private CanInteractWithIt canInteractComponent;
+
+    // Système de compteur pour gérer l'interactivité
+    private int canInteract = 0;
+
+    private void Awake()
+    {
+        GameManager.RegisterInteractable(this);
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.UnregisterInteractable(this);
+    }
 
     protected virtual void Start()
     {
-        // Récupérer le composant CanInteractWithIt (requis)
-        canInteractComponent = GetComponent<CanInteractWithIt>();
-        if (canInteractComponent == null)
-        {
-            Debug.LogError($"InteractableObject sur {gameObject.name}: CanInteractWithIt manquant!");
-        }
-
         // Récupérer le composant Outline s'il existe
         outlineComponent = GetComponent<Outline>();
 
@@ -49,7 +54,7 @@ public class InteractableObject : MonoBehaviour
     protected virtual void Update()
     {
         // Vérifier si l'objet peut être interagi AVANT tout le reste
-        if (canInteractComponent == null || !canInteractComponent.CanInteract())
+        if (!CanInteract())
         {
             // Désactiver le hover si l'objet n'est plus interactif
             if (isHovered)
@@ -139,7 +144,7 @@ public class InteractableObject : MonoBehaviour
     protected virtual void OnClicked()
     {
         // Double vérification avant d'accepter le clic
-        if (canInteractComponent == null || !canInteractComponent.CanInteract())
+        if (!CanInteract())
         {
             return;
         }
@@ -203,4 +208,59 @@ public class InteractableObject : MonoBehaviour
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, interactionDistance);
     }
+
+    #region Système d'interactivité (compteur)
+
+    /// <summary>
+    /// Vérifie si l'objet peut être interagi.
+    /// </summary>
+    /// <returns>True si l'objet est interactif, False sinon</returns>
+    public bool CanInteract()
+    {
+        // Vérifier que le compteur est à 0 (pas de blocage actif)
+        if (canInteract > 0)
+            return false;
+
+        // Vérifier qu'aucun élément UI ne bloque le raycast
+        if (Mouse.current != null && EventSystem.current != null)
+        {
+            if (EventSystem.current.IsPointerOverGameObject())
+            {
+                return false; // UI bloque l'interaction
+            }
+        }
+
+        return true;
+    }
+
+
+    public void SetActive(bool active)
+    {
+        if (active)
+        {
+            canInteract--;
+            if (canInteract < 0)
+            {
+                canInteract = 0;
+            }
+        }
+        else
+        {
+            canInteract++;
+        }
+    }
+
+
+    public void ResetCounter()
+    {
+        canInteract = 0;
+    }
+
+
+    public int GetCounter()
+    {
+        return canInteract;
+    }
+
+    #endregion
 }

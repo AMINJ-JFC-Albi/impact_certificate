@@ -11,11 +11,11 @@ public class ToolTipObject : MonoBehaviour
     [Header("Paramètres de l'infobulle")]
     public string text; // Texte à afficher
 
-    private CanInteractWithIt canInteractWithIt;
+    private InteractableObject interactableObject;
 
     private void Awake()
     {
-        canInteractWithIt = GetComponent<CanInteractWithIt>();
+        interactableObject = GetComponent<InteractableObject>();
     }
 
     /// <summary>
@@ -24,7 +24,7 @@ public class ToolTipObject : MonoBehaviour
     private void OnMouseEnter()
     {
         // Vérifier si l'objet peut être interagi avant d'afficher le tooltip
-        if (canInteractWithIt != null && !canInteractWithIt.CanInteract())
+        if (interactableObject != null && !interactableObject.CanInteract())
         {
             return;
         }
