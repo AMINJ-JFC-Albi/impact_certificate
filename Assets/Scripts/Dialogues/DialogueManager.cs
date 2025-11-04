@@ -16,6 +16,8 @@ public class DialogueManager : MonoBehaviour
     [Header("Dialogue UI")]
     private GameObject dialoguePanel;
     [SerializeField] private TextMeshProUGUI dialogueText;
+    [SerializeField] private GameObject speakerNameObject; // Conteneur du nom du locuteur
+    [SerializeField] private TextMeshProUGUI speakerNameText; // Texte du nom du locuteur
 
     [Header("Choice UI")][SerializeField] private GameObject[] choices;
 
@@ -175,6 +177,9 @@ public class DialogueManager : MonoBehaviour
             }
             string text = currentStory.Continue();
 
+            // Gérer les tags pour le nom du locuteur
+            HandleTags(currentStory.currentTags);
+
             typeCoroutine = StartCoroutine(TypeSentence(text));
             currentChoices = currentStory.currentChoices;
         }
@@ -282,6 +287,52 @@ public class DialogueManager : MonoBehaviour
         ContinueStory();
     }
 
+    /// <summary>
+    /// Gère les tags Ink pour extraire le nom du locuteur.
+    /// </summary>
+    /// <param name="tags">Liste des tags de la ligne actuelle</param>
+    private void HandleTags(List<string> tags)
+    {
+        bool speakerFound = false;
 
+        // Parcourir tous les tags
+        foreach (string tag in tags)
+        {
+            // Séparer le tag en clé:valeur
+            string[] splitTag = tag.Split(':');
+            if (splitTag.Length != 2)
+            {
+                Debug.LogWarning($"Tag mal formaté: {tag}");
+                continue;
+            }
 
+            string tagKey = splitTag[0].Trim();
+            string tagValue = splitTag[1].Trim();
+
+            // Gérer le tag "speaker"
+            if (tagKey == "speaker")
+            {
+                speakerFound = true;
+                if (speakerNameObject != null)
+                {
+                    speakerNameObject.SetActive(true); // Afficher le conteneur
+                }
+                if (speakerNameText != null)
+                {
+                    speakerNameText.text = tagValue;
+                }
+                else
+                {
+                    Debug.LogWarning("speakerNameText n'est pas assigné dans l'Inspector!");
+                }
+            }
+            // Tu peux ajouter d'autres tags ici plus tard (ex: emotion, animation, etc.)
+        }
+
+        // Si aucun tag "speaker" trouvé, cacher le GameObject
+        if (!speakerFound && speakerNameObject != null)
+        {
+            speakerNameObject.SetActive(false);
+        }
+    }
 }
