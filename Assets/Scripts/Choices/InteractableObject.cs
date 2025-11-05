@@ -26,9 +26,6 @@ public class InteractableObject : MonoBehaviour
     [Tooltip("Distance à laquelle le joueur s'arrêtera de l'objet")]
     [SerializeField] protected float interactionDistance = 1f;
 
-    [Tooltip("Afficher un outline ou un effet visuel au survol")]
-    [SerializeField] private bool highlightOnHover = true;
-
     private Outline outlineComponent;
     private bool isHovered = false;
 
@@ -62,10 +59,10 @@ public class InteractableObject : MonoBehaviour
         // Récupérer le composant Outline s'il existe
         outlineComponent = GetComponent<Outline>();
 
-        // Désactiver l'outline au départ si présent
-        if (outlineComponent != null && highlightOnHover)
+        // Activer l'outline par défaut 
+        if (outlineComponent != null)
         {
-            outlineComponent.enabled = false;
+            outlineComponent.enabled = true;
         }
 
         // Vérifier qu'il y a un collider
@@ -173,22 +170,21 @@ public class InteractableObject : MonoBehaviour
     {
         isHovered = true;
 
-        // Activer l'outline si disponible
-        if (outlineComponent != null && highlightOnHover)
+        // Désactiver l'outline au survol 
+        if (outlineComponent != null)
         {
-            outlineComponent.enabled = true;
+            outlineComponent.enabled = false;
         }
-
     }
 
     private void OnHoverExit()
     {
         isHovered = false;
 
-        // Désactiver l'outline
-        if (outlineComponent != null && highlightOnHover)
+        // Réactiver l'outline après le survol 
+        if (outlineComponent != null)
         {
-            outlineComponent.enabled = false;
+            outlineComponent.enabled = true;
         }
     }
 
