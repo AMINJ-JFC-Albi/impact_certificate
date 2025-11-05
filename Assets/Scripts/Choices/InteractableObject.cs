@@ -3,12 +3,25 @@ using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
 
 /// <summary>
+/// Type d'interaction pour l'objet interactif
+/// </summary>
+public enum InteractionType
+{
+    MoveToObject,
+    ClickOnly
+}
+
+/// <summary>
 /// Objet interactif sur lequel on peut cliquer pour déplacer le joueur à proximité.
 /// Utilise un système de compteur pour gérer plusieurs sources de blocage.
 /// </summary>
 [RequireComponent(typeof(Collider))]
 public class InteractableObject : MonoBehaviour
 {
+    [Header("Type d'interaction")]
+    [Tooltip("MoveToObject: Le joueur se déplace vers l'objet. ClickOnly: Interaction immédiate au clic.")]
+    [SerializeField] protected InteractionType interactionType = InteractionType.MoveToObject;
+
     [Header("Paramètres d'interaction")]
     [Tooltip("Distance à laquelle le joueur s'arrêtera de l'objet")]
     [SerializeField] protected float interactionDistance = 1f;
@@ -21,6 +34,10 @@ public class InteractableObject : MonoBehaviour
 
     // Système de compteur pour gérer l'interactivité
     private int canInteract = 0;
+
+    // Pour MoveToObject: suivi du déplacement du joueur
+    private PlayerControl.PlayerController player;
+    private bool isPlayerMovingToThis = false;
 
     private void OnEnable()
     {
@@ -57,10 +74,16 @@ public class InteractableObject : MonoBehaviour
         {
             Debug.LogWarning($"InteractableObject sur {gameObject.name}: Aucun Collider trouvé!");
         }
+
+        // Trouver le joueur (nécessaire pour MoveToObject)
+        player = Object.FindFirstObjectByType<PlayerControl.PlayerController>();
     }
 
     protected virtual void Update()
     {
+        // Vérifier si le joueur est arrivé à destination (pour MoveToObject)
+        CheckPlayerArrival();
+
         // Vérifier si l'objet peut être interagi AVANT tout le reste
         if (!CanInteract())
         {
@@ -85,7 +108,6 @@ public class InteractableObject : MonoBehaviour
             return;
         }
 
-        // Note: La vérification UI est déjà faite dans CanInteractWithIt.CanInteract()
         Vector2 mousePos = Mouse.current.position.ReadValue();
 
         // Vérifier si la souris survole cet objet
@@ -126,6 +148,27 @@ public class InteractableObject : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Vérifie si le joueur est arrivé à destination (pour MoveToObject).
+    /// </summary>
+    private void CheckPlayerArrival()
+    {
+        if (interactionType != InteractionType.MoveToObject || !isPlayerMovingToThis || player == null)
+        {
+            return;
+        }
+
+        float distance = Vector3.Distance(player.transform.position, transform.position);
+        bool isMoving = player.IsMoving();
+        float triggerDistance = interactionDistance + 0.5f;
+
+        if (distance <= triggerDistance && !isMoving)
+        {
+            isPlayerMovingToThis = false;
+            OnInteracted();
+        }
+    }
+
     private void OnHoverEnter()
     {
         isHovered = true;
@@ -157,30 +200,69 @@ public class InteractableObject : MonoBehaviour
             return;
         }
 
-        // Trouver le joueur
-        PlayerControl.PlayerController player = Object.FindFirstObjectByType<PlayerControl.PlayerController>();
-
-        if (player == null)
+        // Comportement selon le type d'interaction
+        switch (interactionType)
         {
-            return;
+            case InteractionType.MoveToObject:
+                HandleMoveToObjectInteraction();
+                break;
+
+            case InteractionType.ClickOnly:
+                HandleClickOnlyInteraction();
+                break;
         }
-
-        // Calculer la position cible 
-        Vector3 targetPosition = CalculateTargetPosition(player.transform.position);
-
-        // Demander au joueur de se déplacer vers cette position
-        player.MoveToPosition(targetPosition);
-
-        // Appeler l'action après le déplacement
-        OnPlayerReachedDestination(player);
     }
 
     /// <summary>
-    /// Appelé quand le joueur atteint la destination. Peut être override par les classes enfants.
+    /// Gère l'interaction avec déplacement vers l'objet.
     /// </summary>
-    protected virtual void OnPlayerReachedDestination(PlayerControl.PlayerController player)
+    private void HandleMoveToObjectInteraction()
+    {
+        if (player == null)
+        {
+            Debug.LogWarning($"{gameObject.name}: PlayerController non trouvé!");
+            return;
+        }
+
+        // Vérifier si le joueur est déjà à proximité
+        float currentDistance = Vector3.Distance(player.transform.position, transform.position);
+        float triggerDistance = interactionDistance + 0.5f;
+
+        if (currentDistance <= triggerDistance)
+        {
+            // Déjà assez proche, interagir immédiatement
+            OnInteracted();
+        }
+        else
+        {
+            // Calculer la position cible 
+            Vector3 targetPosition = CalculateTargetPosition(player.transform.position);
+
+            // Demander au joueur de se déplacer vers cette position
+            player.MoveToPosition(targetPosition);
+
+            // Marquer qu'on attend l'arrivée du joueur
+            isPlayerMovingToThis = true;
+        }
+    }
+
+    /// <summary>
+    /// Gère l'interaction directe sans déplacement.
+    /// </summary>
+    private void HandleClickOnlyInteraction()
+    {
+        OnInteracted();
+    }
+
+    /// <summary>
+    /// Appelé lors d'une interaction. Peut être override par les classes enfants.
+    /// Pour MoveToObject: appeler cette méthode quand le joueur arrive à destination.
+    /// Pour ClickOnly: appelé automatiquement au clic.
+    /// </summary>
+    protected virtual void OnInteracted()
     {
         // Rien par défaut - les classes enfants peuvent override cette méthode
+        Debug.Log($"{gameObject.name} a été interagi");
     }
 
     /// <summary>
