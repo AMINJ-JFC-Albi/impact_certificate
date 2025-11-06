@@ -7,15 +7,16 @@ public class OpenDoors : MonoBehaviour
     private class DoorsStats
     {
         public Transform door;
+        [Tooltip("Mesh séparé pour la porte (si elle fait partie d'un Combined Mesh)")]
+        public MeshFilter separateDoorMesh;
         public float speed = 2.5f;
         public float minimumAngle = -20f;
         public float maximumAngle = 0.0f;
         public bool isOnMinAngle = false;
-        [Tooltip("Script ToggleNavMeshObstacle sur la porte ")]
-        public ToggleNavMeshObstacle navMeshObstacleToggle;
     }
     [SerializeField] private DoorsStats[] doorsStats;
 
+    [ContextMenu("Ouvrir les 4 premières portes")]
     public void OpenFourFirstDoors()
     {
         for (int i = 0; i < doorsStats.Length - 1; i++)
@@ -30,19 +31,17 @@ public class OpenDoors : MonoBehaviour
 
     private IEnumerator ActiveADoorsCoroutine(DoorsStats doorStats)
     {
+        // Désactiver le NavMeshObstacle quand la porte s'ouvre
+        var navObstacle = doorStats.door.GetComponent<UnityEngine.AI.NavMeshObstacle>();
+        if (navObstacle != null)
+        {
+            navObstacle.enabled = false;
+        }
+
         Vector3 startEul = doorStats.door.localEulerAngles;
         float targetAngle = doorStats.isOnMinAngle ? doorStats.maximumAngle : doorStats.minimumAngle;
         float currentAngle = NormalizeAngle(doorStats.door.localEulerAngles.x);
         float direction = targetAngle > currentAngle ? 1f : -1f;
-
-        // Déterminer si on ouvre ou ferme la porte
-        bool isOpening = targetAngle == doorStats.minimumAngle;
-
-        // Désactiver le NavMeshObstacle si on ouvre la porte
-        if (isOpening && doorStats.navMeshObstacleToggle != null)
-        {
-            doorStats.navMeshObstacleToggle.DisableObstacle();
-        }
 
         while (Mathf.Abs(currentAngle - targetAngle) > 0.5f) // small tolerance to stop smoothly
         {
@@ -56,10 +55,10 @@ public class OpenDoors : MonoBehaviour
         doorStats.door.localEulerAngles = new Vector3(targetAngle, startEul.y, startEul.z);
         doorStats.isOnMinAngle = !doorStats.isOnMinAngle;
 
-        // Réactiver le NavMeshObstacle si on ferme la porte
-        if (!isOpening && doorStats.navMeshObstacleToggle != null)
+        // Réactiver le NavMeshObstacle si la porte se referme
+        if (navObstacle != null && doorStats.isOnMinAngle)
         {
-            doorStats.navMeshObstacleToggle.EnableObstacle();
+            navObstacle.enabled = true;
         }
     }
 
