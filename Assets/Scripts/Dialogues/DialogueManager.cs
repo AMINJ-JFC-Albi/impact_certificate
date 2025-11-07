@@ -326,6 +326,18 @@ public class DialogueManager : MonoBehaviour
                     Debug.LogWarning("speakerNameText n'est pas assigné dans l'Inspector!");
                 }
             }
+            // Gérer le tag "action"
+            else if (tagKey == "action")
+            {
+                if (ActionManager.Instance != null)
+                {
+                    ActionManager.Instance.ExecuteAction(tagValue);
+                }
+                else
+                {
+                    Debug.LogWarning("ActionManager n'est pas présent dans la scène!");
+                }
+            }
             // Tu peux ajouter d'autres tags ici plus tard (ex: emotion, animation, etc.)
         }
 

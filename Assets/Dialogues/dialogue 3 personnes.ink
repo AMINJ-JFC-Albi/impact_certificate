@@ -21,7 +21,6 @@ Oui, c'est génial! J'ai hâte de commencer.
 # speaker: Alice
 Bon, je dois y aller. À bientôt!
 
-# speaker: Bob
-À plus tard Alice!
+Les portes s'ouvrent. # speaker: Scientifique # action: open_doors_telescope
 
 -> END

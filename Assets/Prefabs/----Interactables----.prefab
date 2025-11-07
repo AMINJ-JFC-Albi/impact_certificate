@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 8132588196351670710}
   - component: {fileID: 6182325247475637983}
   - component: {fileID: 3707544724092148057}
-  - component: {fileID: 5321885469662268769}
   m_Layer: 0
   m_Name: Telescope
   m_TagString: Untagged
@@ -145,22 +144,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ToolTipObject
   text: Telescope
---- !u!114 &5321885469662268769
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2783496388126919882}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6e853cea8e6e8c4688e5ad9542ede8d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TelescopeTrigger
-  interactionType: 0
-  interactionDistance: 4
-  playableDirector: {fileID: 0}
-  autoReturnToStart: 0
 --- !u!1 &3498992249010604694
 GameObject:
   m_ObjectHideFlags: 0

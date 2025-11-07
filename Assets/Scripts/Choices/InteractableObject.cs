@@ -7,84 +7,56 @@ using UnityEngine.EventSystems;
 /// </summary>
 public enum InteractionType
 {
-    MoveToObject,
-    ClickOnly
+    MoveToObject,  // Le joueur se déplace vers l'objet avant d'interagir
+    ClickOnly      // Interaction immédiate au clic
 }
 
 /// <summary>
-/// Objet interactif sur lequel on peut cliquer pour déplacer le joueur à proximité.
-/// Utilise un système de compteur pour gérer plusieurs sources de blocage.
+/// Objet interactif cliquable.
+/// Gère le déplacement du joueur, l'outline et l'interaction via un système de compteur.
 /// </summary>
 [RequireComponent(typeof(Collider))]
 public class InteractableObject : MonoBehaviour
 {
     [Header("Type d'interaction")]
-    [Tooltip("MoveToObject: Le joueur se déplace vers l'objet. ClickOnly: Interaction immédiate au clic.")]
     [SerializeField] protected InteractionType interactionType = InteractionType.MoveToObject;
 
     [Header("Paramètres d'interaction")]
-    [Tooltip("Distance à laquelle le joueur s'arrêtera de l'objet")]
     [SerializeField] protected float interactionDistance = 1f;
 
     private Outline outlineComponent;
     private bool isHovered = false;
-
-    // Système de compteur pour gérer l'interactivité
-    private int canInteract = 0;
-
-    // Pour MoveToObject: suivi du déplacement du joueur
+    private int canInteract = 0; // Système de compteur pour gérer plusieurs sources de blocage
     private PlayerControl.PlayerController player;
     private bool isPlayerMovingToThis = false;
 
     private void OnEnable()
     {
-        // S'enregistrer quand l'objet est activé
         GameManager.RegisterInteractable(this);
     }
 
     private void OnDisable()
     {
-        // Se désenregistrer quand l'objet est désactivé
         GameManager.UnregisterInteractable(this);
-
-        if (isHovered && outlineComponent != null)
-        {
-            outlineComponent.enabled = false;
-            isHovered = false;
-        }
     }
 
     protected virtual void Start()
     {
-        // Récupérer le composant Outline s'il existe
         outlineComponent = GetComponent<Outline>();
-
-        // Activer l'outline par défaut 
-        if (outlineComponent != null)
+        if (outlineComponent == null)
         {
-            outlineComponent.enabled = true;
+            outlineComponent = GetComponentInChildren<Outline>();
         }
 
-        // Vérifier qu'il y a un collider
-        Collider col = GetComponent<Collider>();
-        if (col == null)
-        {
-            Debug.LogWarning($"InteractableObject sur {gameObject.name}: Aucun Collider trouvé!");
-        }
-
-        // Trouver le joueur (nécessaire pour MoveToObject)
         player = Object.FindFirstObjectByType<PlayerControl.PlayerController>();
     }
-
     protected virtual void Update()
     {
-        // Vérifier si le joueur est arrivé à destination (pour MoveToObject)
         CheckPlayerArrival();
 
-        // Vérifier si l'objet peut être interagi AVANT tout le reste
+        // Vérifier si l'objet peut être interagi
         if (!CanInteract())
         {
-            // Désactiver le hover si l'objet n'est plus interactif
             if (isHovered)
             {
                 OnHoverExit();
@@ -92,74 +64,48 @@ public class InteractableObject : MonoBehaviour
             return;
         }
 
-        if (Mouse.current == null)
-        {
-            Debug.LogWarning($"InteractableObject ({gameObject.name}): Mouse.current est null!");
-            return;
-        }
-
-        Camera mainCamera = Camera.main;
-        if (mainCamera == null)
-        {
-            Debug.LogWarning($"InteractableObject ({gameObject.name}): Camera.main est null!");
-            return;
-        }
+        if (Mouse.current == null || Camera.main == null) return;
 
         Vector2 mousePos = Mouse.current.position.ReadValue();
-
-        // Vérifier si la souris survole cet objet
-        Ray ray = mainCamera.ScreenPointToRay(mousePos);
+        Ray ray = Camera.main.ScreenPointToRay(mousePos);
 
         if (Physics.Raycast(ray, out RaycastHit hit, 100f))
         {
             if (hit.collider.gameObject == gameObject)
             {
-                // Souris sur cet objet
                 if (!isHovered)
                 {
                     OnHoverEnter();
                 }
 
-                // Détection du clic
                 if (Mouse.current.leftButton.wasPressedThisFrame)
                 {
                     OnClicked();
                 }
             }
-            else
-            {
-                // Souris sur autre chose
-                if (isHovered)
-                {
-                    OnHoverExit();
-                }
-            }
-        }
-        else
-        {
-            // Aucun objet sous la souris
-            if (isHovered)
+            else if (isHovered)
             {
                 OnHoverExit();
             }
         }
+        else if (isHovered)
+        {
+            OnHoverExit();
+        }
     }
 
     /// <summary>
-    /// Vérifie si le joueur est arrivé à destination (pour MoveToObject).
+    /// Vérifie si le joueur est arrivé à destination (pour MoveToObject)
     /// </summary>
     private void CheckPlayerArrival()
     {
         if (interactionType != InteractionType.MoveToObject || !isPlayerMovingToThis || player == null)
-        {
             return;
-        }
 
         float distance = Vector3.Distance(player.transform.position, transform.position);
-        bool isMoving = player.IsMoving();
         float triggerDistance = interactionDistance + 0.5f;
 
-        if (distance <= triggerDistance && !isMoving)
+        if (distance <= triggerDistance && !player.IsMoving())
         {
             isPlayerMovingToThis = false;
             OnInteracted();
@@ -169,169 +115,123 @@ public class InteractableObject : MonoBehaviour
     private void OnHoverEnter()
     {
         isHovered = true;
-
-        // Désactiver l'outline au survol 
-        if (outlineComponent != null)
-        {
-            outlineComponent.enabled = false;
-        }
     }
 
     private void OnHoverExit()
     {
         isHovered = false;
-
-        // Réactiver l'outline après le survol 
-        if (outlineComponent != null)
-        {
-            outlineComponent.enabled = true;
-        }
     }
 
     protected virtual void OnClicked()
     {
-        // Double vérification avant d'accepter le clic
-        if (!CanInteract())
-        {
-            return;
-        }
+        if (!CanInteract()) return;
 
-        // Comportement selon le type d'interaction
         switch (interactionType)
         {
             case InteractionType.MoveToObject:
                 HandleMoveToObjectInteraction();
                 break;
-
             case InteractionType.ClickOnly:
-                HandleClickOnlyInteraction();
+                OnInteracted();
                 break;
         }
     }
 
-    /// <summary>
-    /// Gère l'interaction avec déplacement vers l'objet.
-    /// </summary>
     private void HandleMoveToObjectInteraction()
     {
-        if (player == null)
-        {
-            Debug.LogWarning($"{gameObject.name}: PlayerController non trouvé!");
-            return;
-        }
+        if (player == null) return;
 
-        // Vérifier si le joueur est déjà à proximité
         float currentDistance = Vector3.Distance(player.transform.position, transform.position);
         float triggerDistance = interactionDistance + 0.5f;
 
         if (currentDistance <= triggerDistance)
         {
-            // Déjà assez proche, interagir immédiatement
+            // Déjà à proximité, interagir immédiatement
             OnInteracted();
         }
         else
         {
-            // Calculer la position cible 
+            // Déplacer le joueur vers l'objet
             Vector3 targetPosition = CalculateTargetPosition(player.transform.position);
-
-            // Demander au joueur de se déplacer vers cette position
             player.MoveToPosition(targetPosition);
-
-            // Marquer qu'on attend l'arrivée du joueur
             isPlayerMovingToThis = true;
         }
     }
 
     /// <summary>
-    /// Gère l'interaction directe sans déplacement.
-    /// </summary>
-    private void HandleClickOnlyInteraction()
-    {
-        OnInteracted();
-    }
-
-    /// <summary>
-    /// Appelé lors d'une interaction. Peut être override par les classes enfants.
-    /// Pour MoveToObject: appeler cette méthode quand le joueur arrive à destination.
-    /// Pour ClickOnly: appelé automatiquement au clic.
+    /// Appelé lors d'une interaction. Override dans les classes enfants pour définir le comportement.
     /// </summary>
     protected virtual void OnInteracted()
     {
-        // Rien par défaut - les classes enfants peuvent override cette méthode
-        Debug.Log($"{gameObject.name} a été interagi");
     }
 
     /// <summary>
-    /// Calcule la position cible à interactionDistance de l'objet.
+    /// Calcule la position cible à interactionDistance de l'objet
     /// </summary>
     private Vector3 CalculateTargetPosition(Vector3 playerPosition)
     {
-        // Direction du joueur vers l'objet
         Vector3 direction = (transform.position - playerPosition).normalized;
-
-        // Position cible = position de l'objet - direction * distance
         Vector3 targetPos = transform.position - (direction * interactionDistance);
-
-        // Garder la hauteur du joueur (Y)
         targetPos.y = playerPosition.y;
-
         return targetPos;
     }
 
-    // Gizmo pour visualiser la distance d'interaction
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, interactionDistance);
     }
 
-    #region Système d'interactivité (compteur)
+    #region Système d'interactivité
 
     /// <summary>
-    /// Vérifie si l'objet peut être interagi.
+    /// Vérifie si l'objet peut être interagi (compteur à 0 et pas d'UI au-dessus)
     /// </summary>
-    /// <returns>True si l'objet est interactif, False sinon</returns>
     public bool CanInteract()
     {
-        // Vérifier que le compteur est à 0 (pas de blocage actif)
-        if (canInteract > 0)
-            return false;
+        if (canInteract > 0) return false;
 
-        // Vérifier qu'aucun élément UI ne bloque le raycast
         if (Mouse.current != null && EventSystem.current != null)
         {
             if (EventSystem.current.IsPointerOverGameObject())
-            {
-                return false; // UI bloque l'interaction
-            }
+                return false;
         }
 
         return true;
     }
 
-
+    /// <summary>
+    /// Active/désactive l'interactivité via un système de compteur
+    /// </summary>
     public void SetActive(bool active)
     {
         if (active)
         {
             canInteract--;
-            if (canInteract < 0)
-            {
-                canInteract = 0;
-            }
+            if (canInteract < 0) canInteract = 0;
         }
         else
         {
             canInteract++;
         }
+
+        UpdateOutlineState();
     }
 
+    /// <summary>
+    /// Met à jour l'état de l'outline selon si l'objet peut être interagi
+    /// </summary>
+    public void UpdateOutlineState()
+    {
+        if (outlineComponent == null) return;
 
+        // L'outline est activé si le compteur est à 0 (pas de blocage)
+        outlineComponent.enabled = (canInteract == 0);
+    }
     public void ResetCounter()
     {
         canInteract = 0;
     }
-
 
     public int GetCounter()
     {
