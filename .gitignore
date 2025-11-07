@@ -105,7 +105,14 @@ InitTestScene*.unity*
 # Ink compiler temporary files
 *-ink-compiler-output.txt
 
+# Code coverage settings
+ProjectSettings/Packages/com.unity.testtools.codecoverage/Settings.json
+
+# Ink settings
+ProjectSettings/InkSettings.asset
+
 # VS Code
+.vsconfig
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json

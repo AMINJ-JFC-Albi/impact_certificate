@@ -11,7 +11,7 @@ public class GridManager : MonoBehaviour
     void Start()
     {
         InitializeGrids();
-        DisplayGrid();
+        //DisplayGrid();
     }
 
     void InitializeGrids()
