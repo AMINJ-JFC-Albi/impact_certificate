@@ -1,49 +1,55 @@
 using UnityEngine;
 
-public class GridManager : MonoBehaviour
+namespace Grid
 {
-    public int gridSize = 10;
-    public Word[] words;
-    private char[,] solutionGrid;
-    private char[,] playerGrid;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public class GridManager : MonoBehaviour
     {
-        InitializeGrids();
-        //DisplayGrid();
-    }
+        private const ushort GRID_SIZE = 20;
+        private Word[] _words;
+        public Word[] wordsLevelOne;
+        //private Word[] wordsLevelTwo;
+        private char[,] solutionGrid;
+        private char[,] playerGrid;
 
-    void InitializeGrids()
-    {
-        solutionGrid = new char[gridSize, gridSize];
-        playerGrid = new char[gridSize, gridSize];
-
-        // Remplir la grille de solution
-        foreach (var data in words)
+        // Start is called once before the first execution of Update after the MonoBehaviour is created
+        void Start()
         {
-            PlaceWordOnGrid(data, solutionGrid);
+            InitializeGrids();
+            //DisplayGrid();
         }
 
-        // Initialiser la grille du joueur avec des espaces ou des caractères de masquage
-        // (La logique de masquage est souvent gérée par l'UI, pas par le tableau de char)
-    }
-
-    private void PlaceWordOnGrid(Word data, char[,] grid)
-    {
-        int x = data.startX;
-        int y = data.startY;
-        for (int i = 0; i < data.word.Length; i++)
+        void InitializeGrids()
         {
-            grid[x, y] = data.word[i];
+            solutionGrid = new char[GRID_SIZE, GRID_SIZE];
+            playerGrid = new char[GRID_SIZE, GRID_SIZE];
+
+            foreach (var data in words)
+            {
+                PlaceWordOnGrid(data, solutionGrid);
+            }
+
+            // Initialiser la grille du joueur avec des espaces ou des caractères de masquage
+            // (La logique de masquage est souvent gérée par l'UI, pas par le tableau de char)
+        }
+
+        private void PlaceWordOnGrid(Word data, char[,] grid)
+        {
+            int x = data.startX;
+            int y = data.startY;
+
             if (data.direction == Word.Direction.Horizontal)
-            {
-                x++;
-            }
-            else
-            {
-                y++;
-            }
+                for (int i = 0; i < data.word.Length; i++)
+                {
+                    grid[x, y] = data.word[i];
+                    x++;
+                }
+
+            else // Vertical
+                for (int i = 0; i < data.word.Length; i++)
+                {
+                    grid[x, y] = data.word[i];
+                    y++;
+                }
         }
     }
 }

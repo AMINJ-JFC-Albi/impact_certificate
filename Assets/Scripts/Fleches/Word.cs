@@ -1,17 +1,29 @@
 using UnityEngine;
 
-[System.Serializable]
-public class Word
+namespace Grid
 {
-    public enum Direction
+    [System.Serializable]
+    public class Word
     {
-        Horizontal,
-        Vertical
-    }
+        public enum Direction
+        {
+            Horizontal,
+            Vertical
+        }
 
-    public string word;
-    public int startX;
-    public int startY;
-    public Direction direction;
-    public string clue;
+        public string word;
+        public ushort startX;
+        public ushort startY;
+        public Direction direction;
+        public string clue;
+
+        public Word(string word, ushort startX, ushort startY, Direction direction, string clue)
+        {
+            this.word = word;
+            this.startX = startX;
+            this.startY = startY;
+            this.direction = direction;
+            this.clue = clue;
+        }
+    }
 }
