@@ -5,7 +5,6 @@ namespace Grid
     public class GridManager : MonoBehaviour
     {
         private const ushort GRID_SIZE = 20;
-        private Word[] _words;
         public Word[] wordsLevelOne;
         //private Word[] wordsLevelTwo;
         private char[,] solutionGrid;
@@ -14,23 +13,19 @@ namespace Grid
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
-            InitializeGrids();
+            InitializeGrids(wordsLevelOne);
             //DisplayGrid();
         }
 
-        void InitializeGrids()
+        void InitializeGrids(Word[] wordsLevel)
         {
             solutionGrid = new char[GRID_SIZE, GRID_SIZE];
             playerGrid = new char[GRID_SIZE, GRID_SIZE];
 
-            foreach (var data in words)
-            {
+            foreach (var data in wordsLevel)
                 PlaceWordOnGrid(data, solutionGrid);
-            }
-
-            // Initialiser la grille du joueur avec des espaces ou des caractères de masquage
-            // (La logique de masquage est souvent gérée par l'UI, pas par le tableau de char)
         }
+
 
         private void PlaceWordOnGrid(Word data, char[,] grid)
         {
@@ -50,6 +45,11 @@ namespace Grid
                     grid[x, y] = data.word[i];
                     y++;
                 }
+        }
+
+        private void DisplayGrid()
+        {
+
         }
     }
 }
