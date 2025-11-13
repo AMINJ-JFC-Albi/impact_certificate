@@ -7,8 +7,10 @@ namespace Grid
         private const ushort GRID_SIZE = 20;
         public Word[] wordsLevelOne;
         //private Word[] wordsLevelTwo;
-        private char[,] solutionGrid;
-        private char[,] playerGrid;
+        private char[,] _solutionGrid;
+        private char[,] _playerGrid;
+
+        private bool _isLevelCompleted;
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
@@ -19,11 +21,11 @@ namespace Grid
 
         void InitializeGrids(Word[] wordsLevel)
         {
-            solutionGrid = new char[GRID_SIZE, GRID_SIZE];
-            playerGrid = new char[GRID_SIZE, GRID_SIZE];
+            _solutionGrid = new char[GRID_SIZE, GRID_SIZE];
+            _playerGrid = new char[GRID_SIZE, GRID_SIZE];
 
             foreach (var data in wordsLevel)
-                PlaceWordOnGrid(data, solutionGrid);
+                PlaceWordOnGrid(data, _solutionGrid);
         }
 
 
@@ -51,5 +53,7 @@ namespace Grid
         {
 
         }
+
+        
     }
 }
