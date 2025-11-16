@@ -12,6 +12,14 @@ namespace Grid
 
         private bool _isLevelCompleted;
 
+        [Tooltip("Prefab for grid cell")]
+        public GameObject cellPrefab;
+
+        [Tooltip("Parent GameObject of all cells")]
+        public Transform gridParent;
+
+
+
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {

@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Grid
 {
     // Envoie un event avec les coordonnées de la cellule cliquée (x, y)
-    public class InputManager : MonoBehaviour
+    public class GridInput : MonoBehaviour
     {
         public static event Action<int, int> OnCellClicked;
 
@@ -22,9 +22,6 @@ namespace Grid
             if (Input.GetMouseButtonDown(0))
             {
                 Vector3 screenPos = Input.mousePosition;
-
-                // Si vous utilisez une grille en UI (Canvas), utilisez RectTransformUtility.ScreenPointToLocalPointInRectangle
-                // Ici on suppose une grille en world space orthographique ou sprites alignés.
                 Vector3 worldPos = Camera.main.ScreenToWorldPoint(screenPos);
                 TryConvertWorldPositionToCell(worldPos);
             }
