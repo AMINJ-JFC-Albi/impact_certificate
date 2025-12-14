@@ -1,3 +1,4 @@
+using Grid;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI; // IMPORTANT : Ajoutez l'import pour les composants UI
@@ -29,34 +30,4 @@ public class GridCell : MonoBehaviour
         //inputField.onValueChanged.AddListener(OnLetterEntered);
     }
 
-    // Méthode appelée lors de la saisie
-    //private void OnLetterEntered(string letter)
-    //{
-    //    if (string.IsNullOrEmpty(letter)) return;
-
-    //    //char enteredChar = letter.ToUpper()[0];
-
-    //    // Appel du Manager pour vérifier la lettre
-    //    // manager.CheckLetter(this, enteredChar);
-    //}
-
-    public void Highlight(bool isHighlighted)
-    {
-        // Utiliser l'Image (background) au lieu du SpriteRenderer
-        background.color = isHighlighted ? Color.yellow : Color.white;
-
-        // Mettre le focus sur le champ de saisie
-        if (isHighlighted)
-            inputField.Select();
-    }
-
-    //public void SetBackground(Color color)
-    //{
-    //    background.color = color;
-    //}
-
-    //public void SetInputInteractable(bool interactable)
-    //{
-    //    inputField.interactable = interactable;
-    //}
 }
