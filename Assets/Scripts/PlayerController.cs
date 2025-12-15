@@ -24,6 +24,10 @@ namespace PlayerControl
         [SerializeField] private Animator animator;
         [SerializeField] private float animationDampTime = 0.1f;
 
+        [Header("Audio")]
+        [SerializeField] private AudioSource footstepsAudioSource;
+        [SerializeField] private AudioClip footstepsSound;
+        [SerializeField][Range(0f, 1f)] private float footstepsVolume = 0.5f;
 
         private NavMeshPath path;
         private int currentPathIndex;
@@ -91,12 +95,14 @@ namespace PlayerControl
             if (isMoving)
             {
                 UpdateRunAnimation(1.0f);
+                PlayFootstepsSound();
                 MoveAlongPath();
             }
 
             else
             {
                 UpdateRunAnimation(0.0f);
+                StopFootstepsSound();
             }
         }
 
@@ -259,6 +265,35 @@ namespace PlayerControl
         public bool IsMoving()
         {
             return isMoving;
+        }
+
+        /// <summary>
+        /// Joue le son de pas en boucle si ce n'est pas déjà en cours
+        /// </summary>
+        private void PlayFootstepsSound()
+        {
+            if (footstepsAudioSource == null || footstepsSound == null)
+                return;
+
+            // Si le son n'est pas déjà en cours de lecture
+            if (!footstepsAudioSource.isPlaying)
+            {
+                footstepsAudioSource.clip = footstepsSound;
+                footstepsAudioSource.volume = footstepsVolume;
+                footstepsAudioSource.loop = true;
+                footstepsAudioSource.Play();
+            }
+        }
+
+        /// <summary>
+        /// Arrête le son de pas
+        /// </summary>
+        private void StopFootstepsSound()
+        {
+            if (footstepsAudioSource != null && footstepsAudioSource.isPlaying)
+            {
+                footstepsAudioSource.Stop();
+            }
         }
 
         void OnDestroy()

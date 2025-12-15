@@ -2,13 +2,13 @@
 
 
 === dialogue_debut ===
-# speaker: Fille
+# speaker: Alien
 Bonjour Reine! Comment vas-tu aujourd'hui?
 
 # speaker: Reine  
-Salut Fille! Je vais très bien, merci! Et toi?
+Salut Alien! Je vais très bien, merci! Et toi?
 
-# speaker: Fille
+# speaker: Alien
 Moi aussi! Tu as vu le nouveau projet?
 
 # speaker: Reine
@@ -18,7 +18,7 @@ Oui, c'est génial! J'ai hâte de commencer.
     -> au_revoir
 
 === au_revoir ===
-# speaker: Fille
+# speaker: Alien
 Bon, je dois y aller. À bientôt!
 
 Les portes s'ouvrent. # speaker: Scientifique # action: open_doors_telescope
