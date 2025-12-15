@@ -48,5 +48,11 @@ namespace Grid
                 return false;
             return y >= startY && y < startY + (word?.Length ?? 0);
         }
+
+        public void SetSize(bool highlighted)
+        {
+            foreach (var cell in cells)
+                cell.SetSize(highlighted);
+        }
     }
 }

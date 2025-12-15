@@ -5,6 +5,9 @@ namespace Grid
     public class GridManager : MonoBehaviour
     {
         private const ushort GRID_SIZE = 20;
+
+        private Word[] currentLevelWords;
+
         public Word[] wordsLevelOne;
         //private Word[] wordsLevelTwo;
         private char[,] _solutionGrid;
@@ -28,7 +31,7 @@ namespace Grid
         {
             _cellObjects = new GridCell[GRID_SIZE, GRID_SIZE];
 
-            Word[] currentLevelWords = wordsLevelOne;
+            currentLevelWords = wordsLevelOne;
 
             InitializeGrids(currentLevelWords);
             DisplayGrid();
@@ -104,9 +107,7 @@ namespace Grid
                     for (int i = 0; i < data.word.Length; i++)
                     {
                         if (_cellObjects[x, y] != null)
-                        {
                             data.cells.Add(_cellObjects[x, y]);
-                        }
                         x++;
                     }
                 }
@@ -115,12 +116,54 @@ namespace Grid
                     for (int i = 0; i < data.word.Length; i++)
                     {
                         if (_cellObjects[x, y] != null)
-                        {
                             data.cells.Add(_cellObjects[x, y]);
-                        }
                         y++;
                     }
                 }
+            }
+        }
+
+        public void OnCellHovered(GridCell cell)
+        {
+            // Word or null
+            var word = FindWordContainingCell(cell);
+            if (word is null)
+                return;
+            SetSelectedWord(word);
+        }
+
+        public void OnCellUnhovered(GridCell cell)
+        {
+            // Word or null
+            var word = FindWordContainingCell(cell);
+            if (word != null && _selectedWord == word)
+                ClearSelectedWord();
+        }
+
+        private Word FindWordContainingCell(GridCell cell)
+        {
+            foreach (Word word in currentLevelWords)
+                if (word.cells != null && word.cells.Contains(cell))
+                    return word;
+            return null;
+        }
+
+        private void SetSelectedWord(Word word)
+        {
+            if (_selectedWord != null && _selectedWord != word)
+                _selectedWord.SetSize(false);
+
+            _selectedWord = word;
+
+            _selectedWord?.SetSize(true);
+        }
+
+        private void ClearSelectedWord()
+        {
+            if (_selectedWord != null)
+            {
+                _selectedWord.SetSize(false);
+                _selectedWord = null;
             }
         }
     }
