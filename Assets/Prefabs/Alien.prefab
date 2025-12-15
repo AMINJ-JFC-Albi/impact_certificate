@@ -98,14 +98,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca9b76fdc15808f4f90b40c39d331697, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerControl.PlayerController
-  mainCamera: {fileID: 0}
   moveSpeed: 5
-  continuousPathDelay: 0.1
   animator: {fileID: 8748400687237138841}
   animationDampTime: 0.1
+  runParameterName: Run
   footstepsAudioSource: {fileID: 5357156900216421079}
   footstepsSound: {fileID: 8300000, guid: 468f1c905d79d4a4692c7c6b8c5b2ee5, type: 3}
-  footstepsVolume: 0.212
+  footstepsVolume: 0.08
+  mainCamera: {fileID: 0}
+  continuousPathDelay: 0.1
 --- !u!82 &5357156900216421079
 AudioSource:
   m_ObjectHideFlags: 0

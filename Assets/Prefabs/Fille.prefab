@@ -776,8 +776,8 @@ GameObject:
   - component: {fileID: 3091914607736492969}
   - component: {fileID: 2618036825643633669}
   - component: {fileID: 6240251660397733491}
-  - component: {fileID: 3080719255183985134}
   - component: {fileID: 667956473114489862}
+  - component: {fileID: 3717805285133194468}
   m_Layer: 0
   m_Name: Fille
   m_TagString: Untagged
@@ -851,26 +851,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &3080719255183985134
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5992412633577544531}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca9b76fdc15808f4f90b40c39d331697, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerControl.PlayerController
-  mainCamera: {fileID: 0}
-  moveSpeed: 5
-  continuousPathDelay: 0.1
-  animator: {fileID: 789613055706741579}
-  animationDampTime: 0.1
-  footstepsAudioSource: {fileID: 667956473114489862}
-  footstepsSound: {fileID: 8300000, guid: 468f1c905d79d4a4692c7c6b8c5b2ee5, type: 3}
-  footstepsVolume: 0.218
 --- !u!82 &667956473114489862
 AudioSource:
   m_ObjectHideFlags: 0
@@ -968,6 +948,30 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &3717805285133194468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5992412633577544531}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9baf5b2ecb207644f9bdeb96540caa35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BotPatrol
+  moveSpeed: 5
+  animator: {fileID: 789613055706741579}
+  animationDampTime: 0.1
+  runParameterName: Run
+  footstepsAudioSource: {fileID: 667956473114489862}
+  footstepsSound: {fileID: 8300000, guid: 468f1c905d79d4a4692c7c6b8c5b2ee5, type: 3}
+  footstepsVolume: 0.08
+  patrolPoints: []
+  reversePatrol: 1
+  autoStart: 1
+  showDebugGizmos: 1
+  pathColor: {r: 0, g: 1, b: 1, a: 1}
 --- !u!1 &6464938978082756400
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,44 +1,22 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
 
-
-
 namespace PlayerControl
 {
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : BaseMovementController
     {
+        [Header("Player Specific")]
         [SerializeField] private Camera mainCamera;
-
-
-        [Header("Movement")]
-        [SerializeField] private float moveSpeed = 5f;
 
         [Header("Continuous Path Creation")]
         [SerializeField] private float continuousPathDelay = 0.1f;
         private float lastPathCreationTime = 0f;
         private bool isRightClickHeld = false;
 
-        [Header("Animation")]
-        [SerializeField] private Animator animator;
-        [SerializeField] private float animationDampTime = 0.1f;
-
-        [Header("Audio")]
-        [SerializeField] private AudioSource footstepsAudioSource;
-        [SerializeField] private AudioClip footstepsSound;
-        [SerializeField][Range(0f, 1f)] private float footstepsVolume = 0.5f;
-
-        private NavMeshPath path;
-        private int currentPathIndex;
-        private bool isMoving;
-
-        private List<Vector3> destinationQueue = new List<Vector3>();
-
-
-        void Awake()
+        protected override void Awake()
         {
-            path = new NavMeshPath();
+            base.Awake();
 
             if (mainCamera == null)
             {
@@ -92,29 +70,8 @@ namespace PlayerControl
                 lastPathCreationTime = Time.time;
             }
 
-            if (isMoving)
-            {
-                UpdateRunAnimation(1.0f);
-                PlayFootstepsSound();
-                MoveAlongPath();
-            }
-
-            else
-            {
-                UpdateRunAnimation(0.0f);
-                StopFootstepsSound();
-            }
-        }
-
-        private void UpdateRunAnimation(float targetValue)
-        {
-            if (animator != null)
-            {
-
-                float currentValue = animator.GetFloat("Run");
-                float newValue = Mathf.Lerp(currentValue, targetValue, 1.0f - Mathf.Exp(-animationDampTime * Time.deltaTime * 40));
-                animator.SetFloat("Run", newValue);
-            }
+            // Laisser la classe de base gérer le mouvement, l'animation et le son
+            base.Update();
         }
 
         private void HandleMovement()
@@ -171,128 +128,6 @@ namespace PlayerControl
                         }
                     }
                 }
-            }
-        }
-
-        private void MoveAlongPath()
-        {
-            if (currentPathIndex < path.corners.Length)
-            {
-                Vector3 targetPosition = path.corners[currentPathIndex];
-
-                Vector3 direction = (targetPosition - transform.position).normalized;
-
-                // Faire pivoter le personnage dans la direction du mouvement
-                if (direction != Vector3.zero)
-                {
-                    Quaternion targetRotation = Quaternion.LookRotation(direction);
-                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 10f * Time.deltaTime);
-                }
-
-                transform.position += direction * moveSpeed * Time.deltaTime;
-
-                // si on atteint la position cible
-                if (Vector3.Distance(transform.position, targetPosition) < 0.1f)
-                {
-                    currentPathIndex++;
-                }
-            }
-            else
-            {
-                // Si on a atteint la destination, passer à la suivante s'il y en a
-                if (destinationQueue.Count > 0)
-                {
-                    destinationQueue.RemoveAt(0);
-
-                    if (destinationQueue.Count > 0)
-                    {
-                        MoveToNextDestination();
-                        return;
-                    }
-                }
-
-                isMoving = false;
-            }
-        }
-
-        private void MoveToNextDestination()
-        {
-            if (destinationQueue.Count > 0)
-            {
-                // Calculer le chemin vers la prochaine destination
-                if (NavMesh.CalculatePath(transform.position, destinationQueue[0], NavMesh.AllAreas, path))
-                {
-                    if (path.corners.Length > 1)
-                    {
-                        currentPathIndex = 1;
-                        isMoving = true;
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// Déplace le joueur vers une position spécifique (utilisé par les objets interactifs).
-        /// </summary>
-        public void MoveToPosition(Vector3 targetPosition)
-        {
-            // Vérifier que la position est sur le NavMesh
-            NavMeshHit navHit;
-            if (!NavMesh.SamplePosition(targetPosition, out navHit, 5f, NavMesh.AllAreas))
-            {
-                Debug.LogWarning("PlayerController: La position cible n'est pas sur le NavMesh!");
-                return;
-            }
-
-            // Effacer la file d'attente et ajouter la nouvelle destination
-            destinationQueue.Clear();
-            destinationQueue.Add(navHit.position);
-
-            // Calculer le chemin
-            if (NavMesh.CalculatePath(transform.position, navHit.position, NavMesh.AllAreas, path))
-            {
-                if (path.corners.Length > 1)
-                {
-                    currentPathIndex = 1;
-                    isMoving = true;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Vérifie si le joueur est en train de se déplacer.
-        /// </summary>
-        public bool IsMoving()
-        {
-            return isMoving;
-        }
-
-        /// <summary>
-        /// Joue le son de pas en boucle si ce n'est pas déjà en cours
-        /// </summary>
-        private void PlayFootstepsSound()
-        {
-            if (footstepsAudioSource == null || footstepsSound == null)
-                return;
-
-            // Si le son n'est pas déjà en cours de lecture
-            if (!footstepsAudioSource.isPlaying)
-            {
-                footstepsAudioSource.clip = footstepsSound;
-                footstepsAudioSource.volume = footstepsVolume;
-                footstepsAudioSource.loop = true;
-                footstepsAudioSource.Play();
-            }
-        }
-
-        /// <summary>
-        /// Arrête le son de pas
-        /// </summary>
-        private void StopFootstepsSound()
-        {
-            if (footstepsAudioSource != null && footstepsAudioSource.isPlaying)
-            {
-                footstepsAudioSource.Stop();
             }
         }
 
