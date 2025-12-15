@@ -142,6 +142,12 @@ public class DialogueManager : MonoBehaviour
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
 
+        // Arrêter toutes les animations de dialogue
+        if (DialogueAnimationManager.Instance != null)
+        {
+            DialogueAnimationManager.Instance.StopAllSpeaking();
+        }
+
         // Réactiver toutes les interactions dans le jeu
         if (GameManager.Instance != null)
         {
@@ -324,6 +330,12 @@ public class DialogueManager : MonoBehaviour
                 else
                 {
                     Debug.LogWarning("speakerNameText n'est pas assigné dans l'Inspector!");
+                }
+
+                // Déclencher l'animation du personnage qui parle
+                if (DialogueAnimationManager.Instance != null)
+                {
+                    DialogueAnimationManager.Instance.SetSpeaker(tagValue);
                 }
             }
             // Gérer le tag "action"

@@ -91,7 +91,6 @@ public class GameManager : MonoBehaviour
         {
             allowedInteractables.Remove(interactable);
             interactable.SetActive(false); // Le désactiver (met aussi à jour l'outline)
-            Debug.Log($"Objet {interactable.gameObject.name} retiré des objets autorisés");
         }
     }
 

@@ -159,8 +159,6 @@ public class ActionManager : MonoBehaviour
             {
                 telescopeTimeline.stopped += OnTelescopeTimelineStopped;
             }
-
-            Debug.Log("Animation du télescope lancée");
         }
         else
         {

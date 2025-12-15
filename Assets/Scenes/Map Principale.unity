@@ -205,6 +205,11 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: 16a00ac013db9874998c0dee91adf6a8, type: 2}
   m_BuildHeightMesh: 0
+--- !u!1 &320389165 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 102965146235052001, guid: 9142c8bc0fb3b4349b671ffd95f3cb8c, type: 3}
+  m_PrefabInstance: {fileID: 4378253171118556991}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &503707268 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8683120801366119714, guid: c6ab2121e7aab484aa35c739e7519d27, type: 3}
@@ -226,6 +231,50 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 1.4130001, z: 9.541}
   m_TimeToStationary: 0.5
+--- !u!1 &568277532
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 568277534}
+  - component: {fileID: 568277533}
+  m_Layer: 0
+  m_Name: DialogueAnimationManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &568277533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 568277532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2850edfbc76d2814fb8a774c88f42a10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueAnimationManager
+--- !u!4 &568277534
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 568277532}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -8.04275, y: 0, z: 0.09097}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &731687236
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -313,9 +362,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 762414960}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.097, y: 0.179, z: -7.667}
-  m_LocalScale: {x: 0.79, y: 0.79, z: 0.79}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 11.097, y: 0.176, z: -7.613}
+  m_LocalScale: {x: 0.81999993, y: 0.81999993, z: 0.81999993}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 5476681219804072171}
@@ -434,7 +483,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 762414960}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1fee5be830e66b54f8053161d5a9beda, type: 3}
   m_Name: 
@@ -988,7 +1037,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialogueTrigger
   interactionType: 0
-  interactionDistance: 7.09
+  interactionDistance: 6.5
   inkJsons:
   - {fileID: 4900000, guid: a7a39d164fae0d84191b89286964bf4b, type: 3}
 --- !u!114 &2990450512174994018
@@ -1003,7 +1052,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f082328f02ca7844e88f0d21e8b6967a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ToolTipObject
-  text: "Dialogue simple avec 1 r\xE9ponse"
+  text: Reine temporaire
 --- !u!136 &3883013533680180481
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1035,6 +1084,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3080719255183985134, guid: 9142c8bc0fb3b4349b671ffd95f3cb8c, type: 3}
+      propertyPath: mainCamera
+      value: 
+      objectReference: {fileID: 792617456}
     - target: {fileID: 3091914607736492969, guid: 9142c8bc0fb3b4349b671ffd95f3cb8c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1077,13 +1130,37 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5992412633577544531, guid: 9142c8bc0fb3b4349b671ffd95f3cb8c, type: 3}
       propertyPath: m_Name
-      value: Player
+      value: Fille
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 102965146235052001, guid: 9142c8bc0fb3b4349b671ffd95f3cb8c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4378253171118556996}
   m_SourcePrefab: {fileID: 100100000, guid: 9142c8bc0fb3b4349b671ffd95f3cb8c, type: 3}
+--- !u!95 &4378253171118556992 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 789613055706741579, guid: 9142c8bc0fb3b4349b671ffd95f3cb8c, type: 3}
+  m_PrefabInstance: {fileID: 4378253171118556991}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4378253171118556996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 320389165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc7998feb5e6e284b9eca273454cdde9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterAnimator
+  characterName: Fille
+  animator: {fileID: 4378253171118556992}
+  isTalkingParameter: IsTalking
+  talkTrigger: Talk
 --- !u!23 &4871628325313504400
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1180,8 +1257,10 @@ GameObject:
   - component: {fileID: 5974487993741276071}
   - component: {fileID: 2990450512174994018}
   - component: {fileID: 2245700322285965089}
+  - component: {fileID: 5974487993741276073}
+  - component: {fileID: 5974487993741276072}
   m_Layer: 0
-  m_Name: Simple
+  m_Name: ReineTemporaire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1205,11 +1284,50 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
+--- !u!95 &5974487993741276072
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5596737117239136852}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: f2abe7a813e7bcc42a792c29ae10c003, type: 3}
+  m_Controller: {fileID: 9100000, guid: 3a3adf6ed2e4ed14c9e1cf99453b9777, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5974487993741276073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5596737117239136852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc7998feb5e6e284b9eca273454cdde9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterAnimator
+  characterName: Reine
+  animator: {fileID: 5974487993741276072}
+  isTalkingParameter: IsTalking
+  talkTrigger: Talk
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1052263400}
+  - {fileID: 568277534}
   - {fileID: 792617457}
   - {fileID: 4378253171118556991}
   - {fileID: 731687236}

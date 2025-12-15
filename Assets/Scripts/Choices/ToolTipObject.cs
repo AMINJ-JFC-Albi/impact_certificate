@@ -26,7 +26,6 @@ public class ToolTipObject : MonoBehaviour
         // Vérifier si l'objet peut être interagi avant d'afficher le tooltip
         if (interactableObject != null && !interactableObject.CanInteract())
         {
-            Debug.Log($"{gameObject.name}: Tooltip bloqué - CanInteract() = false");
             return;
         }
 
