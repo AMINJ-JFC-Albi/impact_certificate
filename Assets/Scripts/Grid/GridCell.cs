@@ -5,6 +5,9 @@ using UnityEngine.EventSystems;
 
 public class GridCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
+    private const float BIGGER_CELL = 40f;
+    private const float NORMAL_CELL = 30f;
+
     [SerializeField]
     private TMP_InputField inputField;
 
@@ -22,6 +25,14 @@ public class GridCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public int X { get; private set; }
     public int Y { get; private set; }
     public char CorrectLetter { get; private set; }
+    public bool filled;
+
+
+
+    public void Start()
+    {
+        inputField.onValueChanged.AddListener(delegate { ValueChanged(); });
+    }
 
     public void Initialize(int x, int y, char correctLetter, Grid.GridManager gridManager)
     {
@@ -30,9 +41,12 @@ public class GridCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         CorrectLetter = correctLetter;
         manager = gridManager;
         rt = inputStyle.GetComponent<RectTransform>();
+        filled = false;
 
         //inputField.onValueChanged.AddListener(OnLetterEntered);
     }
+
+    #region Highlight on hover
 
     public void OnPointerEnter(PointerEventData eventData)
     {
@@ -47,13 +61,22 @@ public class GridCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public void SetSize(bool sized)
     {
         if (sized)
-            rt.sizeDelta = new Vector2(40f, 40f);
+            rt.sizeDelta = new Vector2(BIGGER_CELL, BIGGER_CELL); // replace to a constant
         else
-            rt.sizeDelta = new Vector2(30f, 30f);
+            rt.sizeDelta = new Vector2(NORMAL_CELL, NORMAL_CELL);
+    }
 
-        // set height and width to 40
+    #endregion
 
-
-
+    public void ValueChanged()
+    {
+        //Debug.Log("Value Changed");
+        if (inputField.text.Length > 0)
+        {
+            filled = true;
+            manager.OnCellValueChanged(this);
+        }
+        else
+            filled = false;
     }
 }

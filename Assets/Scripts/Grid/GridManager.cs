@@ -1,11 +1,15 @@
+using System;
 using UnityEngine;
 
 namespace Grid
 {
     public class GridManager : MonoBehaviour
     {
+        #region Constants
         private const ushort GRID_SIZE = 20;
+        #endregion
 
+        #region Variables
         private Word[] currentLevelWords;
 
         public Word[] wordsLevelOne;
@@ -24,8 +28,12 @@ namespace Grid
         [Tooltip("Prefab for empty grid cell")]
         public GameObject emptyCellPrefab;
 
-        private Word _selectedWord;
+        private Word _highlightedWord;
+        private Word _typingWord;
 
+        #endregion
+
+        #region Grid initialisation
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
@@ -122,24 +130,46 @@ namespace Grid
                 }
             }
         }
+        #endregion
 
+        #region Hover Size
         public void OnCellHovered(GridCell cell)
         {
             // Word or null
             var word = FindWordContainingCell(cell);
             if (word is null)
                 return;
-            SetSelectedWord(word);
+            SetHighlightedWord(word);
         }
 
         public void OnCellUnhovered(GridCell cell)
         {
             // Word or null
             var word = FindWordContainingCell(cell);
-            if (word != null && _selectedWord == word)
-                ClearSelectedWord();
+            if (word != null && _highlightedWord == word)
+            {
+                _highlightedWord.SetSize(false);
+                ClearFocusWord(ref _highlightedWord);
+            }
+        }
+        private void SetHighlightedWord(Word word)
+        {
+            if (_highlightedWord != null && _highlightedWord != word)
+                _highlightedWord.SetSize(false);
+
+            _highlightedWord = word;
+            _highlightedWord.SetSize(true);
         }
 
+
+        #endregion
+
+        #region Value Changed
+        public void OnCellValueChanged(GridCell cell)
+        {
+            _typingWord = FindWordContainingCell(cell);
+            NextCell(cell);
+        }
         private Word FindWordContainingCell(GridCell cell)
         {
             foreach (Word word in currentLevelWords)
@@ -148,23 +178,42 @@ namespace Grid
             return null;
         }
 
-        private void SetSelectedWord(Word word)
+        /*
+         * Fix the next cell changing orientation
+         * Fix new words in other words
+         */
+        private void NextCell(GridCell currentCell)
         {
-            if (_selectedWord != null && _selectedWord != word)
-                _selectedWord.SetSize(false);
+            if (_typingWord == null || currentCell == null) return;
 
-            _selectedWord = word;
-
-            _selectedWord?.SetSize(true);
-        }
-
-        private void ClearSelectedWord()
-        {
-            if (_selectedWord != null)
+            int index = _typingWord.cells.IndexOf(currentCell);
+            if (index >= 0 && index < _typingWord.cells.Count - 1)
             {
-                _selectedWord.SetSize(false);
-                _selectedWord = null;
+                GridCell nextCell = _typingWord.cells[index + 1];
+                if (nextCell != null)
+                {
+                    var input = nextCell.GetComponentInChildren<TMPro.TMP_InputField>();
+                    if (input != null && String.IsNullOrEmpty(input.text))
+                    {
+                        input.Select();
+                    }
+                    else if (index + 2 < _typingWord.cells.Count)
+                    {
+                        GridCell nextNextCell = _typingWord.cells[index + 2];
+                        var nextInput = nextNextCell.GetComponentInChildren<TMPro.TMP_InputField>();
+                        if (nextInput != null)
+                        {
+                            nextInput.Select();
+                        }
+                    }
+                }
             }
+        }
+        #endregion
+        private void ClearFocusWord(ref Word focusWord)
+        {
+            if (focusWord != null)
+                focusWord = null;
         }
     }
 }
