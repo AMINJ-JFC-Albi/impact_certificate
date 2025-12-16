@@ -35,17 +35,6 @@ namespace Grid
             this.clue = clue;
         }
 
-        // Initialize cells
-        public void Initialize()
-        {
-            if (cells == null)
-                cells = new(word.Length);
-            else if (cells.Capacity < word.Length)
-                cells.Capacity = word?.Length ?? 0;
-            cells.Clear();
-        }
-
-
         public bool IsOccuped(int x, int y)
         {
             if (direction == Direction.Horizontal)

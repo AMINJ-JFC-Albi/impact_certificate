@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -31,6 +32,7 @@ namespace Grid
 
         private Word _highlightedWord;
         private Word _typingWord;
+
 
         #endregion
 
@@ -107,7 +109,7 @@ namespace Grid
                 int x = data.startX;
                 int y = data.startY;
 
-                data.cells ??= new System.Collections.Generic.List<GridCell>();
+                data.cells = new List<GridCell>(data.word.Length);
 
                 //data.cells.Clear();
 
@@ -170,6 +172,10 @@ namespace Grid
         {
             _typingWord = FindWordContainingCell(cell);
             NextCell(cell);
+            if (CheckIfWordIsCompleted(_typingWord))
+            {
+                Debug.Log("Word completed: " + _typingWord.word);
+            }
         }
 
         // Fix the new words if we are already typing in a word
@@ -178,7 +184,10 @@ namespace Grid
             if (cell == null)
                 return null;
 
-            // 1) Prefer a word that starts at this cell — if found, make it the new typing word
+            if (_typingWord != null && _typingWord.cells.Contains(cell))
+                return _typingWord;
+
+            // Prefer a word that starts at this cell — if found, make it the new typing word
             Word startMatch = null;
             foreach (Word w in currentLevelWords)
             {
@@ -193,15 +202,8 @@ namespace Grid
                 }
 
                 if (startMatch != null)
-                {
-                    _typingWord = startMatch;
-                    return _typingWord;
-                }
+                    return startMatch;
             }
-
-            // Give priority to the current typing word
-            if (_typingWord != null && _typingWord.cells.Contains(cell))
-            return _typingWord;
 
             // Else search in all words
             // Might have an issue with end of the word, start of another word
@@ -237,6 +239,16 @@ namespace Grid
                 }
             }
         }
+
+        private bool CheckIfWordIsCompleted(Word word)
+        {
+            foreach (GridCell cell in word.cells)
+                if (cell == null || String.IsNullOrEmpty(cell.inputField.text))
+                    return false;
+
+            return true;
+        }
+
         #endregion
         private void ClearFocusWord(ref Word focusWord)
         {
