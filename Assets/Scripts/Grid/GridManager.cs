@@ -3,6 +3,14 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+/**
+ * TODO List:
+ * - Remove size highlight when completing a word
+ * - Add a backspace input to delete letter and go back to previous cell
+ * - Menage the clue pour chaque mot dans le pannel puis le rendre flottant, lié au highlight
+ * - Stylisation
+ */
+
 namespace Grid
 {
     public class GridManager : MonoBehaviour
@@ -200,7 +208,6 @@ namespace Grid
             }
         }
 
-        // Fix the new words if we are already typing in a word
         private Word FindWordContainingCell(GridCell cell)
         {
             if (cell == null)
