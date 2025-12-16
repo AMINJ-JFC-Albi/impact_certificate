@@ -24,7 +24,7 @@ namespace Grid
         public string clue;
 
         [System.NonSerialized]
-        public List<GridCell> cells = new();
+        public List<GridCell> cells;
 
         public Word(string word, ushort startX, ushort startY, Direction direction, string clue)
         {
@@ -34,6 +34,17 @@ namespace Grid
             this.direction = direction;
             this.clue = clue;
         }
+
+        // Initialize cells
+        public void Initialize()
+        {
+            if (cells == null)
+                cells = new(word.Length);
+            else if (cells.Capacity < word.Length)
+                cells.Capacity = word?.Length ?? 0;
+            cells.Clear();
+        }
+
 
         public bool IsOccuped(int x, int y)
         {

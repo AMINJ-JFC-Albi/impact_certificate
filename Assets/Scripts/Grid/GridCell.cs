@@ -8,8 +8,7 @@ public class GridCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     private const float BIGGER_CELL = 40f;
     private const float NORMAL_CELL = 30f;
 
-    [SerializeField]
-    private TMP_InputField inputField;
+    public TMP_InputField inputField;
 
     [SerializeField]
     private GameObject inputStyle;
