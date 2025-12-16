@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 
 namespace Grid
@@ -172,19 +173,30 @@ namespace Grid
         }
         private Word FindWordContainingCell(GridCell cell)
         {
-            foreach (Word word in currentLevelWords)
-                if (word.cells != null && word.cells.Contains(cell))
-                    return word;
+            if (cell == null)
+                return null;
+
+            // Give priority to the current typing word
+            if (_typingWord != null && _typingWord.cells.Contains(cell))
+                return _typingWord;
+
+            // Else search in all words
+            // Might have an issue with end of the word, start of another word
+            if (currentLevelWords != null)
+                foreach (Word word in currentLevelWords)
+                    if (word.cells != null && word.cells.Contains(cell))
+                        return word;
+
             return null;
         }
 
         /*
-         * Fix the next cell changing orientation
          * Fix new words in other words
          */
         private void NextCell(GridCell currentCell)
         {
-            if (_typingWord == null || currentCell == null) return;
+            if (_typingWord == null || currentCell == null)
+                return;
 
             int index = _typingWord.cells.IndexOf(currentCell);
             if (index >= 0 && index < _typingWord.cells.Count - 1)
@@ -192,19 +204,16 @@ namespace Grid
                 GridCell nextCell = _typingWord.cells[index + 1];
                 if (nextCell != null)
                 {
-                    var input = nextCell.GetComponentInChildren<TMPro.TMP_InputField>();
+                    TMP_InputField input = nextCell.GetComponentInChildren<TMPro.TMP_InputField>();
                     if (input != null && String.IsNullOrEmpty(input.text))
-                    {
                         input.Select();
-                    }
+                    // Skip two cells if the next one is already filled
                     else if (index + 2 < _typingWord.cells.Count)
                     {
                         GridCell nextNextCell = _typingWord.cells[index + 2];
                         var nextInput = nextNextCell.GetComponentInChildren<TMPro.TMP_InputField>();
                         if (nextInput != null)
-                        {
                             nextInput.Select();
-                        }
                     }
                 }
             }
