@@ -24,6 +24,9 @@ namespace Grid
         public string clue;
 
         [System.NonSerialized]
+        public bool isCompleted = false;
+
+        [System.NonSerialized]
         public List<GridCell> cells;
 
         public Word(string word, ushort startX, ushort startY, Direction direction, string clue)
@@ -35,7 +38,22 @@ namespace Grid
             this.clue = clue;
         }
 
-        public bool IsOccuped(int x, int y)
+
+        public void SetSize(bool highlighted)
+        {
+            foreach (var cell in cells)
+                cell.SetSize(highlighted);
+        }
+
+        public void ValidateWord()
+        {
+            isCompleted = true;
+            foreach (var cell in cells)
+                cell.ValidateCell();
+        }
+
+
+        /*public bool IsOccuped(int x, int y)
         {
             if (direction == Direction.Horizontal)
             {
@@ -47,12 +65,6 @@ namespace Grid
             if (x != startX)
                 return false;
             return y >= startY && y < startY + (word?.Length ?? 0);
-        }
-
-        public void SetSize(bool highlighted)
-        {
-            foreach (var cell in cells)
-                cell.SetSize(highlighted);
-        }
+        }*/
     }
 }

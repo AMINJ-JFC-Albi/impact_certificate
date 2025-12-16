@@ -18,6 +18,7 @@ namespace Grid
         //private Word[] wordsLevelTwo;
         private char[,] _solutionGrid;
 
+        [NonSerialized]
         private bool _isLevelCompleted;
 
         private GridCell[,] _cellObjects;
@@ -164,6 +165,11 @@ namespace Grid
             _highlightedWord.SetSize(true);
         }
 
+        private void ClearFocusWord(ref Word focusWord)
+        {
+            if (focusWord != null)
+                focusWord = null;
+        }
 
         #endregion
 
@@ -174,7 +180,21 @@ namespace Grid
             NextCell(cell);
             if (CheckIfWordIsCompleted(_typingWord))
             {
-                Debug.Log("Word completed: " + _typingWord.word);
+                //Debug.Log("All cells filled");
+                if (CheckIfWordIsCorrect(_typingWord))
+                {
+                    //Debug.Log("Word completed correctly: " + _typingWord.word);
+                    currentLevelWords[Array.IndexOf(currentLevelWords, _typingWord)].ValidateWord();
+
+                    // Stylise the word
+                    if (Array.TrueForAll(currentLevelWords, w => w.isCompleted))
+                    {
+                        _isLevelCompleted = true;
+                        Debug.Log("Level Completed!");
+                    }
+                }
+                else
+                    RemoveWord(_typingWord);
             }
         }
 
@@ -243,17 +263,34 @@ namespace Grid
         private bool CheckIfWordIsCompleted(Word word)
         {
             foreach (GridCell cell in word.cells)
-                if (cell == null || String.IsNullOrEmpty(cell.inputField.text))
+                if (cell == null || !cell.filled)
+                    return false;
+
+            return true;
+        }
+
+        private bool CheckIfWordIsCorrect(Word word)
+        {
+            foreach (GridCell cell in word.cells)
+                if (!cell.filled || cell.inputField.text[0] != cell.CorrectLetter)
                     return false;
 
             return true;
         }
 
         #endregion
-        private void ClearFocusWord(ref Word focusWord)
+
+        #region Wrong Word
+
+        // Note : Do not remove letters validated in other words
+        private void RemoveWord(Word word)
         {
-            if (focusWord != null)
-                focusWord = null;
+            foreach (GridCell cell in word.cells)
+            {
+                cell.Clear();
+            }
         }
+
+        #endregion
     }
 }

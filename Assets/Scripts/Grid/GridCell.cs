@@ -1,7 +1,8 @@
+using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class GridCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -14,17 +15,18 @@ public class GridCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     private GameObject inputStyle;
     private RectTransform rt;
 
-    [SerializeField]
-    private Image background;
-
-
+    [NonSerialized]
     public Grid.GridManager manager;
 
     // Données de position et de lettre
     public int X { get; private set; }
     public int Y { get; private set; }
     public char CorrectLetter { get; private set; }
+
+    [NonSerialized]
     public bool filled;
+    [NonSerialized]
+    public bool isValidated;
 
 
 
@@ -41,8 +43,7 @@ public class GridCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         manager = gridManager;
         rt = inputStyle.GetComponent<RectTransform>();
         filled = false;
-
-        //inputField.onValueChanged.AddListener(OnLetterEntered);
+        isValidated = false;
     }
 
     #region Highlight on hover
@@ -77,5 +78,20 @@ public class GridCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         }
         else
             filled = false;
+    }
+
+    public void Clear()
+    {
+        if (!isValidated)
+        {
+            inputField.text = string.Empty;
+            filled = false;
+        }
+    }
+
+    public void ValidateCell()
+    {
+        isValidated = true;
+        inputField.interactable = false;
     }
 }
