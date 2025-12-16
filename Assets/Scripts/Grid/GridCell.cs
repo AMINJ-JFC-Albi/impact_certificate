@@ -50,7 +50,8 @@ public class GridCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        manager.OnCellHovered(this);
+        if (!isValidated)
+            manager.OnCellHovered(this);
     }
 
     public void OnPointerExit(PointerEventData eventData)

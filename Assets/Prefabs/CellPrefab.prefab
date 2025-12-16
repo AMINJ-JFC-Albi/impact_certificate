@@ -278,8 +278,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GridCell
   inputField: {fileID: 4058938929499390833}
   inputStyle: {fileID: 8441860979971511933}
-  background: {fileID: 67875458082717319}
-  manager: {fileID: 0}
 --- !u!1 &8441860979971511933
 GameObject:
   m_ObjectHideFlags: 0

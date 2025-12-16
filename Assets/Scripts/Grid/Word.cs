@@ -29,16 +29,6 @@ namespace Grid
         [System.NonSerialized]
         public List<GridCell> cells;
 
-        public Word(string word, ushort startX, ushort startY, Direction direction, string clue)
-        {
-            this.word = word;
-            this.startX = startX;
-            this.startY = startY;
-            this.direction = direction;
-            this.clue = clue;
-        }
-
-
         public void SetSize(bool highlighted)
         {
             foreach (var cell in cells)
@@ -51,20 +41,5 @@ namespace Grid
             foreach (var cell in cells)
                 cell.ValidateCell();
         }
-
-
-        /*public bool IsOccuped(int x, int y)
-        {
-            if (direction == Direction.Horizontal)
-            {
-                if (y != startY)
-                    return false;
-                return x >= startX && x < startX + (word?.Length ?? 0);
-            }
-
-            if (x != startX)
-                return false;
-            return y >= startY && y < startY + (word?.Length ?? 0);
-        }*/
     }
 }

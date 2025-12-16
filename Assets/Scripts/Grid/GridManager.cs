@@ -12,10 +12,12 @@ namespace Grid
         #endregion
 
         #region Variables
-        private Word[] currentLevelWords;
 
+        [Header("Words Data")]
         public Word[] wordsLevelOne;
         //private Word[] wordsLevelTwo;
+
+        private Word[] currentLevelWords;
         private char[,] _solutionGrid;
 
         [NonSerialized]
@@ -282,7 +284,6 @@ namespace Grid
 
         #region Wrong Word
 
-        // Note : Do not remove letters validated in other words
         private void RemoveWord(Word word)
         {
             foreach (GridCell cell in word.cells)
