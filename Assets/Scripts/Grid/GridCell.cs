@@ -2,8 +2,6 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
 
 public class GridCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -31,10 +29,6 @@ public class GridCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
 
     #region Initialization
-    public void Start()
-    {
-        inputField.onValueChanged.AddListener(delegate { ValueChanged(); });
-    }
 
     public void Initialize(int x, int y, char correctLetter, Grid.GridManager gridManager)
     {
@@ -45,7 +39,34 @@ public class GridCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         rt = inputStyle.GetComponent<RectTransform>();
         filled = false;
         isValidated = false;
+
+        // Value change event
+        if (inputField != null)
+            inputField.onValueChanged.AddListener(delegate { ValueChanged(); });
     }
+    #endregion
+
+    #region Keys
+
+    public void Update()
+    {
+        if (manager == null || inputField == null)
+            return;
+
+        // Ne traiter les flèches que si ce champ a le focus (une seule cellule active répond)
+        if (!inputField.isFocused)
+            return;
+
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+            manager.OnCellMoveRequested(this, Grid.GridManager.MoveDirection.Up);
+        else if (Input.GetKeyDown(KeyCode.DownArrow))
+            manager.OnCellMoveRequested(this, Grid.GridManager.MoveDirection.Down);
+        else if (Input.GetKeyDown(KeyCode.LeftArrow))
+            manager.OnCellMoveRequested(this, Grid.GridManager.MoveDirection.Left);
+        else if (Input.GetKeyDown(KeyCode.RightArrow))
+            manager.OnCellMoveRequested(this, Grid.GridManager.MoveDirection.Right);
+    }
+
     #endregion
 
     #region Highlight on hover
@@ -76,13 +97,9 @@ public class GridCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         //Debug.Log("Value Changed");
         if (inputField.text.Length > 0)
-        {
             filled = true;
-        }
         else
-        {
             filled = false;
-        }
         manager.OnCellValueChanged(this, filled);
     }
 

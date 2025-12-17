@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 /**
  * TODO List:
@@ -15,6 +16,11 @@ namespace Grid
 {
     public class GridManager : MonoBehaviour
     {
+        #region Enum
+        public enum MoveDirection { Left, Right, Up, Down }
+
+        #endregion
+
         #region Constants
         private const ushort GRID_SIZE = 20;
         #endregion
@@ -43,7 +49,6 @@ namespace Grid
 
         private Word _highlightedWord;
         private Word _typingWord;
-
 
         #endregion
 
@@ -146,6 +151,34 @@ namespace Grid
         }
         #endregion
 
+        #region Focus monitoring
+        // Robust check : si aucun TMP_InputField n'est sélectionné (ou si l'objet sélectionné n'est pas un input),
+        // on remet _typingWord à null.
+        private void Update()
+        {
+            // EventSystem peut être null en dehors du contexte UI
+            if (EventSystem.current == null)
+                return;
+
+            var current = EventSystem.current.currentSelectedGameObject;
+
+            // Aucun GameObject sélectionné -> aucun input en focus
+            if (current == null)
+            {
+                if (_typingWord != null)
+                    _typingWord = null;
+                return;
+            }
+
+            // Si l'objet sélectionné n'est pas un TMP_InputField (ou enfant), on considère qu'aucun champ n'est actif
+            if (current.GetComponentInParent<TMP_InputField>() == null)
+            {
+                if (_typingWord != null)
+                    _typingWord = null;
+            }
+        }
+        #endregion
+
         #region Hover Size
         public void OnCellHovered(GridCell cell)
         {
@@ -209,9 +242,9 @@ namespace Grid
                         RemoveWord(_typingWord);
                 }
             }
+            // If word deleted move to previous cell
             else
             {
-                // Move to Last Cell
                 PreviousCell(cell);
             }
         }
@@ -264,7 +297,11 @@ namespace Grid
                 if (nextCell != null)
                 {
                     if (!nextCell.isValidated)
-                        nextCell.inputField.Select();
+                    {
+                        TMP_InputField nextInput = nextCell.inputField;
+                        if (nextInput != null)
+                            nextInput.Select();
+                    }
                     // Skip two cells if the next one is already filled
                     else if (index + 2 < _typingWord.cells.Count)
                     {
@@ -326,6 +363,63 @@ namespace Grid
             foreach (GridCell cell in word.cells)
             {
                 cell.Clear();
+            }
+        }
+
+        #endregion
+
+        #region Move Requests
+
+        public void OnCellMoveRequested(GridCell cell, MoveDirection movement)
+        {
+            if (cell == null)
+                return;
+
+            int firstX = cell.X;
+            int firstY = cell.Y;
+            int secondX = cell.X;
+            int secondY = cell.Y;
+
+            switch (movement)
+            {
+                case MoveDirection.Left:
+                    firstX = Math.Max(0, cell.X - 1);
+                    secondX = Math.Max(0, cell.X - 2);
+                    break;
+                case MoveDirection.Right:
+                    firstX = Math.Min(GRID_SIZE - 1, cell.X + 1);
+                    secondX = Math.Min(GRID_SIZE - 1, cell.X + 2);
+                    break;
+                case MoveDirection.Up:
+                    firstY = Math.Max(0, cell.Y - 1);
+                    secondY = Math.Max(0, cell.Y - 2);
+                    break;
+                case MoveDirection.Down:
+                    firstY = Math.Min(GRID_SIZE - 1, cell.Y + 1);
+                    secondY = Math.Min(GRID_SIZE - 1, cell.Y + 2);
+                    break;
+            }
+
+            GridCell firstTarget = _cellObjects[firstX, firstY];
+
+            if (firstTarget != null && firstTarget.isValidated)
+            {
+                GridCell secondTarget = _cellObjects[secondX, secondY];
+                if (secondTarget != null && !secondTarget.isValidated)
+                {
+                    TMP_InputField input = secondTarget.inputField;
+                    if (input != null)
+                        input.Select();
+                }
+            }
+            else
+            {
+                if (firstTarget != null && !firstTarget.isValidated)
+                {
+                    TMP_InputField input = firstTarget.inputField;
+                    if (input != null)
+                        input.Select();
+                }
             }
         }
 
