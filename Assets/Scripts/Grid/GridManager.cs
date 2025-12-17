@@ -184,27 +184,35 @@ namespace Grid
         #endregion
 
         #region Value Changed
-        public void OnCellValueChanged(GridCell cell)
+        public void OnCellValueChanged(GridCell cell, bool filled)
         {
             _typingWord = FindWordContainingCell(cell);
-            NextCell(cell);
-            if (CheckIfWordIsCompleted(_typingWord))
+            if (filled)
             {
-                //Debug.Log("All cells filled");
-                if (CheckIfWordIsCorrect(_typingWord))
+                NextCell(cell);
+                if (CheckIfWordIsCompleted(_typingWord))
                 {
-                    //Debug.Log("Word completed correctly: " + _typingWord.word);
-                    currentLevelWords[Array.IndexOf(currentLevelWords, _typingWord)].ValidateWord();
-
-                    // Stylise the word
-                    if (Array.TrueForAll(currentLevelWords, w => w.isCompleted))
+                    //Debug.Log("All cells filled");
+                    if (CheckIfWordIsCorrect(_typingWord))
                     {
-                        _isLevelCompleted = true;
-                        Debug.Log("Level Completed!");
+                        //Debug.Log("Word completed correctly: " + _typingWord.word);
+                        currentLevelWords[Array.IndexOf(currentLevelWords, _typingWord)].ValidateWord();
+
+                        // Stylise the word
+                        if (Array.TrueForAll(currentLevelWords, w => w.isCompleted))
+                        {
+                            _isLevelCompleted = true;
+                            Debug.Log("Level Completed!");
+                        }
                     }
+                    else
+                        RemoveWord(_typingWord);
                 }
-                else
-                    RemoveWord(_typingWord);
+            }
+            else
+            {
+                // Move to Last Cell
+                PreviousCell(cell);
             }
         }
 
@@ -255,15 +263,37 @@ namespace Grid
                 GridCell nextCell = _typingWord.cells[index + 1];
                 if (nextCell != null)
                 {
-                    TMP_InputField input = nextCell.inputField;
-                    if (input != null && String.IsNullOrEmpty(input.text))
-                        input.Select();
+                    if (!nextCell.isValidated)
+                        nextCell.inputField.Select();
                     // Skip two cells if the next one is already filled
                     else if (index + 2 < _typingWord.cells.Count)
                     {
                         TMP_InputField nextInput = _typingWord.cells[index + 2].inputField;
                         if (nextInput != null)
                             nextInput.Select();
+                    }
+                }
+            }
+        }
+
+        private void PreviousCell(GridCell currentCell)
+        {
+            if (_typingWord == null || currentCell == null)
+                return;
+            int index = _typingWord.cells.IndexOf(currentCell);
+            if (index > 0)
+            {
+                GridCell previousCell = _typingWord.cells[index - 1];
+                if (previousCell != null)
+                {
+                    if(!previousCell.isValidated)
+                        previousCell.inputField.Select();
+                    // Skip two cells if the previous one is already filled
+                    else if (index - 2 >= 0)
+                    {
+                        TMP_InputField prevInput = _typingWord.cells[index - 2].inputField;
+                        if (prevInput != null)
+                            prevInput.Select();
                     }
                 }
             }

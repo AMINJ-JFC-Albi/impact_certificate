@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class GridCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -29,7 +30,7 @@ public class GridCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public bool isValidated;
 
 
-
+    #region Initialization
     public void Start()
     {
         inputField.onValueChanged.AddListener(delegate { ValueChanged(); });
@@ -45,6 +46,7 @@ public class GridCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         filled = false;
         isValidated = false;
     }
+    #endregion
 
     #region Highlight on hover
 
@@ -69,16 +71,19 @@ public class GridCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     #endregion
 
+    #region Input Handling
     public void ValueChanged()
     {
         //Debug.Log("Value Changed");
         if (inputField.text.Length > 0)
         {
             filled = true;
-            manager.OnCellValueChanged(this);
         }
         else
+        {
             filled = false;
+        }
+        manager.OnCellValueChanged(this, filled);
     }
 
     public void Clear()
@@ -95,4 +100,6 @@ public class GridCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         isValidated = true;
         inputField.interactable = false;
     }
+
+    #endregion
 }

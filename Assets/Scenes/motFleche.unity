@@ -535,32 +535,32 @@ MonoBehaviour:
     startX: 0
     startY: 5
     direction: 0
-    clue: 
+    clue: "Sensaci\xF3n de estar all\xED, incluso a distancia."
   - word: VISITA
     startX: 8
     startY: 0
     direction: 1
-    clue: 
+    clue: "Acci\xF3n de acudir a un lugar o sitio web."
   - word: INTERACCION
     startX: 7
     startY: 5
     direction: 1
-    clue: 
+    clue: "Acci\xF3n mutua entre el usuario y la m\xE1quina."
   - word: INMERSION
     startX: 11
     startY: 4
     direction: 1
-    clue: 
+    clue: Experiencia de estar totalmente sumergido en un mundo virtual.
   - word: FORMACION
     startX: 9
     startY: 6
     direction: 1
-    clue: 
+    clue: "Proceso de aprendizaje o ense\xF1anza."
   - word: COMPROMISO
     startX: 3
     startY: 9
     direction: 0
-    clue: 
+    clue: "Compromiso o v\xEDnculo emocional con una marca."
   gridContainer: {fileID: 47045832}
   cellPrefab: {fileID: 6941967380982900365, guid: a6c90f9196a5b234c95f668f826927e9, type: 3}
   emptyCellPrefab: {fileID: 4294050094654570830, guid: 13011820a2cb99a46b685b3beb580a7e, type: 3}
