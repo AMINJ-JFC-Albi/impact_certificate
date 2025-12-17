@@ -4,14 +4,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-/**
- * TODO List:
- * - Remove size highlight when completing a word
- * - Add a backspace input to delete letter and go back to previous cell
- * - Menage the clue pour chaque mot dans le pannel puis le rendre flottant, lié au highlight
- * - Stylisation
- */
-
 namespace Grid
 {
     public class GridManager : MonoBehaviour
@@ -29,7 +21,10 @@ namespace Grid
 
         [Header("Words Data")]
         public Word[] wordsLevelOne;
-        //private Word[] wordsLevelTwo;
+
+
+        // For testing purposes
+        public Word[] test;
 
         private Word[] currentLevelWords;
         private char[,] _solutionGrid;
@@ -39,8 +34,10 @@ namespace Grid
 
         private GridCell[,] _cellObjects;
 
+        [Header("Child")]
         public RectTransform gridContainer;
 
+        [Header("Prefabs")]
         [Tooltip("Prefab for grid cell")]
         public GameObject cellPrefab;
 
@@ -49,6 +46,8 @@ namespace Grid
 
         private Word _highlightedWord;
         private Word _typingWord;
+
+        public ClueTooltip tooltip;
 
         #endregion
 
@@ -59,6 +58,7 @@ namespace Grid
             _cellObjects = new GridCell[GRID_SIZE, GRID_SIZE];
 
             currentLevelWords = wordsLevelOne;
+            //currentLevelWords = test;
 
             InitializeGrids(currentLevelWords);
             DisplayGrid();
@@ -187,6 +187,8 @@ namespace Grid
             if (word is null)
                 return;
             SetHighlightedWord(word);
+            ShowClue(word);
+
         }
 
         public void OnCellUnhovered(GridCell cell)
@@ -198,6 +200,7 @@ namespace Grid
                 _highlightedWord.SetSize(false);
                 ClearFocusWord(ref _highlightedWord);
             }
+            HideClue();
         }
         private void SetHighlightedWord(Word word)
         {
@@ -421,6 +424,21 @@ namespace Grid
                         input.Select();
                 }
             }
+        }
+
+        #endregion
+
+        #region Clue Management
+
+        private void ShowClue(Word word)
+        {
+            if (word != null)
+                tooltip.ShowClue(word.clue);
+        }
+
+        private void HideClue()
+        {
+            tooltip.Hide();
         }
 
         #endregion
