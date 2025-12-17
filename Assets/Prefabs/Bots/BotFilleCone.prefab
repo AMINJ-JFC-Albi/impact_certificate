@@ -1100,6 +1100,7 @@ GameObject:
   - component: {fileID: 147357988124123481}
   - component: {fileID: 8888938521951135869}
   - component: {fileID: 3013253578601298144}
+  - component: {fileID: 4056405065806841259}
   m_Layer: 0
   m_Name: BotFilleCone
   m_TagString: Untagged
@@ -1324,3 +1325,15 @@ MonoBehaviour:
   alertZoneColor: {r: 1, g: 0, b: 0, a: 0.5}
   meshResolution: 20
   viewAngle: 90
+--- !u!114 &4056405065806841259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9022273193722860256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30a7ec11ecd102d4d8b93a11403a95eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerControl.DetectionHealthConnector

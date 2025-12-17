@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7344252513518435821}
   - component: {fileID: 3434805139199002439}
   - component: {fileID: 5357156900216421079}
+  - component: {fileID: 4457179146467975329}
   m_Layer: 6
   m_Name: (Player) Alien
   m_TagString: Player
@@ -204,6 +205,32 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &4457179146467975329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4097275809151719555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b6262072b534c144b2c69467533d812, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerControl.PlayerHealth
+  maxHealth: 100
+  currentHealth: 0
+  healthLossPerSecond: 5
+  isDetected: 0
+  isInInfiltrationMode: 0
+  OnHealthChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPlayerDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDetectionStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &7942719008283600860
 PrefabInstance:
   m_ObjectHideFlags: 0

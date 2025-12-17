@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using PlayerControl;
 
 /// <summary>
 /// Gestionnaire central du jeu qui gère les modes d'interaction.
@@ -14,12 +15,24 @@ public class GameManager : MonoBehaviour
     [Tooltip("Liste des objets qui peuvent être interagis. Tous les autres sont bloqués.")]
     [SerializeField] private List<InteractableObject> allowedInteractables = new List<InteractableObject>();
 
+    [Header("Mode Infiltration")]
+    [Tooltip("Active le mode infiltration au démarrage du jeu")]
+    [SerializeField] private bool infiltrationMode = false;
+
+    // Événement statique pour le changement de mode infiltration
+    public static System.Action<bool> OnInfiltrationModeChanged;
+
+    // Propriété publique pour accéder au mode infiltration
+    public static bool IsInInfiltrationMode { get; private set; } = false;
+
     // Liste statique de tous les objets interactifs enregistrés
     private static List<InteractableObject> registeredInteractables = new List<InteractableObject>();
 
     // Flag global pour savoir si les interactions sont bloquées
     private static bool interactionsEnabled = true;
     public static bool InteractionsEnabled => interactionsEnabled;
+
+    private PlayerHealth playerHealth;
 
     private void Awake()
     {
@@ -38,6 +51,39 @@ public class GameManager : MonoBehaviour
     {
         // Appliquer la liste d'objets autorisés au démarrage
         UpdateAllowedInteractables();
+
+        // Trouver le PlayerHealth
+        playerHealth = FindObjectOfType<PlayerHealth>();
+        
+        // Initialiser le mode infiltration
+        SetInfiltrationMode(infiltrationMode);
+    }
+
+    private void Update()
+    {
+        // Mettre à jour le mode infiltration si changé dans l'Inspector
+        if (IsInInfiltrationMode != infiltrationMode)
+        {
+            SetInfiltrationMode(infiltrationMode);
+        }
+    }
+
+    /// <summary>
+    /// Active ou désactive le mode infiltration par script
+    /// </summary>
+    public void SetInfiltrationMode(bool active)
+    {
+        infiltrationMode = active;
+        IsInInfiltrationMode = active;
+        
+        // Déclencher l'événement
+        OnInfiltrationModeChanged?.Invoke(active);
+        
+        // Activer/désactiver la perte de vie du joueur
+        if (playerHealth != null)
+        {
+            playerHealth.EnableHealthLoss(active);
+        }
     }
 
     /// <summary>

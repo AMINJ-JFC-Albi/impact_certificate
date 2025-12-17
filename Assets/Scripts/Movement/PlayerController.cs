@@ -14,6 +14,9 @@ namespace PlayerControl
         private float lastPathCreationTime = 0f;
         private bool isRightClickHeld = false;
 
+        [Header("Health System")]
+        private PlayerHealth playerHealth;
+
         protected override void Awake()
         {
             base.Awake();
@@ -21,6 +24,13 @@ namespace PlayerControl
             if (mainCamera == null)
             {
                 mainCamera = Camera.main;
+            }
+
+            // Récupérer ou ajouter le composant PlayerHealth
+            playerHealth = GetComponent<PlayerHealth>();
+            if (playerHealth == null)
+            {
+                playerHealth = gameObject.AddComponent<PlayerHealth>();
             }
         }
 
@@ -49,7 +59,7 @@ namespace PlayerControl
         }
 
 
-        void Update()
+        protected override void Update()
         {
             if (InputManager.Instance == null)
                 return;
@@ -142,7 +152,7 @@ namespace PlayerControl
 
 
 #if UNITY_EDITOR
-        private void OnDrawGizmos()
+        protected override void OnDrawGizmos()
         {
             // Dessiner le chemin actuel
             if (path != null && path.corners.Length > 0)
