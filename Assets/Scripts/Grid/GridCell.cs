@@ -6,9 +6,10 @@ using UnityEngine.EventSystems;
 public class GridCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     private const float BIGGER_CELL = 40f;
-    private const float NORMAL_CELL = 30f;
+    private const float NORMAL_CELL = 36f;
 
     public TMP_InputField inputField;
+    public GameObject text;
 
     [SerializeField]
     private GameObject inputStyle;
@@ -21,6 +22,9 @@ public class GridCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public int X { get; private set; }
     public int Y { get; private set; }
     public char CorrectLetter { get; private set; }
+
+    public Color32 correctColor = new(0, 255, 138, 255);
+
 
     [NonSerialized]
     public bool filled;
@@ -116,6 +120,7 @@ public class GridCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         isValidated = true;
         inputField.interactable = false;
+        text.GetComponent<TMP_Text>().color = correctColor;
     }
 
     #endregion

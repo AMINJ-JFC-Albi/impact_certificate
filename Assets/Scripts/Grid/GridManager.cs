@@ -14,7 +14,8 @@ namespace Grid
         #endregion
 
         #region Constants
-        private const ushort GRID_SIZE = 20;
+        private const ushort GRID_NUMBER_HEIGHT = 14;
+        private const ushort GRID_NUMBER_WIDTH = 22;
         #endregion
 
         #region Variables
@@ -55,7 +56,7 @@ namespace Grid
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
-            _cellObjects = new GridCell[GRID_SIZE, GRID_SIZE];
+            _cellObjects = new GridCell[GRID_NUMBER_WIDTH, GRID_NUMBER_HEIGHT];
 
             currentLevelWords = wordsLevelOne;
             //currentLevelWords = test;
@@ -67,7 +68,7 @@ namespace Grid
 
         private void InitializeGrids(Word[] wordsLevel)
         {
-            _solutionGrid = new char[GRID_SIZE, GRID_SIZE];
+            _solutionGrid = new char[GRID_NUMBER_WIDTH, GRID_NUMBER_HEIGHT];
 
             foreach (var data in wordsLevel)
                 PlaceWordOnGrid(data, _solutionGrid);
@@ -76,9 +77,9 @@ namespace Grid
         private void DisplayGrid()
         {
             // Using Y first because of the Grid Layout Group arrangement
-            for (ushort y = 0; y < GRID_SIZE; y++)
+            for (ushort y = 0; y < GRID_NUMBER_HEIGHT; y++)
             {
-                for (ushort x = 0; x < GRID_SIZE; x++)
+                for (ushort x = 0; x < GRID_NUMBER_WIDTH; x++)
                 {
                     if (_solutionGrid[x, y] != '\0')
                     {
@@ -390,16 +391,16 @@ namespace Grid
                     secondX = Math.Max(0, cell.X - 2);
                     break;
                 case MoveDirection.Right:
-                    firstX = Math.Min(GRID_SIZE - 1, cell.X + 1);
-                    secondX = Math.Min(GRID_SIZE - 1, cell.X + 2);
+                    firstX = Math.Min(GRID_NUMBER_WIDTH - 1, cell.X + 1);
+                    secondX = Math.Min(GRID_NUMBER_WIDTH - 1, cell.X + 2);
                     break;
                 case MoveDirection.Up:
                     firstY = Math.Max(0, cell.Y - 1);
                     secondY = Math.Max(0, cell.Y - 2);
                     break;
                 case MoveDirection.Down:
-                    firstY = Math.Min(GRID_SIZE - 1, cell.Y + 1);
-                    secondY = Math.Min(GRID_SIZE - 1, cell.Y + 2);
+                    firstY = Math.Min(GRID_NUMBER_HEIGHT - 1, cell.Y + 1);
+                    secondY = Math.Min(GRID_NUMBER_HEIGHT - 1, cell.Y + 2);
                     break;
             }
 

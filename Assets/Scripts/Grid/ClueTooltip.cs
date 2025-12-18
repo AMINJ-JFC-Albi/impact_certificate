@@ -13,7 +13,7 @@ public class ClueTooltip : MonoBehaviour
     {
         rectTransform = GetComponent<RectTransform>();
         parentCanvas = GetComponentInParent<Canvas>();
-        gameObject.SetActive(false); // Caché par défaut
+        gameObject.SetActive(false);
     }
 
     void Update()
