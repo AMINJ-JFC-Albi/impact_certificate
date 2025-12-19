@@ -254,7 +254,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 0}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -279,8 +279,9 @@ MonoBehaviour:
   inputField: {fileID: 4058938929499390833}
   text: {fileID: 4153155726669215339}
   inputStyle: {fileID: 8441860979971511933}
-  correctColor: {r: 80, g: 255, b: 180, a: 1}
-  normalColor: {r: 0, g: 229, b: 255, a: 1}
+  correctColor:
+    serializedVersion: 2
+    rgba: 4287299328
 --- !u!1 &8441860979971511933
 GameObject:
   m_ObjectHideFlags: 0

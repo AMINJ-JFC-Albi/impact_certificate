@@ -5,8 +5,8 @@ using UnityEngine.EventSystems;
 
 public class GridCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    private const float BIGGER_CELL = 40f;
-    private const float NORMAL_CELL = 36f;
+    private const float BIGGER_CELL = 54f;
+    private const float NORMAL_CELL = 50f;
 
     public TMP_InputField inputField;
     public GameObject text;
@@ -43,6 +43,7 @@ public class GridCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         rt = inputStyle.GetComponent<RectTransform>();
         filled = false;
         isValidated = false;
+        rt.sizeDelta = new Vector2(NORMAL_CELL, NORMAL_CELL); // replace to a constant
 
         // Value change event
         if (inputField != null)
@@ -111,7 +112,7 @@ public class GridCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         if (!isValidated)
         {
-            inputField.text = string.Empty;
+            inputField.SetTextWithoutNotify(string.Empty);
             filled = false;
         }
     }

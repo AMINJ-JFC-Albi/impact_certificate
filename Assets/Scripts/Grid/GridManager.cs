@@ -15,7 +15,7 @@ namespace Grid
 
         #region Constants
         private const ushort GRID_NUMBER_HEIGHT = 14;
-        private const ushort GRID_NUMBER_WIDTH = 22;
+        private const ushort GRID_NUMBER_WIDTH = 20;
         #endregion
 
         #region Variables
@@ -49,6 +49,12 @@ namespace Grid
         private Word _typingWord;
 
         public ClueTooltip tooltip;
+
+        [Header("Audio Settings")]
+        [SerializeField] private AudioSource audioSource;
+        [SerializeField] private AudioClip soundWordCorrect;
+        [SerializeField] private AudioClip soundLevelComplete;
+        [SerializeField] private AudioClip soundError;
 
         #endregion
 
@@ -240,13 +246,19 @@ namespace Grid
                         {
                             _isLevelCompleted = true;
                             Debug.Log("Level Completed!");
+                            PlaySfx(soundLevelComplete);
                         }
+                        else
+                            PlaySfx(soundWordCorrect);
                     }
                     else
+                    {
                         RemoveWord(_typingWord);
+                        MoveToFistCharacter(_typingWord);
+                    }
                 }
             }
-            // If word deleted move to previous cell
+            // If char deleted move to previous cell
             else
             {
                 PreviousCell(cell);
@@ -368,6 +380,9 @@ namespace Grid
             {
                 cell.Clear();
             }
+            audioSource.pitch = UnityEngine.Random.Range(0.8f, 1.2f);
+            PlaySfx(soundError);
+            audioSource.pitch = 1.0f;
         }
 
         #endregion
@@ -427,6 +442,31 @@ namespace Grid
             }
         }
 
+        private void MoveToFistCharacter(Word word)
+        {
+            if (word == null || word.cells.Count == 0)
+                return;
+
+            GridCell firstCell = word.cells[0];
+            if (firstCell != null && !firstCell.isValidated)
+            {
+                TMP_InputField input = firstCell.inputField;
+                if (input != null)
+                    input.Select();
+            }
+            // Move to the second cell if the first is validated
+            else if (firstCell != null)
+            {
+                GridCell secondCell = word.cells[1];
+                if (secondCell != null)
+                {
+                    TMP_InputField input = secondCell.inputField;
+                    if (input != null)
+                        input.Select();
+                }
+            }
+        }
+
         #endregion
 
         #region Clue Management
@@ -440,6 +480,18 @@ namespace Grid
         private void HideClue()
         {
             tooltip.Hide();
+        }
+
+        #endregion
+
+        #region Sound Management
+
+        private void PlaySfx(AudioClip clip)
+        {
+            if (clip != null && audioSource != null)
+            {
+                audioSource.PlayOneShot(clip);
+            }
         }
 
         #endregion
