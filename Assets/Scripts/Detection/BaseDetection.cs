@@ -126,12 +126,9 @@ namespace Detection
                 return;
             }
 
-            // Régénérer le mesh uniquement si la range a changé
-            if (Mathf.Abs(detectionRange - lastDetectionRange) > 0.01f)
-            {
-                lastDetectionRange = detectionRange;
-                RegenerateMesh();
-            }
+            // Régénérer le mesh à chaque frame pour prendre en compte les obstacles
+            lastDetectionRange = detectionRange;
+            RegenerateMesh();
 
             // Mettre à jour la couleur selon l'état
             if (meshRenderer != null && meshRenderer.material != null)
@@ -139,6 +136,19 @@ namespace Detection
                 Color targetColor = isTargetDetected ? alertZoneColor : normalColor;
                 meshRenderer.material.color = targetColor;
             }
+        }
+
+        /// <summary>
+        /// Calcule la distance effective dans une direction en tenant compte des obstacles
+        /// </summary>
+        protected float GetEffectiveRange(Vector3 direction, float maxRange)
+        {
+            Vector3 origin = transform.position + Vector3.up * 0.1f; // Légèrement au-dessus du sol
+            if (Physics.Raycast(origin, direction, out RaycastHit hit, maxRange, obstacleLayer))
+            {
+                return hit.distance;
+            }
+            return maxRange;
         }
 
         /// <summary>

@@ -22,15 +22,19 @@ namespace Detection
             int[] triangles = new int[segments * 3];
             vertices[0] = Vector3.zero;
 
-            // Calculer les points de l'arc
+            // Calculer les points de l'arc en tenant compte des obstacles
             float angleStep = viewAngle / segments;
             float startAngle = -viewAngle / 2f;
 
             for (int i = 0; i <= segments; i++)
             {
                 float angle = startAngle + (angleStep * i);
-                Vector3 direction = Quaternion.Euler(0, angle, 0) * Vector3.forward;
-                vertices[i + 1] = direction * detectionRange;
+                Vector3 localDirection = Quaternion.Euler(0, angle, 0) * Vector3.forward;
+                Vector3 worldDirection = transform.TransformDirection(localDirection);
+                
+                // Calculer la distance effective (avec obstacles)
+                float effectiveRange = GetEffectiveRange(worldDirection, detectionRange);
+                vertices[i + 1] = localDirection * effectiveRange;
             }
 
             // Créer les triangles
