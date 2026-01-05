@@ -43,7 +43,7 @@ public class GridCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         rt = inputStyle.GetComponent<RectTransform>();
         filled = false;
         isValidated = false;
-        rt.sizeDelta = new Vector2(NORMAL_CELL, NORMAL_CELL); // replace to a constant
+        rt.sizeDelta = new Vector2(NORMAL_CELL, NORMAL_CELL);
 
         // Value change event
         if (inputField != null)
@@ -120,8 +120,21 @@ public class GridCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public void ValidateCell()
     {
         isValidated = true;
+        filled = true;
         inputField.interactable = false;
         text.GetComponent<TMP_Text>().color = correctColor;
+    }
+
+    #endregion
+
+    #region Fill
+    public void Fill(bool checkValidation = true)
+    {
+        inputField.SetTextWithoutNotify(CorrectLetter.ToString());
+        ValidateCell();
+
+        if (checkValidation)
+            manager.OnCellValueChanged(this, filled);
     }
 
     #endregion

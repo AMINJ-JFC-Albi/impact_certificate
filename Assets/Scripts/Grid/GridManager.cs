@@ -22,6 +22,9 @@ namespace Grid
 
         [Header("Words Data")]
         public Word[] wordsLevelOne;
+        public Word[] wordsLevelTwo;
+        public Word[] wordsLevelThree;
+        public Word[] wordsLevelFour;
 
 
         // For testing purposes
@@ -64,8 +67,8 @@ namespace Grid
         {
             _cellObjects = new GridCell[GRID_NUMBER_WIDTH, GRID_NUMBER_HEIGHT];
 
-            currentLevelWords = wordsLevelOne;
-            //currentLevelWords = test;
+            //currentLevelWords = wordsLevelOne;
+            currentLevelWords = test;
 
             InitializeGrids(currentLevelWords);
             DisplayGrid();
@@ -93,8 +96,13 @@ namespace Grid
                         GridCell cellScript = cellObj.GetComponent<GridCell>();
 
                         char correctLetter = _solutionGrid[x, y];
-
-                        cellScript.Initialize(x, y, correctLetter, this);
+                        if (correctLetter == '-')
+                        {
+                            cellScript.Initialize(x, y, correctLetter, this);
+                            cellScript.Fill(false);
+                        }
+                        else
+                            cellScript.Initialize(x, y, correctLetter, this);
 
                         _cellObjects[x, y] = cellScript;
                     }
@@ -159,17 +167,15 @@ namespace Grid
         #endregion
 
         #region Focus monitoring
-        // Robust check : si aucun TMP_InputField n'est sélectionné (ou si l'objet sélectionné n'est pas un input),
-        // on remet _typingWord à null.
+        // If no TMP_InputField is selected
+        // we set _typingWord to null
         private void Update()
         {
-            // EventSystem peut être null en dehors du contexte UI
             if (EventSystem.current == null)
                 return;
 
             var current = EventSystem.current.currentSelectedGameObject;
 
-            // Aucun GameObject sélectionné -> aucun input en focus
             if (current == null)
             {
                 if (_typingWord != null)
@@ -177,7 +183,7 @@ namespace Grid
                 return;
             }
 
-            // Si l'objet sélectionné n'est pas un TMP_InputField (ou enfant), on considère qu'aucun champ n'est actif
+            // If no TMP_InputField, clear _typingWord
             if (current.GetComponentInParent<TMP_InputField>() == null)
             {
                 if (_typingWord != null)
@@ -492,6 +498,35 @@ namespace Grid
             {
                 audioSource.PlayOneShot(clip);
             }
+        }
+
+        #endregion
+
+        #region Hint
+        public void ButtonClick_GiveLetter()
+        {
+            GiveRandomLetter();
+        }
+
+        private void GiveRandomLetter()
+        {
+            List<Word> incompleteWords = new();
+            foreach (var word in currentLevelWords)
+                if (!word.isCompleted)
+                    incompleteWords.Add(word);
+
+            if (incompleteWords.Count == 0)
+                return;
+            Word randomWord = incompleteWords[UnityEngine.Random.Range(0, incompleteWords.Count)];
+            List<GridCell> unfilledCells = new();
+            foreach (var cell in randomWord.cells)
+                if (!cell.filled)
+                    unfilledCells.Add(cell);
+
+            if (unfilledCells.Count == 0)
+                return;
+            GridCell randomCell = unfilledCells[UnityEngine.Random.Range(0, unfilledCells.Count)];
+            randomCell.Fill();
         }
 
         #endregion
