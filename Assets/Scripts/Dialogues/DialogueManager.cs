@@ -38,6 +38,7 @@ public class DialogueManager : MonoBehaviour
     private CanvasRenderer arrowRenderer;
     private Coroutine typeCoroutine;
     private bool inTypeCoroutine;
+    private float pendingDelay = 0f; // Délai en attente après le prochain clic
 
 
     /// <summary>
@@ -167,6 +168,14 @@ public class DialogueManager : MonoBehaviour
     /// </summary>
     public void ContinueStory()
     {
+        // Si un delay est en attente, l'exécuter d'abord
+        if (pendingDelay > 0f)
+        {
+            StartCoroutine(DelayThenContinue(pendingDelay));
+            pendingDelay = 0f;
+            return;
+        }
+
         // Si l'histoire peut continuer avec du texte
         if (inTypeCoroutine)
         {
@@ -183,7 +192,7 @@ public class DialogueManager : MonoBehaviour
             }
             string text = currentStory.Continue();
 
-            // Gérer les tags pour le nom du locuteur
+            // Gérer les tags 
             HandleTags(currentStory.currentTags);
 
             typeCoroutine = StartCoroutine(TypeSentence(text));
@@ -350,7 +359,19 @@ public class DialogueManager : MonoBehaviour
                     Debug.LogWarning("ActionManager n'est pas présent dans la scène!");
                 }
             }
-            // Tu peux ajouter d'autres tags ici plus tard (ex: emotion, animation, etc.)
+            // Gérer le tag "delay" pour une pause automatique
+            else if (tagKey == "delay")
+            {
+                if (float.TryParse(tagValue, out float delaySeconds))
+                {
+                    pendingDelay = delaySeconds; // Stocker pour après le clic
+                }
+                else
+                {
+                    Debug.LogWarning($"Valeur de delay invalide: {tagValue}");
+                }
+            }
+
         }
 
         // Si aucun tag "speaker" trouvé, cacher le GameObject
@@ -358,5 +379,25 @@ public class DialogueManager : MonoBehaviour
         {
             speakerNameObject.SetActive(false);
         }
+    }
+
+    /// <summary>
+    /// Coroutine pour attendre un délai puis continuer le dialogue automatiquement
+    /// </summary>
+    private IEnumerator DelayThenContinue(float seconds)
+    {
+        CanPassDialogue(false);
+        dialoguePanel.SetActive(false); // Masquer le dialogue pendant l'attente
+
+        // Arrêter les animations de dialogue
+        if (DialogueAnimationManager.Instance != null)
+        {
+            DialogueAnimationManager.Instance.StopAllSpeaking();
+        }
+
+        yield return new WaitForSeconds(seconds);
+        dialoguePanel.SetActive(true); // Réafficher le dialogue
+        CanPassDialogue(true);
+        ContinueStory();
     }
 }

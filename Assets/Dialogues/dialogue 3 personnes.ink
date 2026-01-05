@@ -2,17 +2,14 @@
 
 
 === dialogue_debut ===
-# speaker: Alien
-Bonjour Reine! Comment vas-tu aujourd'hui?
+Bonjour Reine! Comment vas-tu aujourd'hui? # speaker: Alien # delay:5
 
-# speaker: Reine  
-Salut Alien! Je vais très bien, merci! Et toi?
+Salut Alien! Je vais très bien, merci! Et toi? # speaker: Reine  
 
-# speaker: Alien
-Moi aussi! Tu as vu le nouveau projet?
+Moi aussi! Tu as vu le nouveau projet? # speaker: Alien
 
-# speaker: Reine
-Oui, c'est génial! J'ai hâte de commencer.
+
+Oui, c'est génial! J'ai hâte de commencer. # speaker: Reine
 
 * [Dire au revoir]
     -> au_revoir
@@ -21,6 +18,6 @@ Oui, c'est génial! J'ai hâte de commencer.
 # speaker: Alien
 Bon, je dois y aller. À bientôt!
 
-Les portes s'ouvrent. # speaker: Scientifique # action: open_doors_telescope
+Les portes s'ouvrent. # speaker: Scientifique # action: open_doors_telescope 
 
 -> END
