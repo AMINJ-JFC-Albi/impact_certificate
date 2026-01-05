@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2ea132ff4d0c7f4bac675fef79a4092, type: 3}
+  m_Name: CasqueVR
+  m_EditorClassIdentifier: Assembly-CSharp::ProductSpecification
+  conceptualDesignSpecificationTitle: 'SPECIFICATION DU DESIGN DE CONCEPT:'
+  productName: "Casque de r\xE9alit\xE9 virtuelle (HMD - Head Mounted Display)"
+  productDescriptionTitle: "Description g\xE9n\xE9rale"
+  productDescription: "Dispositif port\xE9 sur la t\xEAte permettant l\u2019affichage
+    st\xE9r\xE9oscopique d\u2019un environnement virtuel en 3D \xE0 360\xB0, avec
+    suivi des mouvements de la t\xEAte.\nExemples : Meta Quest 2/3, HTC Vive, Valve
+    Index, Pico 4"
+  keyUtilityFunctionsTitle: Fonctions utilitaires
+  keyUtilityFunctions: "- Affichage immersif de contenus p\xE9dagogiques\r\n- Isolation
+    visuelle du monde r\xE9el\r\n- Point d\u2019entr\xE9e principal dans l\u2019environnement
+    VR"
+  pedagogicalAspectsTitle: "Aspects p\xE9dagogiques"
+  pedagogicalAspects: "- Immersion cognitive: favorise l\u2019engagement et la concentration\r\n-
+    Apprentissage exp\xE9rientiel: l\u2019apprenant vit la situation plut\xF4t que
+    de l\u2019observer\r\n- Simulation de contextes complexes ou dangereux (laboratoires,
+    chantiers, blocs op\xE9ratoires)\r\n- Augmentation de la m\xE9morisation gr\xE2ce
+    \xE0 l\u2019implication sensorielle\r\n"
+  productPicture: {fileID: 21300000, guid: b3b985ff659f23f478545da1997d7f1e, type: 3}
+  pedagogicalUsesTitle: "Types d\u2019usages p\xE9dagogiques"
+  pedagogicalUses: "- Simulations professionnelles\r\n- Serious games \xE9ducatifs\r\n-
+    Mise en situation (prise de d\xE9cision, gestion de crise)\r\n- Formation \xE0
+    distance immersive"
+  pedagogicalAdvantagesTitle: "Avantages p\xE9dagogiques "
+  pedagogicalAdvantages: "- Forte motivation des apprenants\r\n- R\xE9duction des
+    co\xFBts et des risques r\xE9els\r\n- Adaptable \xE0 de nombreux domaines"
+  usageLimitsTitle: Limitations d'usages
+  usageLimits: "- Fatigue visuelle possible\r\n- N\xE9cessite un temps d\u2019adaptation\r\n-
+    D\xE9pendance \xE0 la qualit\xE9 du contenu p\xE9dagogique"

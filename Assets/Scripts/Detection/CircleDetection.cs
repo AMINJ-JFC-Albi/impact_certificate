@@ -27,10 +27,10 @@ namespace Detection
                 float angle = angleStep * i * Mathf.Deg2Rad;
                 Vector3 localDirection = new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle));
                 Vector3 worldDirection = transform.TransformDirection(localDirection);
-                
+
                 // Calculer la distance effective (avec obstacles)
                 float effectiveRange = GetEffectiveRange(worldDirection, detectionRange);
-                
+
                 float x = Mathf.Cos(angle) * effectiveRange;
                 float z = Mathf.Sin(angle) * effectiveRange;
                 vertices[i + 1] = new Vector3(x, 0.1f, z);

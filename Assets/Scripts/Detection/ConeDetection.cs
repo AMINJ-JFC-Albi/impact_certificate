@@ -31,7 +31,7 @@ namespace Detection
                 float angle = startAngle + (angleStep * i);
                 Vector3 localDirection = Quaternion.Euler(0, angle, 0) * Vector3.forward;
                 Vector3 worldDirection = transform.TransformDirection(localDirection);
-                
+
                 // Calculer la distance effective (avec obstacles)
                 float effectiveRange = GetEffectiveRange(worldDirection, detectionRange);
                 vertices[i + 1] = localDirection * effectiveRange;

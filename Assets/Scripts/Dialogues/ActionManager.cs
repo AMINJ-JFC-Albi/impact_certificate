@@ -166,6 +166,35 @@ public class ActionManager : MonoBehaviour
                 GameManager.Instance.SetInfiltrationMode(true);
                 break;
 
+            // Actions pour afficher les fiches de conception
+            case "show_fiche_casqueVR":
+                ExecuteShowFiche(0);
+                break;
+
+            case "show_fiche_ControleurVR":
+                ExecuteShowFiche(1);
+                break;
+
+            case "show_fiche_2":
+                ExecuteShowFiche(2);
+                break;
+
+            case "show_fiche_3":
+                ExecuteShowFiche(3);
+                break;
+
+            case "show_fiche_4":
+                ExecuteShowFiche(4);
+                break;
+
+            case "show_fiche_5":
+                ExecuteShowFiche(5);
+                break;
+
+            case "hide_fiche":
+                ExecuteHideFiche();
+                break;
+
             // Ajouter d'autres actions ici
             // case "autre_action":
             //     ExecuteAutreAction();
@@ -235,6 +264,33 @@ public class ActionManager : MonoBehaviour
         }
 
 
+    }
+
+    /// <summary>
+    /// Action spécifique : Affiche une fiche de conception
+    /// </summary>
+    private void ExecuteShowFiche(int productIndex)
+    {
+        if (ConceptualSpecificationDesign.Instance != null)
+        {
+            ConceptualSpecificationDesign.Instance.ShowFiche(productIndex);
+            Debug.Log($"Affichage de la fiche de conception pour le produit index {productIndex}");
+        }
+        else
+        {
+            Debug.LogError("ConceptualSpecificationDesign introuvable!");
+        }
+    }
+
+    /// <summary>
+    /// Action spécifique : Cache la fiche de conception
+    /// </summary>
+    private void ExecuteHideFiche()
+    {
+        if (ConceptualSpecificationDesign.Instance != null)
+        {
+            ConceptualSpecificationDesign.Instance.HideFiche();
+        }
     }
     #endregion
 }

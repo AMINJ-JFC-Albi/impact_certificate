@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2ea132ff4d0c7f4bac675fef79a4092, type: 3}
+  m_Name: PlateformeOmnidirectionnelle
+  m_EditorClassIdentifier: Assembly-CSharp::ProductSpecification
+  conceptualDesignSpecificationTitle: 'SPECIFICATION DU DESIGN DE CONCEPT:'
+  productName: "Syst\xE8mes de tracking de mouvements (Full Body Tracking)"
+  productDescriptionTitle: "Description g\xE9n\xE9rale"
+  productDescription: "Dispositifs permettant \xE0 l\u2019utilisateur de marcher
+    physiquement tout en restant statique, avec retranscription des d\xE9placements
+    en VR.\r\nExemples : Virtuix Omni, Kat Walk"
+  keyUtilityFunctionsTitle: Fonctions utilitaires
+  keyUtilityFunctions: "- D\xE9placement naturel dans l\u2019environnement virtuel\r\n-
+    Simulation de la marche ou de la course\r\n- R\xE9duction des d\xE9placements
+    virtuels artificiels"
+  pedagogicalAspectsTitle: "Aspects p\xE9dagogiques"
+  pedagogicalAspects: "- Apprentissage spatial et contextuel\r\n- R\xE9alisme des
+    d\xE9placements\r\n- Meilleure compr\xE9hension des environnements complexes\r\n-
+    Entra\xEEnement \xE0 des sc\xE9narios dynamiques"
+  productPicture: {fileID: 21300000, guid: 305938f4d8c7f834d81e4c52ad02c0fe, type: 3}
+  pedagogicalUsesTitle: "Types d\u2019usages p\xE9dagogiques"
+  pedagogicalUses: "- Exercices d\u2019\xE9vacuation\r\n- Formation militaire ou
+    s\xE9curit\xE9 civile\r\n- Exploration de sites ou b\xE2timents\r\n- Simulations
+    urbaines"
+  pedagogicalAdvantagesTitle: "Avantages p\xE9dagogiques "
+  pedagogicalAdvantages: "- Immersion physique renforc\xE9e\r\n- R\xE9duction du
+    motion sickness\r\n- Engagement corporel total"
+  usageLimitsTitle: Limitations d'usages
+  usageLimits: "- Mat\xE9riel encombrant\r\n- Co\xFBt \xE9lev\xE9\r\n- Apprentissage
+    de l\u2019\xE9quilibre n\xE9cessaire"
