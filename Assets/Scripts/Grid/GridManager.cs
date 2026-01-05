@@ -75,6 +75,7 @@ namespace Grid
             _cellObjects = new GridCell[GRID_NUMBER_WIDTH, GRID_NUMBER_HEIGHT];
 
             currentLevelWords = wordsLevelOne;
+            //currentLevelWords = wordsLevelTwo;
             //currentLevelWords = test;
 
             InitializeGrids(currentLevelWords);
