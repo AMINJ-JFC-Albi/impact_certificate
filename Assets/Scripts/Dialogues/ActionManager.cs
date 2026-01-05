@@ -175,19 +175,19 @@ public class ActionManager : MonoBehaviour
                 ExecuteShowFiche(1);
                 break;
 
-            case "show_fiche_2":
+            case "show_fiche_gantsHaptique":
                 ExecuteShowFiche(2);
                 break;
 
-            case "show_fiche_3":
+            case "show_fiche_fullBodyTracking":
                 ExecuteShowFiche(3);
                 break;
 
-            case "show_fiche_4":
+            case "show_fiche_PlateformeOmni":
                 ExecuteShowFiche(4);
                 break;
 
-            case "show_fiche_5":
+            case "show_fiche_casqueAudio":
                 ExecuteShowFiche(5);
                 break;
 
