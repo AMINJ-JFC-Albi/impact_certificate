@@ -30,7 +30,7 @@ namespace PlayerControl
 
         private void Start()
         {
-            playerHealth = FindObjectOfType<PlayerHealth>();
+            playerHealth = FindFirstObjectByType<PlayerHealth>();
 
             if (playerHealth == null)
             {

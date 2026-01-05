@@ -10,7 +10,7 @@ namespace PlayerControl
     public class DetectionHealthConnector : MonoBehaviour
     {
         private BaseDetection detectionSystem;
-        private PlayerHealth playerHealth;
+        private PlayerHealth lastDetectedPlayerHealth; // Stocker la dernière cible détectée
 
         private void Awake()
         {
@@ -19,14 +19,6 @@ namespace PlayerControl
 
         private void Start()
         {
-            playerHealth = FindObjectOfType<PlayerHealth>();
-
-            if (playerHealth == null)
-            {
-                Debug.LogWarning($"{gameObject.name} : Aucun PlayerHealth trouvé dans la scène !");
-                return;
-            }
-
             // S'abonner aux événements de détection
             if (detectionSystem != null)
             {
@@ -50,8 +42,11 @@ namespace PlayerControl
         /// </summary>
         private void OnPlayerDetected(Transform target)
         {
+            // Récupérer PlayerHealth de la cible détectée
+            PlayerHealth playerHealth = target.GetComponent<PlayerHealth>();
             if (playerHealth != null)
             {
+                lastDetectedPlayerHealth = playerHealth; // Sauvegarder la référence
                 playerHealth.OnDetectedByEnemy();
             }
         }
@@ -61,9 +56,11 @@ namespace PlayerControl
         /// </summary>
         private void OnPlayerLost()
         {
-            if (playerHealth != null)
+            // Utiliser la dernière cible détectée sauvegardée
+            if (lastDetectedPlayerHealth != null)
             {
-                playerHealth.OnLostByEnemy();
+                lastDetectedPlayerHealth.OnLostByEnemy();
+                lastDetectedPlayerHealth = null; // Nettoyer la référence
             }
         }
     }

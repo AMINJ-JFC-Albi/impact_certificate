@@ -194,7 +194,6 @@ namespace Detection
                 isTargetDetected = true;
                 detectedTarget = target;
                 OnTargetDetected?.Invoke(target);
-                Debug.Log($"{gameObject.name} a détecté {target.name} !");
             }
         }
 
@@ -208,7 +207,6 @@ namespace Detection
                 isTargetDetected = false;
                 detectedTarget = null;
                 OnTargetLost?.Invoke();
-                Debug.Log($"{gameObject.name} a perdu la cible.");
             }
         }
 

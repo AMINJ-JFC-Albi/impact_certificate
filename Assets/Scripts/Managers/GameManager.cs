@@ -22,7 +22,6 @@ public class GameManager : MonoBehaviour
     // Événement statique pour le changement de mode infiltration
     public static System.Action<bool> OnInfiltrationModeChanged;
 
-    // Propriété publique pour accéder au mode infiltration
     public static bool IsInInfiltrationMode { get; private set; } = false;
 
     // Liste statique de tous les objets interactifs enregistrés
@@ -52,37 +51,47 @@ public class GameManager : MonoBehaviour
         // Appliquer la liste d'objets autorisés au démarrage
         UpdateAllowedInteractables();
 
-        // Trouver le PlayerHealth
-        playerHealth = FindObjectOfType<PlayerHealth>();
-        
+
+        playerHealth = FindFirstObjectByType<PlayerHealth>();
+
+        // S'abonner à l'événement de mort du joueur
+        if (playerHealth != null)
+        {
+            playerHealth.OnPlayerDeath.AddListener(OnPlayerDeath);
+        }
+
         // Initialiser le mode infiltration
         SetInfiltrationMode(infiltrationMode);
     }
 
     private void Update()
     {
-        // Mettre à jour le mode infiltration si changé dans l'Inspector
-        if (IsInInfiltrationMode != infiltrationMode)
+        // Synchroniser avec l'Inspector seulement en mode édition (pas pendant le jeu)
+#if UNITY_EDITOR
+        if (IsInInfiltrationMode != infiltrationMode && !UnityEngine.Application.isPlaying)
         {
             SetInfiltrationMode(infiltrationMode);
         }
+#endif
     }
 
     /// <summary>
-    /// Active ou désactive le mode infiltration par script
+    /// Active ou désactive le mode infiltration
     /// </summary>
     public void SetInfiltrationMode(bool active)
     {
         infiltrationMode = active;
         IsInInfiltrationMode = active;
-        
-        // Déclencher l'événement
+
         OnInfiltrationModeChanged?.Invoke(active);
-        
-        // Activer/désactiver la perte de vie du joueur
+
         if (playerHealth != null)
         {
             playerHealth.EnableHealthLoss(active);
+        }
+        else
+        {
+            Debug.LogWarning("SetInfiltrationMode: playerHealth est null !");
         }
     }
 
@@ -124,7 +133,6 @@ public class GameManager : MonoBehaviour
             allowedInteractables.Add(interactable);
             interactable.ResetCounter();
             interactable.UpdateOutlineState();
-            Debug.Log($"Objet {interactable.gameObject.name} ajouté aux objets autorisés");
         }
     }
 
@@ -184,6 +192,22 @@ public class GameManager : MonoBehaviour
         if (!active && ToolTipsManager.Instance != null)
         {
             ToolTipsManager.Instance.HideToolTip();
+        }
+    }
+
+    /// <summary>
+    /// Appelé quand le joueur meurt - déclenche l'action de reset
+    /// </summary>
+    private void OnPlayerDeath()
+    {
+        // Appeler l'action de reset via ActionManager
+        if (ActionManager.Instance != null)
+        {
+            ActionManager.Instance.ExecuteAction("reset_on_death");
+        }
+        else
+        {
+            Debug.LogError("ActionManager introuvable!");
         }
     }
 }

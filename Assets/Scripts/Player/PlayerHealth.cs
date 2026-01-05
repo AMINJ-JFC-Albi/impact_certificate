@@ -18,7 +18,7 @@ namespace PlayerControl
 
         [Header("État")]
         [SerializeField] private bool isDetected = false;
-        [SerializeField] private bool canLoseHealth = false; // Contrôlé par le GameManager
+        [SerializeField] private bool canLoseHealth = false;
 
         // Événements
         public UnityEvent<float, float> OnHealthChanged; // currentHealth, maxHealth
@@ -39,7 +39,7 @@ namespace PlayerControl
 
         private void Update()
         {
-            // Perdre de la vie seulement si autorisé (mode infiltration) et détecté
+
             if (canLoseHealth && isDetected && !IsDead)
             {
                 LoseHealth(healthLossPerSecond * Time.deltaTime);
@@ -52,7 +52,7 @@ namespace PlayerControl
         public void EnableHealthLoss(bool enable)
         {
             canLoseHealth = enable;
-            
+
             // Si on désactive, réinitialiser la détection
             if (!enable)
             {
@@ -95,12 +95,18 @@ namespace PlayerControl
         /// </summary>
         private void Die()
         {
-            Debug.Log("Le joueur est mort !");
             OnPlayerDeath?.Invoke();
-            
-            // Réinitialiser l'état
-            canLoseHealth = false;
             isDetected = false;
+        }
+
+        /// <summary>
+        /// Réinitialise la santé du joueur (appelé après respawn)
+        /// </summary>
+        public void ResetHealth()
+        {
+            currentHealth = maxHealth;
+            isDetected = false;
+            OnHealthChanged?.Invoke(currentHealth, maxHealth);
         }
 
         /// <summary>
@@ -108,7 +114,7 @@ namespace PlayerControl
         /// </summary>
         public void OnDetectedByEnemy()
         {
-            // Seulement si la perte de vie est activée (mode infiltration)
+
             if (canLoseHealth)
             {
                 SetDetected(true);
