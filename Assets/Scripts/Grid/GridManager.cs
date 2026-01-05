@@ -1,8 +1,10 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace Grid
 {
@@ -59,6 +61,11 @@ namespace Grid
         [SerializeField] private AudioClip soundLevelComplete;
         [SerializeField] private AudioClip soundError;
 
+        [Header("Hint")]
+        public Button buttonHint;
+        public Image loadingImage;
+        [SerializeField] private float buttonCooldown = 20f;
+
         #endregion
 
         #region Grid initialisation
@@ -67,8 +74,8 @@ namespace Grid
         {
             _cellObjects = new GridCell[GRID_NUMBER_WIDTH, GRID_NUMBER_HEIGHT];
 
-            //currentLevelWords = wordsLevelOne;
-            currentLevelWords = test;
+            currentLevelWords = wordsLevelOne;
+            //currentLevelWords = test;
 
             InitializeGrids(currentLevelWords);
             DisplayGrid();
@@ -506,6 +513,7 @@ namespace Grid
         public void ButtonClick_GiveLetter()
         {
             GiveRandomLetter();
+            StartCoroutine(CooldownRoutine());
         }
 
         private void GiveRandomLetter()
@@ -527,6 +535,21 @@ namespace Grid
                 return;
             GridCell randomCell = unfilledCells[UnityEngine.Random.Range(0, unfilledCells.Count)];
             randomCell.Fill();
+        }
+
+        private IEnumerator CooldownRoutine()
+        {
+            buttonHint.interactable = false;
+            float timer = buttonCooldown;
+
+            while (timer > 0)
+            {
+                timer -= Time.deltaTime;
+                loadingImage.fillAmount = timer / buttonCooldown;
+                yield return null;
+            }
+            loadingImage.fillAmount = 1f;
+            buttonHint.interactable = true;
         }
 
         #endregion
