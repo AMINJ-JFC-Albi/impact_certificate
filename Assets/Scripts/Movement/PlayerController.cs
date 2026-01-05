@@ -49,7 +49,7 @@ namespace PlayerControl
         }
 
 
-        void Update()
+        new void Update()
         {
             if (InputManager.Instance == null)
                 return;

@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2ea132ff4d0c7f4bac675fef79a4092, type: 3}
+  m_Name: FullBodyTracking
+  m_EditorClassIdentifier: Assembly-CSharp::ProductSpecification
+  conceptualDesignSpecificationTitle: 'SPECIFICATION DU DESIGN DE CONCEPT:'
+  productName: "Syst\xE8mes de tracking de mouvements (Full Body Tracking)"
+  productDescriptionTitle: "Description g\xE9n\xE9rale"
+  productDescription: "Syst\xE8mes de capteurs permettant de suivre les mouvements
+    du corps entier de l\u2019utilisateur dans l\u2019espace virtuel.\r\nExemples
+    : Vive Trackers, OptiTrack, Perception Neuron"
+  keyUtilityFunctionsTitle: Fonctions utilitaires
+  keyUtilityFunctions: "- Capture des postures et d\xE9placements\r\n- Analyse des
+    mouvements\r\n- Reproduction fid\xE8le du corps en VR"
+  pedagogicalAspectsTitle: "Aspects p\xE9dagogiques"
+  pedagogicalAspects: "- Analyse posturale et gestuelle\r\n- Correction des erreurs
+    en temps r\xE9el\r\n- Apprentissage ergonomique\r\n- D\xE9veloppement de la conscience
+    corporelle"
+  productPicture: {fileID: 21300000, guid: aa1620ed7fed27a47a0f467d1e491e26, type: 3}
+  pedagogicalUsesTitle: "Types d\u2019usages p\xE9dagogiques"
+  pedagogicalUses: "- Formation sportive\r\n- Pr\xE9vention des troubles musculo-squelettiques\r\n-
+    S\xE9curit\xE9 au travail\r\n- Danse, th\xE9\xE2tre, expression corporelle"
+  pedagogicalAdvantagesTitle: "Avantages p\xE9dagogiques "
+  pedagogicalAdvantages: "- Feedback pr\xE9cis et mesurable\r\n- Suivi de progression\r\n-
+    Personnalisation de l\u2019apprentissage"
+  usageLimitsTitle: Limitations d'usages
+  usageLimits: "- Calibration n\xE9cessaire\r\n- Sensibilit\xE9 aux conditions de
+    l\u2019environnement\r\n- Complexit\xE9 mat\xE9rielle"

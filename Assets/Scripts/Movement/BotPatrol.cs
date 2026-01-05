@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 using PlayerControl;
+using UnityEngine.Events;
 
 /// <summary>
 /// Système de patrouille pour les bots NPC.
@@ -26,6 +26,9 @@ public class BotPatrol : BaseMovementController
 
     [Tooltip("Temps d'attente à la position de départ (en secondes)")]
     [SerializeField] private float startPositionWaitTime = 2f;
+    
+    [Tooltip("Stop la patrouille aux dernier point")]
+    [SerializeField] private bool stopAtEnd = false;
 
     [Tooltip("Si true, fait des allers-retours. Si false, boucle du dernier au premier point")]
     [SerializeField] private bool reversePatrol = true;
@@ -36,6 +39,9 @@ public class BotPatrol : BaseMovementController
     [Header("Debug")]
     [SerializeField] private bool showDebugGizmos = true;
     [SerializeField] private Color pathColor = Color.cyan;
+
+    [Header("Evenement de patrouille")]
+    public UnityEvent<int, int> pathEvent;
 
     private int currentPointIndex = 0;
     private bool isMovingForward = true;
@@ -60,19 +66,22 @@ public class BotPatrol : BaseMovementController
 
     protected override void Update()
     {
-        if (!isPatrolling)
-        {
-            StopFootstepsSound();
-            return;
-        }
-
         base.Update();
 
         // Vérifier si le bot a atteint sa destination
         if (!isWaiting && !isMoving)
         {
+            pathEvent.Invoke(currentPointIndex, patrolPoints.Count-1);
             StartCoroutine(WaitAtPoint());
         }
+    }
+
+    /// <summary>
+    /// Assigne une patrouille
+    /// </summary>
+    public void SetPatrolPoints(List<PatrolPoint> newPatrolPoints)
+    {
+        patrolPoints = newPatrolPoints;
     }
 
     /// <summary>
@@ -90,6 +99,7 @@ public class BotPatrol : BaseMovementController
         currentPointIndex = 0;
         isMovingForward = true;
         GoToCurrentPoint();
+        Debug.LogError("where !" + gameObject.name);
     }
 
     /// <summary>
@@ -126,7 +136,7 @@ public class BotPatrol : BaseMovementController
     /// </summary>
     private void GoToCurrentPoint()
     {
-
+        if (!isPatrolling) return;
         if (currentPointIndex == -1)
         {
             MoveToPosition(startPosition);
@@ -187,6 +197,13 @@ public class BotPatrol : BaseMovementController
     {
         if (patrolPoints.Count == 0) return;
 
+        // Si on a atteint le dernier point, et que l'on veut s'arrêter, on stop la patrouille
+        if (currentPointIndex >= patrolPoints.Count-1 && stopAtEnd)
+        {
+            StopPatrol();
+            return;
+        }
+
         // Gérer le cas où il n'y a qu'un seul point
         if (patrolPoints.Count == 1)
         {
@@ -228,15 +245,14 @@ public class BotPatrol : BaseMovementController
                 currentPointIndex = -1;
             }
         }
-
         GoToCurrentPoint();
     }
 
 #if UNITY_EDITOR
-    protected override void OnDrawGizmos()
+    protected override void OnDrawGizmosSelected()
     {
         // Appeler les gizmos de la classe de base
-        base.OnDrawGizmos();
+        base.OnDrawGizmosSelected();
 
         if (!showDebugGizmos) return;
 

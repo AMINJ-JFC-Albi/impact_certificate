@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2ea132ff4d0c7f4bac675fef79a4092, type: 3}
+  m_Name: GantsHaptique
+  m_EditorClassIdentifier: Assembly-CSharp::ProductSpecification
+  conceptualDesignSpecificationTitle: 'SPECIFICATION DU DESIGN DE CONCEPT:'
+  productName: "Contr\xF4leurs VR (Manettes de mouvement) "
+  productDescriptionTitle: "Description g\xE9n\xE9rale"
+  productDescription: "Gants \xE9quip\xE9s de capteurs et de syst\xE8mes de retour
+    de force permettant de ressentir des sensations tactiles dans l\u2019environnement
+    virtuel.\nExemples : HaptX, Manus VR, SenseGlove"
+  keyUtilityFunctionsTitle: Fonctions utilitaires
+  keyUtilityFunctions: "- Simulation du toucher\r\n- Retour de force et r\xE9sistance\r\n-
+    Suivi pr\xE9cis des doigts"
+  pedagogicalAspectsTitle: "Aspects p\xE9dagogiques"
+  pedagogicalAspects: "- Apprentissage sensorimoteur avanc\xE9\r\n- Compr\xE9hension
+    physique des objets et mat\xE9riaux\r\n- Entra\xEEnement \xE0 des gestes fins
+    et pr\xE9cis\r\n- Approche r\xE9aliste des comp\xE9tences manuelles"
+  productPicture: {fileID: 21300000, guid: f93e76dc99c2bb64bab039b318164eb3, type: 3}
+  pedagogicalUsesTitle: "Types d\u2019usages p\xE9dagogiques"
+  pedagogicalUses: "- Formation m\xE9dicale et chirurgicale\r\n- Maintenance industrielle\r\n-
+    Artisanat et m\xE9tiers techniques\r\n- R\xE9\xE9ducation et kin\xE9sith\xE9rapie"
+  pedagogicalAdvantagesTitle: "Avantages p\xE9dagogiques "
+  pedagogicalAdvantages: "- R\xE9alisme \xE9lev\xE9\r\n- Transfert plus efficace
+    vers le r\xE9el\r\n- Am\xE9lioration de la pr\xE9cision gestuelle"
+  usageLimitsTitle: Limitations d'usages
+  usageLimits: "- Co\xFBt \xE9lev\xE9\r\n- Mise en place technique complexe\r\n-
+    Peu adapt\xE9 \xE0 un usage grand public"

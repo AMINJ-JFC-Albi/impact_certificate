@@ -208,7 +208,7 @@ namespace PlayerControl
         #endregion
 
 #if UNITY_EDITOR
-        protected virtual void OnDrawGizmos()
+        protected virtual void OnDrawGizmosSelected()
         {
             // Dessiner le chemin actuel
             if (path != null && path.corners.Length > 0)
