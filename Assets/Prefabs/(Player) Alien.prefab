@@ -129,10 +129,10 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
+  MinDistance: 10
+  MaxDistance: 30
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -221,7 +221,7 @@ MonoBehaviour:
   currentHealth: 0
   healthLossPerSecond: 5
   isDetected: 0
-  isInInfiltrationMode: 0
+  canLoseHealth: 0
   OnHealthChanged:
     m_PersistentCalls:
       m_Calls: []

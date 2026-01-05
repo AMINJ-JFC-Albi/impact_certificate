@@ -213,6 +213,11 @@ public class InteractableObject : MonoBehaviour
         else
         {
             canInteract++;
+            // Masquer le tooltip si l'objet devient non-interactif
+            if (ToolTipsManager.Instance != null)
+            {
+                ToolTipsManager.Instance.HideToolTip();
+            }
         }
 
         UpdateOutlineState();
