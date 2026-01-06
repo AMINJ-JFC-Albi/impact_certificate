@@ -26,8 +26,14 @@ public class ActionManager : MonoBehaviour
         [Tooltip("Objets à activer")]
         public GameObject[] objectsToActivate;
 
+        [Tooltip("Délai avant d'activer les objets (0 = immédiat)")]
+        public float delayBeforeActivate = 0f;
+
         [Tooltip("Objets à désactiver")]
         public GameObject[] objectsToDeactivate;
+
+        [Tooltip("Délai avant de désactiver les objets (0 = immédiat)")]
+        public float delayBeforeDeactivate = 0f;
 
         [Tooltip("Objets dont on active uniquement l'interaction")]
         public InteractableObject[] interactionsToEnable;
@@ -141,41 +147,29 @@ public class ActionManager : MonoBehaviour
     /// </summary>
     private void ExecuteActionObjects(Action action)
     {
-        // Activer les objets
-        if (action.objectsToActivate != null)
+        // Activer les objets (avec délai si spécifié)
+        if (action.objectsToActivate != null && action.objectsToActivate.Length > 0)
         {
-            foreach (GameObject obj in action.objectsToActivate)
+            if (action.delayBeforeActivate > 0)
             {
-                if (obj != null)
-                {
-                    obj.SetActive(true);
-
-                    // Si c'est un InteractableObject, l'activer aussi dans le GameManager
-                    InteractableObject interactable = obj.GetComponent<InteractableObject>();
-                    if (interactable != null && GameManager.Instance != null)
-                    {
-                        GameManager.Instance.AllowInteractable(interactable);
-                    }
-                }
+                StartCoroutine(ActivateObjectsWithDelay(action.objectsToActivate, action.delayBeforeActivate));
+            }
+            else
+            {
+                ActivateObjects(action.objectsToActivate);
             }
         }
 
-        // Désactiver les objets
-        if (action.objectsToDeactivate != null)
+        // Désactiver les objets (avec délai si spécifié)
+        if (action.objectsToDeactivate != null && action.objectsToDeactivate.Length > 0)
         {
-            foreach (GameObject obj in action.objectsToDeactivate)
+            if (action.delayBeforeDeactivate > 0)
             {
-                if (obj != null)
-                {
-                    obj.SetActive(false);
-
-                    // Si c'est un InteractableObject, le désactiver aussi dans le GameManager
-                    InteractableObject interactable = obj.GetComponent<InteractableObject>();
-                    if (interactable != null && GameManager.Instance != null)
-                    {
-                        GameManager.Instance.DisallowInteractable(interactable);
-                    }
-                }
+                StartCoroutine(DeactivateObjectsWithDelay(action.objectsToDeactivate, action.delayBeforeDeactivate));
+            }
+            else
+            {
+                DeactivateObjects(action.objectsToDeactivate);
             }
         }
 
@@ -196,6 +190,54 @@ public class ActionManager : MonoBehaviour
         {
             foreach (InteractableObject interactable in action.interactionsToDisable)
             {
+                if (interactable != null && GameManager.Instance != null)
+                {
+                    GameManager.Instance.DisallowInteractable(interactable);
+                }
+            }
+        }
+    }
+
+    private IEnumerator ActivateObjectsWithDelay(GameObject[] objects, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        ActivateObjects(objects);
+    }
+
+    private IEnumerator DeactivateObjectsWithDelay(GameObject[] objects, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        DeactivateObjects(objects);
+    }
+
+    private void ActivateObjects(GameObject[] objects)
+    {
+        foreach (GameObject obj in objects)
+        {
+            if (obj != null)
+            {
+                obj.SetActive(true);
+
+                // Si c'est un InteractableObject, l'activer aussi dans le GameManager
+                InteractableObject interactable = obj.GetComponent<InteractableObject>();
+                if (interactable != null && GameManager.Instance != null)
+                {
+                    GameManager.Instance.AllowInteractable(interactable);
+                }
+            }
+        }
+    }
+
+    private void DeactivateObjects(GameObject[] objects)
+    {
+        foreach (GameObject obj in objects)
+        {
+            if (obj != null)
+            {
+                obj.SetActive(false);
+
+                // Si c'est un InteractableObject, le désactiver aussi dans le GameManager
+                InteractableObject interactable = obj.GetComponent<InteractableObject>();
                 if (interactable != null && GameManager.Instance != null)
                 {
                     GameManager.Instance.DisallowInteractable(interactable);

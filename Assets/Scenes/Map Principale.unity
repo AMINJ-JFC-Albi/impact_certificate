@@ -827,8 +827,10 @@ MonoBehaviour:
   - {fileID: 6452810884719430662}
   - {fileID: 919132147772448993}
   - {fileID: 673829315}
+  delayBeforeActivate: 0
   objectsToDeactivate:
   - {fileID: 192030646}
+  delayBeforeDeactivate: 0
   actionName: Start_phase_infiltration
   objective: 
   isCheckpoint: 1
@@ -2348,9 +2350,11 @@ MonoBehaviour:
   interactionDistance: 1
   objectsToActivate:
   - {fileID: 569673112}
+  delayBeforeActivate: 10
   objectsToDeactivate:
   - {fileID: 762414960}
   - {fileID: 1952150480}
+  delayBeforeDeactivate: 10
   actionName: telescope_action
   objective: 
   isCheckpoint: 0
@@ -3433,9 +3437,11 @@ MonoBehaviour:
   objectsToActivate:
   - {fileID: 557134267}
   - {fileID: 1810293564}
+  delayBeforeActivate: 0
   objectsToDeactivate:
   - {fileID: 1258991586}
   - {fileID: 1369909794}
+  delayBeforeDeactivate: 0
   actionName: show_fiche_casqueVR
   objective: 
   isCheckpoint: 1
@@ -3840,7 +3846,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9013592051722383650, guid: 8a00d6f71ef2b7f4fb6e1909d9e75474, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5333,9 +5339,11 @@ MonoBehaviour:
   interactionType: 0
   interactionDistance: 1
   objectsToActivate: []
+  delayBeforeActivate: 0
   objectsToDeactivate:
   - {fileID: 557134267}
   - {fileID: 1810293564}
+  delayBeforeDeactivate: 0
   actionName: show_fiche_ControleurVR
   objective: 
   isCheckpoint: 1

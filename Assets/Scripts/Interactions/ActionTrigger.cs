@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 /// <summary>
 /// Déclenche des actions quand on clique sur l'objet.
@@ -10,8 +11,14 @@ public class ActionTrigger : InteractableObject
     [Tooltip("Objets à activer lors de l'interaction")]
     [SerializeField] private GameObject[] objectsToActivate;
 
+    [Tooltip("Délai avant d'activer les objets (0 = immédiat)")]
+    [SerializeField] private float delayBeforeActivate = 0f;
+
     [Tooltip("Objets à désactiver lors de l'interaction ")]
     [SerializeField] private GameObject[] objectsToDeactivate;
+
+    [Tooltip("Délai avant de désactiver les objets (0 = immédiat)")]
+    [SerializeField] private float delayBeforeDeactivate = 0f;
 
     [Header("Action complexe (optionnel)")]
     [Tooltip("Nom de l'action complexe à exécuter dans l'ActionManager (laisser vide si pas nécessaire)")]
@@ -29,41 +36,29 @@ public class ActionTrigger : InteractableObject
 
     protected override void OnInteracted()
     {
-        // 1. Activer les objets
-        if (objectsToActivate != null)
+        // 1. Activer les objets (avec délai si spécifié)
+        if (objectsToActivate != null && objectsToActivate.Length > 0)
         {
-            foreach (GameObject obj in objectsToActivate)
+            if (delayBeforeActivate > 0)
             {
-                if (obj != null)
-                {
-                    obj.SetActive(true);
-
-                    // Si c'est un InteractableObject, l'activer aussi dans le GameManager
-                    InteractableObject interactable = obj.GetComponent<InteractableObject>();
-                    if (interactable != null && GameManager.Instance != null)
-                    {
-                        GameManager.Instance.AllowInteractable(interactable);
-                    }
-                }
+                StartCoroutine(ActivateObjectsWithDelay(delayBeforeActivate));
+            }
+            else
+            {
+                ActivateObjects();
             }
         }
 
-        // 2. Désactiver les objets
-        if (objectsToDeactivate != null)
+        // 2. Désactiver les objets (avec délai si spécifié)
+        if (objectsToDeactivate != null && objectsToDeactivate.Length > 0)
         {
-            foreach (GameObject obj in objectsToDeactivate)
+            if (delayBeforeDeactivate > 0)
             {
-                if (obj != null)
-                {
-                    obj.SetActive(false);
-
-                    // Si c'est un InteractableObject, le désactiver aussi dans le GameManager
-                    InteractableObject interactable = obj.GetComponent<InteractableObject>();
-                    if (interactable != null && GameManager.Instance != null)
-                    {
-                        GameManager.Instance.DisallowInteractable(interactable);
-                    }
-                }
+                StartCoroutine(DeactivateObjectsWithDelay(delayBeforeDeactivate));
+            }
+            else
+            {
+                DeactivateObjects();
             }
         }
 
@@ -92,6 +87,54 @@ public class ActionTrigger : InteractableObject
             else
             {
                 Debug.LogWarning($"Checkpoint activé sur {gameObject.name} mais aucun Spawn Point n'est assigné!");
+            }
+        }
+    }
+
+    private IEnumerator ActivateObjectsWithDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        ActivateObjects();
+    }
+
+    private IEnumerator DeactivateObjectsWithDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        DeactivateObjects();
+    }
+
+    private void ActivateObjects()
+    {
+        foreach (GameObject obj in objectsToActivate)
+        {
+            if (obj != null)
+            {
+                obj.SetActive(true);
+
+                // Si c'est un InteractableObject, l'activer aussi dans le GameManager
+                InteractableObject interactable = obj.GetComponent<InteractableObject>();
+                if (interactable != null && GameManager.Instance != null)
+                {
+                    GameManager.Instance.AllowInteractable(interactable);
+                }
+            }
+        }
+    }
+
+    private void DeactivateObjects()
+    {
+        foreach (GameObject obj in objectsToDeactivate)
+        {
+            if (obj != null)
+            {
+                obj.SetActive(false);
+
+                // Si c'est un InteractableObject, le désactiver aussi dans le GameManager
+                InteractableObject interactable = obj.GetComponent<InteractableObject>();
+                if (interactable != null && GameManager.Instance != null)
+                {
+                    GameManager.Instance.DisallowInteractable(interactable);
+                }
             }
         }
     }
