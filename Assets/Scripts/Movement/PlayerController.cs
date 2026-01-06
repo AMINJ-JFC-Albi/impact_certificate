@@ -26,12 +26,8 @@ namespace PlayerControl
                 mainCamera = Camera.main;
             }
 
-            // Récupérer ou ajouter le composant PlayerHealth
             playerHealth = GetComponent<PlayerHealth>();
-            if (playerHealth == null)
-            {
-                playerHealth = gameObject.AddComponent<PlayerHealth>();
-            }
+
         }
 
         private void Start()

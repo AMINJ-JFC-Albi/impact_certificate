@@ -17,6 +17,9 @@ public class ActionTrigger : InteractableObject
     [Tooltip("Nom de l'action complexe à exécuter dans l'ActionManager (laisser vide si pas nécessaire)")]
     [SerializeField] private string actionName = "";
 
+    [Tooltip("Objectif pour cette action (remplace l'objectif par défaut de l'action si rempli)")]
+    [SerializeField] private string objective = "";
+
     [Header("Checkpoint")]
     [Tooltip("Cocher pour faire de cet objet un checkpoint")]
     [SerializeField] private bool isCheckpoint = false;
@@ -69,7 +72,9 @@ public class ActionTrigger : InteractableObject
         {
             if (ActionManager.Instance != null)
             {
-                ActionManager.Instance.ExecuteAction(actionName);
+                // Utiliser l'objectif s'il est défini, sinon null (utilisera l'objectif de l'action)
+                string objectiveToUse = !string.IsNullOrEmpty(objective) ? objective : null;
+                ActionManager.Instance.ExecuteAction(actionName, objectiveToUse);
             }
             else
             {

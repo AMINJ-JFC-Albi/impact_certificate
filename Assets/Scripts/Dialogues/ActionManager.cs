@@ -19,6 +19,9 @@ public class ActionManager : MonoBehaviour
         [Tooltip("Délai avant l'exécution de l'action")]
         public float delayBeforeAction = 0f;
 
+        [Tooltip("Objectif associé à cette action (optionnel)")]
+        public string objective = "";
+
         [Tooltip("Objets à activer")]
         public GameObject[] objectsToActivate;
 
@@ -70,11 +73,30 @@ public class ActionManager : MonoBehaviour
     /// <param name="actionName">Nom de l'action à exécuter </param>
     public void ExecuteAction(string actionName)
     {
+        ExecuteAction(actionName, null);
+    }
+
+    /// <summary>
+    /// Exécute une action en fonction de son nom avec un objectif personnalisé
+    /// </summary>
+    /// <param name="actionName">Nom de l'action à exécuter </param>
+    /// <param name="customObjective">Objectif personnalisé (si null, utilise l'objectif de l'action)</param>
+    public void ExecuteAction(string actionName, string customObjective)
+    {
         // Chercher l'action dans la liste
         Action action = actions.Find(a => a.actionName == actionName);
 
         if (action != null)
         {
+            // Déterminer quel objectif utiliser
+            string objectiveToShow = customObjective ?? action.objective;
+
+            // Toujours appeler ShowObjective 
+            if (ObjectiveUI.Instance != null)
+            {
+                ObjectiveUI.Instance.ShowObjective(objectiveToShow);
+            }
+
             // Si délai, utiliser une coroutine
             if (action.delayBeforeAction > 0)
             {
@@ -89,7 +111,13 @@ public class ActionManager : MonoBehaviour
         }
         else
         {
-            // Pas d'action dans la liste, essayer juste le code spécifique
+            // Toujours appeler ShowObjective (gère le cas vide en cachant)
+            if (ObjectiveUI.Instance != null)
+            {
+                ObjectiveUI.Instance.ShowObjective(customObjective);
+            }
+
+            // Essayer juste le code spécifique
             ExecuteSpecificAction(actionName);
         }
     }
