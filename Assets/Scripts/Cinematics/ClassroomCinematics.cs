@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using static BotPatrol;
 
@@ -10,14 +11,11 @@ public class ClassroomCinematics : MonoBehaviour
     [SerializeField] private List<PatrolPoint> studentHelmetPoints = new List<PatrolPoint>();
     [SerializeField] private List<GameObject> map_equipments = new List<GameObject>();
 
-
-    void Start()
-    {
-        StudentsEnterInRoom();
-    }
-
     public void StudentsEnterInRoom()
     {
+        Destroy(teacher.GetComponent<ToolTipObject>());
+        Destroy(teacher.GetComponent<Outline>());
+        Destroy(teacher.GetComponent<DialogueTrigger>());
         foreach (GameObject student in students)
         {
             PathFollow patrol = student.GetComponent<PathFollow>();
@@ -38,41 +36,9 @@ public class ClassroomCinematics : MonoBehaviour
         }
     }
 
-    /*
-
-    private void TeacherAtDesk(int teacherPathPoint, int lastPP)
+    public void TakeHelmet()
     {
-        if (teacherPathPoint >= lastPP)
-        {
-            StudentTakeHelmet();
-        }
-    }
-
-    private void StudentsSit(int StudentPathPoint, int lastPP)
-    {
-        if (StudentPathPoint >= lastPP)
-        {
-        }
-    }
-
-    /*
-
-    private void StudentTakeHelmet()
-    {
-        BotPatrol patrol = students[0].GetComponent<BotPatrol>();
-        patrol.SetPatrolPoints(studentHelmetPoints);
-        patrol.StartPatrol();
-        patrol.pathEvent.AddListener(TakeHelmet);
-    }
-
-    */
-
-    private void TakeHelmet(int StudentPathPoint, int lastPP)
-    {
-        if (StudentPathPoint == 3)
-        {
-            StartCoroutine(HideEquipment());
-        }
+        StartCoroutine(HideEquipment());
     }
 
     private IEnumerator HideEquipment()
@@ -83,5 +49,23 @@ public class ClassroomCinematics : MonoBehaviour
             map_equipments[i].SetActive(false);
             students[0].GetComponent<RigItemsManager>().ShowItem(i);
         }
+        students[0].GetComponent<PathFollow>().GoToPoint(2);
+    }
+
+    public void ActiveGroupsInteractions()
+    {
+        foreach (GameObject student in students)
+        {
+            if (student.TryGetComponent(out ToolTipObject tooltip))
+                tooltip.enabled = true;
+
+            if (student.TryGetComponent(out DialogueTrigger dialogue))
+                dialogue.enabled = true;
+
+            if (student.TryGetComponent(out Outline outline))
+                outline.enabled = true;
+        }
+        students[0].transform.GetChild(0).GetComponent<Animator>().SetTrigger("Vr");
+        students[1].transform.GetChild(0).GetComponent<Animator>().SetBool("IsTalking", true);
     }
 }

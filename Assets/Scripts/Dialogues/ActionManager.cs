@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Events;
 
 /// <summary>
 /// Gestionnaire d'actions complexes et actions partagées (utilisées par dialogues et triggers)
@@ -33,6 +34,9 @@ public class ActionManager : MonoBehaviour
 
         [Tooltip("Objets dont on désactive uniquement l'interaction ")]
         public InteractableObject[] interactionsToDisable;
+        
+        [Tooltip("Event")]
+        public UnityEvent unityEvent;
     }
 
     [Header("Actions partagées (dialogues + triggers)")]
@@ -251,6 +255,15 @@ public class ActionManager : MonoBehaviour
 
             case "hide_fiche":
                 ExecuteHideFiche();
+                break;
+            case "students_enter":
+                actions[1].unityEvent.Invoke();
+                break;
+            case "student_helmet":
+                actions[2].unityEvent.Invoke();
+                break;
+            case "student_help":
+                actions[3].unityEvent.Invoke();
                 break;
 
             // Ajouter d'autres actions ici

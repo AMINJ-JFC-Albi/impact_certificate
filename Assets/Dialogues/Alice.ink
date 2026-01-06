@@ -1,0 +1,44 @@
+﻿-> dialogue_debut
+
+
+=== dialogue_debut ===
+# speaker: Alice
+ Normalement c’est bon tout a été mis en place tu devrais être dans une salle d’opération et voir tes mains
+
+# speaker: Thibault
+ En effet, je suis dedans et waouh c’est immense, bien plus que celle la salle de classe
+
+# speaker: Alice
+ Oui, évite de marcher sinon tu vas entrer dans le mur
+
+# speaker: Thibault
+ Normalement ça devrait pas, j’ai bien compris qu’il fallait se déplacer avec les manettes, c’est bizarre de faire comme ça
+
+# speaker: Alice
+ On s’y fait, allez les outils pour la chirurgie sont devant toi ; prends les avec les gâchettes de la manette et fais l’opération du coeur
+
+# speaker: Thibault #delay:2
+ ça marche
+
+# speaker: Alice
+ Tu à l’air très concentré 
+
+# speaker: Thibault
+ Oui j’ai envie de bien faire et de ne pas me louper
+
+# speaker: Alice
+ Tu sais que c’est virtuel ça n’explique pas, c’est pas un vrai coeur que tu opères
+
+# speaker: Thibault
+ Ouais mais je sais pas, je me sens engagé, j’ai les outils je peux faire l’opération, je peux interagir avec le coeur, je suis le chirurgien
+
+# speaker: Alice
+ C’est ce qu’on appelle l’immersion, le moment où ton cerveau oublie que c’est virtuel et que ça devient réel. De ce fait tu es totalement engagé, concentré et c’est là que la VR devient pertinent
+
+# speaker: Alice
+ Alors c’était comment ta première fois ?
+
+# speaker: Thibault
+ C’était cool mais j’ai l’air fatigué comme si j’avais fais une vraie opération
+ 
+-> END
