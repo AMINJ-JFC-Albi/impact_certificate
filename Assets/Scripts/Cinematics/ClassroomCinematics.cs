@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Grid;
 using static BotPatrol;
 
 public class ClassroomCinematics : MonoBehaviour
@@ -9,7 +10,7 @@ public class ClassroomCinematics : MonoBehaviour
     [SerializeField] private GameObject teacher;
     [SerializeField] private List<PatrolPoint> studentHelmetPoints = new List<PatrolPoint>();
     [SerializeField] private List<GameObject> map_equipments = new List<GameObject>();
-    [SerializeField] private GameObject showCrossGameEval;
+    [SerializeField] private GameObject CrossGamePanel;
 
     private (bool, bool) dialoguesListen = (false, false);
 
@@ -77,7 +78,12 @@ public class ClassroomCinematics : MonoBehaviour
         if (id == 1) { dialoguesListen.Item2 = true; }
         if (dialoguesListen == (true, true))
         {
-            showCrossGameEval.SetActive(true);
+            // Avant de lancer le panel -> dialogue + animation ?
+            CrossGamePanel.SetActive(true);
+            GridManager.Instance.StartGame(1);
         }
     }
+
+
+
 }
