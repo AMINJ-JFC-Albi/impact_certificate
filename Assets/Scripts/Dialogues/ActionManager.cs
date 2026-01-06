@@ -34,7 +34,7 @@ public class ActionManager : MonoBehaviour
 
         [Tooltip("Objets dont on désactive uniquement l'interaction ")]
         public InteractableObject[] interactionsToDisable;
-        
+
         [Tooltip("Event")]
         public UnityEvent unityEvent;
     }

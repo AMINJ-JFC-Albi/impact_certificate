@@ -1999,6 +1999,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 919126399}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &569673112 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9013592051722383650, guid: 8a00d6f71ef2b7f4fb6e1909d9e75474, type: 3}
+  m_PrefabInstance: {fileID: 1362244521}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &569715656
 GameObject:
   m_ObjectHideFlags: 0
@@ -2341,9 +2346,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TelescopeTrigger
   interactionType: 0
   interactionDistance: 1
-  objectsToActivate: []
+  objectsToActivate:
+  - {fileID: 569673112}
   objectsToDeactivate:
   - {fileID: 762414960}
+  - {fileID: 1952150480}
   actionName: telescope_action
   objective: 
   isCheckpoint: 0
@@ -2639,6 +2646,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5973174399962827415, guid: c6ab2121e7aab484aa35c739e7519d27, type: 3}
   m_PrefabInstance: {fileID: 1660110124}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &924449098 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 602275361047255241, guid: c6ab2121e7aab484aa35c739e7519d27, type: 3}
+  m_PrefabInstance: {fileID: 1660110124}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4c34208b54afcb4bb8749855c899bbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OpenDoors
 --- !u!1 &963520135
 GameObject:
   m_ObjectHideFlags: 0
@@ -2752,6 +2770,22 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 555398236967125274, guid: 1059cfe63aad82547ad4196d4357644f, type: 3}
+      propertyPath: telescopeTimeline
+      value: 
+      objectReference: {fileID: 792617454}
+    - target: {fileID: 555398236967125274, guid: 1059cfe63aad82547ad4196d4357644f, type: 3}
+      propertyPath: openDoorsComponent
+      value: 
+      objectReference: {fileID: 924449098}
+    - target: {fileID: 555398236967125274, guid: 1059cfe63aad82547ad4196d4357644f, type: 3}
+      propertyPath: actions.Array.data[0].objective
+      value: Interactuar con el telescopio
+      objectReference: {fileID: 0}
+    - target: {fileID: 555398236967125274, guid: 1059cfe63aad82547ad4196d4357644f, type: 3}
+      propertyPath: actions.Array.data[0].delayBeforeAction
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 555398236967125274, guid: 1059cfe63aad82547ad4196d4357644f, type: 3}
       propertyPath: actions.Array.data[1].objectsToActivate.Array.size
       value: 0
       objectReference: {fileID: 0}
@@ -2763,6 +2797,22 @@ PrefabInstance:
       propertyPath: actions.Array.data[3].objectsToActivate.Array.size
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 555398236967125274, guid: 1059cfe63aad82547ad4196d4357644f, type: 3}
+      propertyPath: actions.Array.data[0].objectsToDeactivate.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 555398236967125274, guid: 1059cfe63aad82547ad4196d4357644f, type: 3}
+      propertyPath: 'actions.Array.data[0].objectsToActivate.Array.data[0]'
+      value: 
+      objectReference: {fileID: 762414960}
+    - target: {fileID: 555398236967125274, guid: 1059cfe63aad82547ad4196d4357644f, type: 3}
+      propertyPath: actions.Array.data[0].interactionsToDisable.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 555398236967125274, guid: 1059cfe63aad82547ad4196d4357644f, type: 3}
+      propertyPath: 'actions.Array.data[0].interactionsToDisable.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1099550969}
     - target: {fileID: 555398236967125274, guid: 1059cfe63aad82547ad4196d4357644f, type: 3}
       propertyPath: actions.Array.data[1].unityEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -5751,7 +5801,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1952150481
 Transform:
   m_ObjectHideFlags: 0
