@@ -118,7 +118,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f082328f02ca7844e88f0d21e8b6967a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ToolTipObject
-  text: Reine temporaire
+  text: Reina Alien
 --- !u!114 &4559026314264031510
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -147,7 +147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc7998feb5e6e284b9eca273454cdde9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterAnimator
-  characterName: Reine
+  characterName: Reina Alien
   animator: {fileID: 3781532496548087550}
   isTalkingParameter: IsTalking
   talkTrigger: Talk

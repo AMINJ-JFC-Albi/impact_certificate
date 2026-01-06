@@ -24,6 +24,12 @@ public class ActionManager : MonoBehaviour
 
         [Tooltip("Objets à désactiver")]
         public GameObject[] objectsToDeactivate;
+
+        [Tooltip("Objets dont on active uniquement l'interaction")]
+        public InteractableObject[] interactionsToEnable;
+
+        [Tooltip("Objets dont on désactive uniquement l'interaction ")]
+        public InteractableObject[] interactionsToDisable;
     }
 
     [Header("Actions partagées (dialogues + triggers)")]
@@ -137,6 +143,30 @@ public class ActionManager : MonoBehaviour
                     {
                         GameManager.Instance.DisallowInteractable(interactable);
                     }
+                }
+            }
+        }
+
+        // Activer uniquement l'interaction 
+        if (action.interactionsToEnable != null)
+        {
+            foreach (InteractableObject interactable in action.interactionsToEnable)
+            {
+                if (interactable != null && GameManager.Instance != null)
+                {
+                    GameManager.Instance.AllowInteractable(interactable);
+                }
+            }
+        }
+
+        // Désactiver uniquement l'interaction 
+        if (action.interactionsToDisable != null)
+        {
+            foreach (InteractableObject interactable in action.interactionsToDisable)
+            {
+                if (interactable != null && GameManager.Instance != null)
+                {
+                    GameManager.Instance.DisallowInteractable(interactable);
                 }
             }
         }
