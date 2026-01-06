@@ -51,6 +51,7 @@ Le fait d’être actif renforce la mémorisation et augmente les chances de ré
 D’accord, je comprends mieux. La VR n’est donc pas seulement un support visuel, mais un outil qui permet de vivre une expérience immersive et active, ce qui la rend particulièrement pertinente pour des situations comme la formation ou la simulation de contextes à risque.
 
 # speaker: Professeur Bob
-Exactement, tu as bien compris.
+Exactement, tu as bien compris. # action: end_ethan_dialog
+
 
 -> END

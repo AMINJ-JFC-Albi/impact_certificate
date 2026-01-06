@@ -39,6 +39,6 @@
  Alors c’était comment ta première fois ?
 
 # speaker: Thibault
- C’était cool mais j’ai l’air fatigué comme si j’avais fais une vraie opération
+ C’était cool mais j’ai l’air fatigué comme si j’avais fais une vraie opération # action: end_alice_dialog
  
 -> END

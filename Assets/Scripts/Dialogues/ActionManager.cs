@@ -307,6 +307,12 @@ public class ActionManager : MonoBehaviour
             case "student_help":
                 actions[3].unityEvent.Invoke();
                 break;
+            case "end_ethan_dialog":
+                actions[4].unityEvent.Invoke();
+                break;
+            case "end_alice_dialog":
+                actions[5].unityEvent.Invoke();
+                break;
 
             // Ajouter d'autres actions ici
             // case "autre_action":

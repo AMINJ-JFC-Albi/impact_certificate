@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using static BotPatrol;
 
@@ -10,6 +9,9 @@ public class ClassroomCinematics : MonoBehaviour
     [SerializeField] private GameObject teacher;
     [SerializeField] private List<PatrolPoint> studentHelmetPoints = new List<PatrolPoint>();
     [SerializeField] private List<GameObject> map_equipments = new List<GameObject>();
+    [SerializeField] private GameObject showCrossGameEval;
+
+    private (bool,bool) dialoguesListen = (false,false);
 
     public void StudentsEnterInRoom()
     {
@@ -67,5 +69,16 @@ public class ClassroomCinematics : MonoBehaviour
         }
         students[0].transform.GetChild(0).GetComponent<Animator>().SetTrigger("Vr");
         students[1].transform.GetChild(0).GetComponent<Animator>().SetBool("IsTalking", true);
+    }
+
+    public void AssignDialogListen(int id)
+    {
+        if (id == 0) { dialoguesListen.Item1 = true; }
+        if (id == 1) { dialoguesListen.Item2 = true; }
+        if (dialoguesListen == (true,true))
+        {
+            showCrossGameEval.SetActive(true);
+        }
+        Debug.Log("DIALOGUE FINI");
     }
 }
