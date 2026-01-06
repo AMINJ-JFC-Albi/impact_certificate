@@ -2488,7 +2488,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!95 &792617453
 Animator:
   serializedVersion: 7
@@ -2982,7 +2982,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8185425352640080945, guid: 1059cfe63aad82547ad4196d4357644f, type: 3}
       propertyPath: allowedInteractables.Array.size
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8185425352640080945, guid: 1059cfe63aad82547ad4196d4357644f, type: 3}
       propertyPath: 'allowedInteractables.Array.data[0]'
@@ -2995,7 +2995,7 @@ PrefabInstance:
     - target: {fileID: 8185425352640080945, guid: 1059cfe63aad82547ad4196d4357644f, type: 3}
       propertyPath: 'allowedInteractables.Array.data[2]'
       value: 
-      objectReference: {fileID: 1362244522}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -4555,17 +4555,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8a00d6f71ef2b7f4fb6e1909d9e75474, type: 3}
---- !u!114 &1362244522 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7453880016219743046, guid: 8a00d6f71ef2b7f4fb6e1909d9e75474, type: 3}
-  m_PrefabInstance: {fileID: 1362244521}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8862241cf53f03846aee42fc9ab2f9e1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DialogueTrigger
 --- !u!114 &1362244523 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5619039405761344777, guid: 8a00d6f71ef2b7f4fb6e1909d9e75474, type: 3}
@@ -6661,7 +6650,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1952150481
 Transform:
   m_ObjectHideFlags: 0
