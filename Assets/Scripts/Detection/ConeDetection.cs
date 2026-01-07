@@ -11,11 +11,8 @@ namespace Detection
         [Tooltip("Angle du cône de vision (en degrés)")]
         [SerializeField] private float viewAngle = 90f;
 
-        protected override Mesh GenerateDetectionMesh()
+        protected override void GenerateDetectionMesh(Mesh mesh)
         {
-            Mesh mesh = new Mesh();
-            mesh.name = "VisionConeMesh";
-
             int segments = meshResolution;
             int vertexCount = segments + 2;
             Vector3[] vertices = new Vector3[vertexCount];
@@ -45,27 +42,30 @@ namespace Detection
                 triangles[i * 3 + 2] = i + 2;
             }
 
+            mesh.Clear();
             mesh.vertices = vertices;
             mesh.triangles = triangles;
             mesh.RecalculateNormals();
-
-            return mesh;
         }
 
         protected override void CheckForTarget()
         {
+            Vector3 detectionOrigin = transform.position + Vector3.up * detectionHeight;
+
             // Chercher tous les colliders dans le rayon de détection
-            Collider[] targetsInRange = Physics.OverlapSphere(transform.position, detectionRange, targetLayer);
+            Collider[] targetsInRange = Physics.OverlapSphere(detectionOrigin, detectionRange, targetLayer);
 
             bool targetFound = false;
 
             foreach (Collider targetCollider in targetsInRange)
             {
                 Transform target = targetCollider.transform;
-                Vector3 directionToTarget = (target.position - transform.position).normalized;
+                Vector3 directionToTarget = (target.position - detectionOrigin).normalized;
 
-                // Vérifier si la cible est dans l'angle de vision
-                float angleToTarget = Vector3.Angle(transform.forward, directionToTarget);
+                // Vérifier si la cible est dans l'angle de vision (ignorer l'axe Y pour l'angle horizontal)
+                Vector3 flatDirection = new Vector3(directionToTarget.x, 0, directionToTarget.z).normalized;
+                Vector3 flatForward = new Vector3(transform.forward.x, 0, transform.forward.z).normalized;
+                float angleToTarget = Vector3.Angle(flatForward, flatDirection);
 
                 if (angleToTarget <= viewAngle / 2f)
                 {

@@ -15,6 +15,9 @@ namespace Detection
         [Tooltip("Distance maximale de détection")]
         [SerializeField] protected float detectionRange = 10f;
 
+        [Tooltip("Hauteur du point d'origine de la détection (0 = pieds, 1.5 = tête)")]
+        [SerializeField] protected float detectionHeight = 1f;
+
         [Tooltip("Délai entre chaque vérification (en secondes)")]
         [SerializeField] protected float detectionInterval = 0.2f;
 
@@ -39,6 +42,12 @@ namespace Detection
         [Tooltip("Nombre de segments pour le rendu")]
         [SerializeField] protected int meshResolution = 20;
 
+        [Tooltip("Si activé, le cône n'est calculé qu'une seule fois (pour PNJ statiques)")]
+        [SerializeField] protected bool staticDetection = false;
+
+        [Tooltip("Intervalle de mise à jour du mesh en secondes (pour PNJ mobiles)")]
+        [SerializeField] protected float meshUpdateInterval = 0.2f;
+
         protected Transform detectedTarget;
         protected float lastDetectionTime;
         protected bool isTargetDetected;
@@ -48,6 +57,9 @@ namespace Detection
         protected GameObject detectionZoneObject;
         private Mesh cachedMesh;
         private float lastDetectionRange;
+        private bool meshInitialized = false;
+        private bool lastDetectionState = false;
+        private float lastMeshUpdateTime = 0f;
 
 
         public System.Action<Transform> OnTargetDetected;
@@ -69,12 +81,18 @@ namespace Detection
             // Créer un GameObject enfant pour le mesh
             detectionZoneObject = new GameObject("DetectionZone");
             detectionZoneObject.transform.SetParent(transform);
-            detectionZoneObject.transform.localPosition = Vector3.zero;
+            detectionZoneObject.transform.localPosition = Vector3.up * detectionHeight;
             detectionZoneObject.transform.localRotation = Quaternion.identity;
+
+
 
             // Ajouter MeshFilter et MeshRenderer
             meshFilter = detectionZoneObject.AddComponent<MeshFilter>();
             meshRenderer = detectionZoneObject.AddComponent<MeshRenderer>();
+
+            // Désactiver les shadows pour optimiser
+            meshRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            meshRenderer.receiveShadows = false;
 
             // Configurer le matériau
             if (detectionMaterial != null)
@@ -108,11 +126,20 @@ namespace Detection
         /// </summary>
         private void RegenerateMesh()
         {
-            cachedMesh = GenerateDetectionMesh();
-            if (cachedMesh != null && meshFilter != null)
+            // Réutiliser le mesh existant au lieu d'en créer un nouveau
+            if (cachedMesh == null)
+            {
+                cachedMesh = new Mesh();
+                cachedMesh.name = "DetectionMesh";
+            }
+
+            GenerateDetectionMesh(cachedMesh);
+
+            if (meshFilter != null)
             {
                 meshFilter.mesh = cachedMesh;
             }
+            meshInitialized = true;
         }
 
         /// <summary>
@@ -126,13 +153,36 @@ namespace Detection
                 return;
             }
 
-            // Régénérer le mesh à chaque frame pour prendre en compte les obstacles
-            lastDetectionRange = detectionRange;
-            RegenerateMesh();
-
-            // Mettre à jour la couleur selon l'état
-            if (meshRenderer != null && meshRenderer.material != null)
+            // Mettre à jour la position du cône selon la hauteur
+            if (detectionZoneObject != null)
             {
+                detectionZoneObject.transform.localPosition = Vector3.up * detectionHeight;
+            }
+
+            // Si détection statique, ne régénérer qu'une seule fois
+            if (staticDetection)
+            {
+                if (!meshInitialized)
+                {
+                    lastDetectionRange = detectionRange;
+                    RegenerateMesh();
+                }
+            }
+            else
+            {
+                // Régénérer le mesh seulement à intervalle régulier
+                if (Time.time - lastMeshUpdateTime >= meshUpdateInterval)
+                {
+                    lastMeshUpdateTime = Time.time;
+                    lastDetectionRange = detectionRange;
+                    RegenerateMesh();
+                }
+            }
+
+            // Mettre à jour la couleur seulement si l'état a changé
+            if (meshRenderer != null && meshRenderer.material != null && lastDetectionState != isTargetDetected)
+            {
+                lastDetectionState = isTargetDetected;
                 Color targetColor = isTargetDetected ? alertZoneColor : normalColor;
                 meshRenderer.material.color = targetColor;
             }
@@ -143,7 +193,7 @@ namespace Detection
         /// </summary>
         protected float GetEffectiveRange(Vector3 direction, float maxRange)
         {
-            Vector3 origin = transform.position + Vector3.up * 0.1f; // Légèrement au-dessus du sol
+            Vector3 origin = transform.position + Vector3.up * detectionHeight;
             if (Physics.Raycast(origin, direction, out RaycastHit hit, maxRange, obstacleLayer))
             {
                 return hit.distance;
@@ -155,7 +205,7 @@ namespace Detection
         /// Génère le mesh spécifique pour le type de détection.
         /// À implémenter dans les classes dérivées.
         /// </summary>
-        protected abstract Mesh GenerateDetectionMesh();
+        protected abstract void GenerateDetectionMesh(Mesh mesh);
 
         protected virtual void Update()
         {
@@ -182,10 +232,11 @@ namespace Detection
         /// </summary>
         protected bool HasLineOfSight(Vector3 targetPosition)
         {
-            Vector3 direction = targetPosition - transform.position;
+            Vector3 origin = transform.position + Vector3.up * detectionHeight;
+            Vector3 direction = targetPosition - origin;
             float distance = direction.magnitude;
 
-            if (Physics.Raycast(transform.position, direction.normalized, out RaycastHit hit, distance, obstacleLayer))
+            if (Physics.Raycast(origin, direction.normalized, out RaycastHit hit, distance, obstacleLayer))
             {
                 // Un obstacle bloque la vue
                 return false;

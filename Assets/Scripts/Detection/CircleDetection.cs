@@ -7,11 +7,8 @@ namespace Detection
     /// </summary>
     public class CircleDetection : BaseDetection
     {
-        protected override Mesh GenerateDetectionMesh()
+        protected override void GenerateDetectionMesh(Mesh mesh)
         {
-            Mesh mesh = new Mesh();
-            mesh.name = "CircleDetectionMesh";
-
             int segments = meshResolution;
             int vertexCount = segments + 2;
             Vector3[] vertices = new Vector3[vertexCount];
@@ -44,11 +41,10 @@ namespace Detection
                 triangles[i * 3 + 2] = i + 1;
             }
 
+            mesh.Clear();
             mesh.vertices = vertices;
             mesh.triangles = triangles;
             mesh.RecalculateNormals();
-
-            return mesh;
         }
 
         protected override void CheckForTarget()
