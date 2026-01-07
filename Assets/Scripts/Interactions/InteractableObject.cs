@@ -185,11 +185,15 @@ public class InteractableObject : MonoBehaviour
     #region Système d'interactivité
 
     /// <summary>
-    /// Vérifie si l'objet peut être interagi (compteur à 0 et pas d'UI au-dessus)
+    /// Vérifie si l'objet peut être interagi (compteur à 0, pas d'UI au-dessus, et dans allowedInteractables)
     /// </summary>
     public bool CanInteract()
     {
         if (canInteract > 0) return false;
+
+        // Vérifier si l'objet est dans la liste des objets autorisés
+        if (GameManager.Instance != null && !GameManager.Instance.IsInteractableAllowed(this))
+            return false;
 
         if (Mouse.current != null && EventSystem.current != null)
         {

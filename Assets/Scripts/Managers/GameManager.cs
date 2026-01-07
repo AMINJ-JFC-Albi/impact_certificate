@@ -148,6 +148,14 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Vérifie si un objet est dans la liste des objets autorisés
+    /// </summary>
+    public bool IsInteractableAllowed(InteractableObject interactable)
+    {
+        return interactable != null && allowedInteractables.Contains(interactable);
+    }
+
 
     /// <summary>
     /// Enregistre un objet interactif dans la liste globale.
