@@ -78,9 +78,15 @@ public class ClassroomCinematics : MonoBehaviour
         if (id == 1) { dialoguesListen.Item2 = true; }
         if (dialoguesListen == (true, true))
         {
-            CrossGamePanel.SetActive(true);
-            GridManager.Instance.StartGame(1);
+            StartCoroutine(StartCrosswordGameWithDelay(5f));
         }
+    }
+
+    private IEnumerator StartCrosswordGameWithDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        CrossGamePanel.SetActive(true);
+        GridManager.Instance.StartGame(1);
     }
 
 

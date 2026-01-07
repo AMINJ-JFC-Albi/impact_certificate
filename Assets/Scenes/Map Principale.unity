@@ -2646,7 +2646,7 @@ MonoBehaviour:
   buttonHint: {fileID: 158666470}
   loadingImage: {fileID: 1271278434}
   buttonCooldown: 10
-  autoStartOnEnable: 0
+  autoStartOnEnable: 1
   startingLevel: 1
   delayBeforeStart: 5
 --- !u!4 &774679762
@@ -3168,6 +3168,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 555398236967125274, guid: 1059cfe63aad82547ad4196d4357644f, type: 3}
       propertyPath: timelineActions.Array.data[0].autoReset
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 555398236967125274, guid: 1059cfe63aad82547ad4196d4357644f, type: 3}
+      propertyPath: timelineActions.Array.data[1].autoReset
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 555398236967125274, guid: 1059cfe63aad82547ad4196d4357644f, type: 3}
@@ -7566,6 +7570,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2526298174726225390, guid: 65ece3fc9b86b744cae5910b114769ca, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2526298174726225390, guid: 65ece3fc9b86b744cae5910b114769ca, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2999882582675747575, guid: 65ece3fc9b86b744cae5910b114769ca, type: 3}
       propertyPath: m_Name
       value: Canvas-MotFleche
@@ -7574,6 +7586,30 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 774679761}
+    - target: {fileID: 5782187400933619759, guid: 65ece3fc9b86b744cae5910b114769ca, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5782187400933619759, guid: 65ece3fc9b86b744cae5910b114769ca, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5782187400933619759, guid: 65ece3fc9b86b744cae5910b114769ca, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5782187400933619759, guid: 65ece3fc9b86b744cae5910b114769ca, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5782187400933619759, guid: 65ece3fc9b86b744cae5910b114769ca, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7289169570128204607, guid: 65ece3fc9b86b744cae5910b114769ca, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

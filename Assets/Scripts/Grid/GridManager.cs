@@ -87,7 +87,7 @@ namespace Grid
         [Header("Auto Start")]
         [SerializeField] private bool autoStartOnEnable = false;
         [SerializeField] private int startingLevel = 1;
-        [SerializeField] private float delayBeforeStart = 0f;
+
 
         private bool hasStarted = false;
         private int _currentLevel;
@@ -119,10 +119,8 @@ namespace Grid
 
         private IEnumerator StartGameWithDelay(int levelNumber)
         {
-            if (delayBeforeStart > 0)
-            {
-                yield return new WaitForSeconds(delayBeforeStart);
-            }
+
+            yield return null; // Attendre une frame pour s'assurer que tout est initialisé
 
             if (!hasStarted)
             {
