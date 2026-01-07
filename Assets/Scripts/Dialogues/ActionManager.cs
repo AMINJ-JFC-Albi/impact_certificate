@@ -225,13 +225,8 @@ public class ActionManager : MonoBehaviour
             if (obj != null)
             {
                 obj.SetActive(true);
-
-                // Si c'est un InteractableObject, l'activer aussi dans le GameManager
-                InteractableObject interactable = obj.GetComponent<InteractableObject>();
-                if (interactable != null && GameManager.Instance != null)
-                {
-                    GameManager.Instance.AllowInteractable(interactable);
-                }
+                // Note: On n'active plus automatiquement l'interaction ici
+                // Utiliser interactionsToEnable si besoin d'activer l'interaction
             }
         }
     }
