@@ -52,6 +52,10 @@ public class ActionManager : MonoBehaviour
     [Header("Références aux composants")]
     [SerializeField] private OpenDoors openDoorsComponent;
 
+    [Header("Téléportation")]
+    [SerializeField] private GameObject player;
+    [SerializeField] private Transform teleportMission2Position;
+
     [System.Serializable]
     public class TimelineAction
     {
@@ -225,8 +229,13 @@ public class ActionManager : MonoBehaviour
             if (obj != null)
             {
                 obj.SetActive(true);
-                // Note: On n'active plus automatiquement l'interaction ici
-                // Utiliser interactionsToEnable si besoin d'activer l'interaction
+
+                // Si c'est un InteractableObject, l'activer aussi dans le GameManager
+                InteractableObject interactable = obj.GetComponent<InteractableObject>();
+                if (interactable != null && GameManager.Instance != null)
+                {
+                    GameManager.Instance.AllowInteractable(interactable);
+                }
             }
         }
     }
@@ -322,7 +331,7 @@ public class ActionManager : MonoBehaviour
                 break;
 
             case "teleport_to_mission2":
-                PlayTimeline("teleport_to_mission2");
+                StartCoroutine(ExecuteTeleportToMission2WithDelay());
                 break;
 
             // Ajouter d'autres actions ici
@@ -436,6 +445,47 @@ public class ActionManager : MonoBehaviour
         if (ConceptualSpecificationDesign.Instance != null)
         {
             ConceptualSpecificationDesign.Instance.HideFiche();
+        }
+    }
+
+    /// <summary>
+    /// Action spécifique : Téléporte le joueur vers la position de la mission 2 avec délai
+    /// </summary>
+    private IEnumerator ExecuteTeleportToMission2WithDelay()
+    {
+
+        PlayTimeline("teleport_to_mission2");
+        GameManager.Instance.SetInfiltrationMode(true);
+
+        yield return new WaitForSeconds(2f);
+
+        if (player != null && teleportMission2Position != null)
+        {
+            CharacterController controller = player.GetComponent<CharacterController>();
+            if (controller != null)
+            {
+                controller.enabled = false;
+                player.transform.position = teleportMission2Position.position;
+                player.transform.rotation = teleportMission2Position.rotation;
+                controller.enabled = true;
+            }
+            else
+            {
+                player.transform.position = teleportMission2Position.position;
+                player.transform.rotation = teleportMission2Position.rotation;
+            }
+
+        }
+        else
+        {
+            if (player == null)
+            {
+                Debug.LogError("Player non assigné dans l'ActionManager!");
+            }
+            if (teleportMission2Position == null)
+            {
+                Debug.LogError("Position de téléportation pour la mission 2 non assignée dans l'ActionManager!");
+            }
         }
     }
     #endregion

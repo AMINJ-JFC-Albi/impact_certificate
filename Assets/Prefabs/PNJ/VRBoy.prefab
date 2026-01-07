@@ -774,6 +774,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PathFollow
   anim: {fileID: 5472333750126348068}
   walkBlendTreeAnimName: Run
+  onStartEvent:
+    m_PersistentCalls:
+      m_Calls: []
   points:
   - pointTransforms:
     - {fileID: 0}
@@ -811,6 +814,7 @@ MonoBehaviour:
     OnPointReached:
       m_PersistentCalls:
         m_Calls: []
+  loops: []
 --- !u!195 &7690216784221125506
 NavMeshAgent:
   m_ObjectHideFlags: 0

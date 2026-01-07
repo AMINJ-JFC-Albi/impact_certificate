@@ -9,6 +9,7 @@ public class PathFollow : MonoBehaviour
 {
     [SerializeField, Header("Animations")] private Animator anim;
     [SerializeField] private string walkBlendTreeAnimName = "Run";
+    [SerializeField] private UnityEvent onStartEvent;
 
     [System.Serializable]
     private class Point
@@ -18,9 +19,17 @@ public class PathFollow : MonoBehaviour
         public UnityEvent OnPointReached;
     }
     [SerializeField] private List<Point> points;
+
+    [System.Serializable]
+    private class Loop
+    {
+        public int[] pointTransformsId;
+        public int[] onPointReachedDelay;
+    }
+    [SerializeField] private List<Loop> loops;
     private NavMeshAgent agent;
 
-    private bool isFollowing = false, sitTo = false, sitOnBed = false;
+    private bool isFollowing = false, sitTo = false, sitOnBed = false, goingToAPoint = false;
     private Point currentPoint = null;
     private int actualPointIndex = 0, pointTransformIndex = 0;
 
@@ -28,10 +37,30 @@ public class PathFollow : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         if (anim == null) {anim = GetComponent<Animator>();};
+        onStartEvent.Invoke();
+    }
+
+    public void PlayLoop(int index)
+    {
+        goingToAPoint = true;
+        StartCoroutine(PlayloopCoroutine(index, 0));
+    }
+
+    private IEnumerator PlayloopCoroutine(int loopIndex, int pointIndex)
+    {
+        int[] points = loops[loopIndex].pointTransformsId;
+        GoToPoint(points[pointIndex]);
+        while (goingToAPoint)
+        {
+            yield return new WaitForSeconds(0.5f);
+        }
+        yield return new WaitForSeconds(loops[loopIndex].onPointReachedDelay[pointIndex]);
+        StartCoroutine(PlayloopCoroutine(loopIndex, pointIndex+1 > points.Length-1 ? 0 : pointIndex+1));
     }
 
     public void GoToPoint(int index)
     {
+        goingToAPoint = true;
         actualPointIndex = index;
         Point point = points[index];
         // choisis une destination aléatoire si le point en possède plusieurs.
@@ -82,6 +111,7 @@ public class PathFollow : MonoBehaviour
             if (sitTo) { sitTo = false; anim.SetTrigger("Sit"); }
             if (sitOnBed) { sitOnBed = false; anim.SetTrigger("LieOn"); }
             StartCoroutine(RotateAndPos(0.5f));
+            goingToAPoint = false;
         }
     }
 
