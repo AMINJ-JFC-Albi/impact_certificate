@@ -109,8 +109,8 @@ public class ActionManager : MonoBehaviour
             // Déterminer quel objectif utiliser
             string objectiveToShow = customObjective ?? action.objective;
 
-            // Toujours appeler ShowObjective 
-            if (ObjectiveUI.Instance != null)
+            // Ne changer l'objectif que s'il n'est pas vide (sinon on garde l'actuel)
+            if (!string.IsNullOrEmpty(objectiveToShow) && ObjectiveUI.Instance != null)
             {
                 ObjectiveUI.Instance.ShowObjective(objectiveToShow);
             }
@@ -129,8 +129,8 @@ public class ActionManager : MonoBehaviour
         }
         else
         {
-            // Toujours appeler ShowObjective (gère le cas vide en cachant)
-            if (ObjectiveUI.Instance != null)
+            // Ne changer l'objectif que s'il n'est pas vide (sinon on garde l'actuel)
+            if (!string.IsNullOrEmpty(customObjective) && ObjectiveUI.Instance != null)
             {
                 ObjectiveUI.Instance.ShowObjective(customObjective);
             }
@@ -324,6 +324,10 @@ public class ActionManager : MonoBehaviour
 
             case "return_to_navet":
                 PlayTimeline("return_to_navet");
+                break;
+
+            case "teleport_to_mission2":
+                PlayTimeline("teleport_to_mission2");
                 break;
 
             // Ajouter d'autres actions ici
