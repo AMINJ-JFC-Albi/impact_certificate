@@ -78,7 +78,6 @@ public class ClassroomCinematics : MonoBehaviour
         if (id == 1) { dialoguesListen.Item2 = true; }
         if (dialoguesListen == (true, true))
         {
-            // Avant de lancer le panel -> dialogue + animation ?
             CrossGamePanel.SetActive(true);
             GridManager.Instance.StartGame(1);
         }

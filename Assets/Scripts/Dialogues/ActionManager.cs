@@ -52,9 +52,17 @@ public class ActionManager : MonoBehaviour
     [Header("Références aux composants")]
     [SerializeField] private OpenDoors openDoorsComponent;
 
-    [Header("Télescope")]
-    [SerializeField] private UnityEngine.Playables.PlayableDirector telescopeTimeline;
-    [SerializeField] private bool telescopeAutoReturn = true;
+    [System.Serializable]
+    public class TimelineAction
+    {
+        public string name;
+        public UnityEngine.Playables.PlayableAsset timeline;
+        public bool autoReset = true;
+    }
+
+    [Header("Timelines")]
+    [SerializeField] private UnityEngine.Playables.PlayableDirector sharedDirector;
+    [SerializeField] private TimelineAction[] timelineActions;
 
     private void Awake()
     {
@@ -70,10 +78,10 @@ public class ActionManager : MonoBehaviour
 
     private void OnDisable()
     {
-        // Nettoyer l'abonnement si l'ActionManager est désactivé
-        if (telescopeTimeline != null)
+        // Nettoyer les abonnements si l'ActionManager est désactivé
+        if (sharedDirector != null)
         {
-            telescopeTimeline.stopped -= OnTelescopeTimelineStopped;
+            sharedDirector.stopped -= OnTimelineStopped;
         }
     }
 
@@ -259,7 +267,7 @@ public class ActionManager : MonoBehaviour
                 break;
 
             case "telescope_action":
-                ExecuteTelescopeAction();
+                PlayTimeline("telescope");
                 break;
 
             case "reset_on_death":
@@ -314,6 +322,10 @@ public class ActionManager : MonoBehaviour
                 actions[5].unityEvent.Invoke();
                 break;
 
+            case "return_to_navet":
+                PlayTimeline("return_to_navet");
+                break;
+
             // Ajouter d'autres actions ici
             // case "autre_action":
             //     ExecuteAutreAction();
@@ -339,29 +351,45 @@ public class ActionManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Action spécifique : Active le télescope (joue la Timeline de zoom caméra)
+    /// Joue une timeline par son nom (défini dans timelineActions)
     /// </summary>
-    private void ExecuteTelescopeAction()
+    private void PlayTimeline(string timelineName)
     {
-        if (telescopeTimeline != null)
+        if (timelineActions == null || sharedDirector == null)
         {
-            telescopeTimeline.time = 0;
-            telescopeTimeline.Play();
+            Debug.LogError("TimelineActions ou SharedDirector non assigné dans l'ActionManager!");
+            return;
+        }
 
-            if (telescopeAutoReturn)
+        foreach (var ta in timelineActions)
+        {
+            if (ta.name == timelineName)
             {
-                telescopeTimeline.stopped += OnTelescopeTimelineStopped;
+                if (ta.timeline != null)
+                {
+                    // Assigner la nouvelle timeline au director partagé
+                    sharedDirector.playableAsset = ta.timeline;
+                    sharedDirector.time = 0;
+                    sharedDirector.Play();
+
+                    if (ta.autoReset)
+                    {
+                        sharedDirector.stopped += OnTimelineStopped;
+                    }
+                }
+                else
+                {
+                    Debug.LogError($"Timeline '{timelineName}' n'est pas assignée dans l'ActionManager!");
+                }
+                return;
             }
         }
-        else
-        {
-            Debug.LogError("Telescope Timeline n'est pas assignée dans l'ActionManager!");
-        }
+        Debug.LogWarning($"Timeline '{timelineName}' non trouvée dans timelineActions");
     }
 
-    private void OnTelescopeTimelineStopped(UnityEngine.Playables.PlayableDirector director)
+    private void OnTimelineStopped(UnityEngine.Playables.PlayableDirector director)
     {
-        director.stopped -= OnTelescopeTimelineStopped;
+        director.stopped -= OnTimelineStopped;
         director.time = 0;
         director.Evaluate();
     }

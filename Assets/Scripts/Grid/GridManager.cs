@@ -19,6 +19,13 @@ namespace Grid
         [SerializeField] private GameObject gamePanel;
         [SerializeField] private float delayBeforeClose = 1.5f;
 
+        [Header("Dialogues de fin de niveau")]
+        [Tooltip("Fichier Ink JSON à déclencher à la fin du niveau 1")]
+        [SerializeField] private TextAsset inkDialogueLevel1;
+        [Tooltip("Fichier Ink JSON à déclencher à la fin du niveau 2")]
+        [SerializeField] private TextAsset inkDialogueLevel2;
+
+
         #region Enum
         public enum MoveDirection { Left, Right, Up, Down }
 
@@ -198,6 +205,38 @@ namespace Grid
 
             // Déclencher l'événement
             OnLevelCompleted?.Invoke(_currentLevel);
+
+            // Déclencher le dialogue du niveau
+            TriggerLevelDialogue(_currentLevel);
+        }
+
+        /// <summary>
+        /// Déclenche le dialogue associé au niveau spécifié
+        /// </summary>
+        private void TriggerLevelDialogue(int level)
+        {
+            TextAsset inkJson = level switch
+            {
+                1 => inkDialogueLevel1,
+                2 => inkDialogueLevel2,
+                _ => null
+            };
+
+            if (inkJson == null)
+            {
+                Debug.LogWarning($"Aucun dialogue Ink assigné pour le niveau {level} dans l'inspecteur du GridManager!");
+                return;
+            }
+
+            if (DialogueManager.Instance != null)
+            {
+                Debug.Log($"Triggering dialogue for level {level}");
+                DialogueManager.Instance.EnterDialogueMode(inkJson, false);
+            }
+            else
+            {
+                Debug.LogError("DialogueManager.Instance est null!");
+            }
         }
 
         /// <summary>

@@ -9,7 +9,7 @@ Bonjour, entrez chers élèves ! # action: students_enter # delay:3
 Aujourd'hui, nous allons étudier la réalité virtuelle. 
 Pour cela j'ai mis un casque VR a votre disposition.
 
-# speaker: Professeur Bob
+# speaker: Professeur Bob #delay:5
 Thibault, viens prendre le casque je te pris, qui aimerait l'aider à le mettre en place ? # action: student_helmet
 
 # speaker: Alice

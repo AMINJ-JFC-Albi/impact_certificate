@@ -30,10 +30,10 @@
  Tu sais que c’est virtuel ça n’explique pas, c’est pas un vrai coeur que tu opères
 
 # speaker: Thibault
- Ouais mais je sais pas, je me sens engagé, j’ai les outils je peux faire l’opération, je peux interagir avec le coeur, je suis le chirurgien
+ Ouais mais je sais pas, je me sens <b>engagé</b>, j’ai les outils je peux faire l’opération, je peux <b>interagir</b> avec le coeur, je suis le chirurgien
 
 # speaker: Alice
- C’est ce qu’on appelle l’immersion, le moment où ton cerveau oublie que c’est virtuel et que ça devient réel. De ce fait tu es totalement engagé, concentré et c’est là que la VR devient pertinent
+ C’est ce qu’on appelle <b>l’immersion</b>, le moment où ton cerveau oublie que c’est virtuel et que ça devient réel. De ce fait tu es totalement <b>engagé</b>, concentré et c’est là que la VR devient pertinent
 
 # speaker: Alice
  Alors c’était comment ta première fois ?
