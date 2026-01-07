@@ -3,7 +3,7 @@
 
 === dialogue_debut ===
 # speaker: Alien
-Je pense avoir récupéré assez d'informations pour le moment, je vais aller faire mon rapport. #delay: 3 # action: return_to_navet
+Creo que por el momento he recopilado suficiente información, voy a ir a hacer mi informe. #delay: 3 # action: return_to_navet
 
 
 

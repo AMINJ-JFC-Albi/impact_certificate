@@ -3,55 +3,55 @@
 
 === dialogue_debut ===
 # speaker: Ethan
-Monsieur, j’ai des questions sur la VR.
+Señor, tengo preguntas sobre la realidad virtual.
 
 # speaker: Professeur Bob
-Je t’écoute, Ethan.
+Te escucho, Ethan.
 
 # speaker: Ethan
-Je ne vois pas vraiment ce que la VR apporte de plus par rapport aux autres supports numériques.
+No veo realmente qué aporta la realidad virtual de más en comparación con otros soportes digitales.
 
 # speaker: Professeur Bob
-La principale différence, c’est <b>l’immersion</b>. La VR permet à l’utilisateur d’avoir l’impression d’être physiquement présent dans un environnement virtuel, ce qui n’est pas le cas avec un simple écran.
+La principal diferencia es la <b>inmersión</b>. La realidad virtual permite al usuario tener la impresión de estar físicamente presente en un entorno virtual, por ejemplo durante <b>visitas</b> virtuales como las de museos o de lugares de difícil acceso.
 
 # speaker: Ethan
-Mais cette <b>immersion</b> ne pourrait-elle pas être obtenue aussi avec un écran de PC ou une tablette ?
+Pero ¿esa <b>inmersión</b> no podría obtenerse también con una pantalla de PC o una tableta, incluso para una <b>visita</b>?
 
 # speaker: Professeur Bob
-Pas au même niveau. Avec un casque VR, les déplacements sont plus naturels, l’utilisateur se déplace en tournant la tête et en utilisant ses gestes. 
+No al mismo nivel. Con un casco de realidad virtual, los desplazamientos son más naturales: el usuario se mueve girando la cabeza y utilizando sus gestos, lo que hace que la experiencia de visita sea mucho más realista.
 
 # speaker: Professeur Bob
-Cela peut créer une sensation de <b>présence</b>, c’est-à-dire l’impression d’exister réellement dans le monde virtuel, si l’expérience est bien conçue.
+Esto puede crear una sensación de <b>presencia</b>, es decir, la impresión de existir realmente en el mundo virtual, especialmente durante una visita inmersiva bien diseñada.
 
 # speaker: Ethan
-Encore faut-il que la simulation soit suffisamment convaincante pour provoquer cette sensation.
+Aún así, la simulación tendría que ser lo suficientemente convincente como para provocar esa sensación.
 
 # speaker: Professeur Bob
-C’est vrai, la qualité de la simulation est essentielle. Mais lorsque c’est bien réalisé, l’expérience devient très <b>engageante</b> et capte davantage l’attention de l’utilisateur.
+la experiencia genera un alto nivel de <b>compromiso</b> y capta mejor la atención del usuario
 
 # speaker: Ethan
-D’accord pour l’aspect <b>immersif</b>, mais concrètement, dans quels domaines la VR est-elle réellement pertinente ?
+De acuerdo con el aspecto <b>inmersivo</b>, pero concretamente, ¿en qué ámbitos es realmente pertinente la realidad virtual, aparte de las visitas?
 
 # speaker: Professeur Bob
-Elle est particulièrement utile dans certains types de <b>formations</b>, notamment celles qui nécessitent de la pratique sans prendre de risques.
+Es especialmente útil en ciertos tipos de <b>formación</b>, sobre todo en aquellos que requieren práctica sin asumir riesgos.
 
 # speaker: Ethan
-Vous pouvez préciser ?
+¿Puede precisar?
 
 # speaker: Professeur Bob
-La VR est très efficace pour la <b>formation</b> à des protocoles de sécurité. Prenons le cas d’un départ de feu dans une scierie. En réalité, il serait dangereux de s’entraîner dans ces conditions. 
+La realidad virtual es muy eficaz para la <b>formación</b> en protocolos de seguridad. Tomemos el caso de un incendio en un aserradero. En la realidad, sería peligroso entrenarse en esas condiciones.
 
 # speaker: Professeur Bob
-En VR, l’utilisateur peut observer l’incendie, se diriger vers un extincteur, apprendre à le manipuler et agir comme s’il était dans une situation réelle. 
+En realidad virtual, el usuario puede observar el incendio, dirigirse hacia un extintor, aprender a utilizarlo y actuar como si estuviera en una situación real.
 
 # speaker: Professeur Bob
-Le fait d’être actif renforce la mémorisation et augmente les chances de réagir correctement le jour où la situation se présente dans le monde réel.
+El hecho de ser activo refuerza la memorización y aumenta las probabilidades de reaccionar correctamente el día en que la situación se presente en el mundo real.
 
 # speaker: Ethan
-D’accord, je comprends mieux. La VR n’est donc pas seulement un support visuel, mais un outil qui permet de vivre une expérience <b>immersive</b> et active, ce qui la rend particulièrement pertinente pour des situations comme la <b>formation</b> ou la simulation de contextes à risque.
+De acuerdo, ahora lo entiendo mejor. La realidad virtual no es solo un soporte visual o una herramienta de <b>visita</b>, sino una forma de vivir una experiencia <b>inmersiva</b> y activa, lo que la hace especialmente pertinente para la <b>formación</b> o la simulación de contextos de riesgo.
 
 # speaker: Professeur Bob
-Exactement, tu as bien compris. # action: end_ethan_dialog
+Exactamente, lo has entendido muy bien. # action: end_ethan_dialog
 
 
 -> END

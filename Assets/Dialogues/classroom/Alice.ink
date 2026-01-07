@@ -3,42 +3,42 @@
 
 === dialogue_debut ===
 # speaker: Alice
- Normalement c’est bon tout a été mis en place tu devrais être dans une salle d’opération et voir tes mains
+Normalmente todo está listo, deberías estar en un quirófano y ver tus manos.
 
 # speaker: Thibault
- En effet, je suis dedans et waouh c’est immense, bien plus que celle la salle de classe
+En efecto, estoy dentro y guau, es enorme, mucho más grande que el aula.
 
 # speaker: Alice
- Oui, évite de marcher sinon tu vas entrer dans le mur
+Sí, evita caminar, si no vas a chocar contra la pared.
 
 # speaker: Thibault
- Normalement ça devrait pas, j’ai bien compris qu’il fallait se déplacer avec les manettes, c’est bizarre de faire comme ça
+Normalmente no debería pasar, entendí bien que hay que moverse con los mandos, es raro hacerlo así.
 
 # speaker: Alice
- On s’y fait, allez les outils pour la chirurgie sont devant toi ; prends les avec les gâchettes de la manette et fais l’opération du coeur
+Uno se acostumbra. Vamos, las herramientas para la cirugía están delante de ti; cógelas con los gatillos del mando y realiza la operación del corazón.
 
 # speaker: Thibault #delay:2
- ça marche
+Vale.
 
 # speaker: Alice
- Tu à l’air très concentré 
+Pareces muy concentrado.
 
 # speaker: Thibault
- Oui j’ai envie de bien faire et de ne pas me louper
+Sí, tengo ganas de hacerlo bien y de no equivocarme.
 
 # speaker: Alice
- Tu sais que c’est virtuel ça n’explique pas, c’est pas un vrai coeur que tu opères
+Sabes que es virtual, eso no duele, no es un corazón real el que estás operando.
 
 # speaker: Thibault
- Ouais mais je sais pas, je me sens <b>engagé</b>, j’ai les outils je peux faire l’opération, je peux <b>interagir</b> avec le coeur, je suis le chirurgien
+Sí, pero no sé, siento un <b>compromiso</b> real: tengo las herramientas, puedo hacer la operación, puedo <b>interactuar</b> con el corazón, soy el cirujano.
 
 # speaker: Alice
- C’est ce qu’on appelle <b>l’immersion</b>, le moment où ton cerveau oublie que c’est virtuel et que ça devient réel. De ce fait tu es totalement <b>engagé</b>, concentré et c’est là que la VR devient pertinent
+Eso es lo que se llama <b>inmersión</b>, el momento en el que tu cerebro olvida que es virtual y se vuelve real. De este modo se genera un alto nivel de <b>compromiso</b>, estás concentrado, y es ahí cuando la realidad virtual se vuelve pertinente.
 
 # speaker: Alice
- Alors c’était comment ta première fois ?
+Entonces, ¿cómo fue tu primera vez?
 
 # speaker: Thibault
- C’était cool mais j’ai l’air fatigué comme si j’avais fais une vraie opération # action: end_alice_dialog
+Estuvo bien, pero me siento cansado, como si hubiera hecho una operación de verdad. # action: end_alice_dialog
  
 -> END
