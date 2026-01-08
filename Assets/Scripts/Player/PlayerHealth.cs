@@ -19,6 +19,7 @@ namespace PlayerControl
         [Header("État")]
         [SerializeField] private bool isDetected = false;
         [SerializeField] private bool canLoseHealth = false;
+        [SerializeField] private int detectorCount = 0; // Nombre d'ennemis qui détectent actuellement
 
         // Événements
         public UnityEvent<float, float> OnHealthChanged; // currentHealth, maxHealth
@@ -31,6 +32,7 @@ namespace PlayerControl
         public float HealthPercentage => currentHealth / maxHealth;
         public bool IsDetected => isDetected;
         public bool IsDead => currentHealth <= 0;
+        public int DetectorCount => detectorCount;
 
         private void Awake()
         {
@@ -39,10 +41,10 @@ namespace PlayerControl
 
         private void Update()
         {
-
-            if (canLoseHealth && isDetected && !IsDead)
+            // Les dégâts se cumulent avec le nombre de détecteurs
+            if (canLoseHealth && isDetected && !IsDead && detectorCount > 0)
             {
-                LoseHealth(healthLossPerSecond * Time.deltaTime);
+                LoseHealth(healthLossPerSecond * detectorCount * Time.deltaTime);
             }
         }
 
@@ -56,6 +58,7 @@ namespace PlayerControl
             // Si on désactive, réinitialiser la détection
             if (!enable)
             {
+                detectorCount = 0;
                 SetDetected(false);
             }
         }
@@ -106,6 +109,7 @@ namespace PlayerControl
         {
             currentHealth = maxHealth;
             isDetected = false;
+            detectorCount = 0;
             OnHealthChanged?.Invoke(currentHealth, maxHealth);
         }
 
@@ -114,9 +118,9 @@ namespace PlayerControl
         /// </summary>
         public void OnDetectedByEnemy()
         {
-
             if (canLoseHealth)
             {
+                detectorCount++;
                 SetDetected(true);
             }
         }
@@ -126,7 +130,13 @@ namespace PlayerControl
         /// </summary>
         public void OnLostByEnemy()
         {
-            SetDetected(false);
+            detectorCount = Mathf.Max(0, detectorCount - 1);
+
+            // Ne désactiver la détection que si plus aucun ennemi ne détecte
+            if (detectorCount == 0)
+            {
+                SetDetected(false);
+            }
         }
 
 #if UNITY_EDITOR

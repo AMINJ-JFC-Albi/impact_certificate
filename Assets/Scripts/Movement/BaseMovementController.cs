@@ -12,6 +12,7 @@ namespace PlayerControl
     {
         [Header("Movement")]
         [SerializeField] protected float moveSpeed = 5f;
+        [SerializeField] protected float rotationSpeed = 10f; // Vitesse de rotation en degrés par seconde
 
         [Header("Animation")]
         [SerializeField] protected Animator animator;
@@ -85,7 +86,12 @@ namespace PlayerControl
                 if (direction != Vector3.zero)
                 {
                     Quaternion targetRotation = Quaternion.LookRotation(direction);
-                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 10f * Time.deltaTime);
+
+                    transform.rotation = Quaternion.RotateTowards(
+                        transform.rotation,
+                        targetRotation,
+                        rotationSpeed * 100f * Time.deltaTime
+                    );
                 }
 
                 transform.position += direction * moveSpeed * Time.deltaTime;
