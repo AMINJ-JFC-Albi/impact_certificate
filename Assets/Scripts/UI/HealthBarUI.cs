@@ -5,7 +5,7 @@ using TMPro;
 namespace PlayerControl
 {
     /// <summary>
-    /// Gère l'affichage de la barre de vie du joueur dans l'interface
+    /// Gère l'affichage de la barre de détection du joueur dans l'interface
     /// </summary>
     public class HealthBarUI : MonoBehaviour
     {
@@ -13,12 +13,14 @@ namespace PlayerControl
         [SerializeField] private Image healthBarFill;
         [SerializeField] private TextMeshProUGUI healthText;
 
-        [Header("Couleurs de la barre")]
-        [SerializeField] private Color healthyColor = Color.green;
+        [Header("Couleurs de la barre (détection)")]
+        [SerializeField] private Color safeColor = Color.green;
         [SerializeField] private Color warningColor = Color.yellow;
-        [SerializeField] private Color criticalColor = Color.red;
+        [SerializeField] private Color dangerColor = Color.red;
+        [Tooltip("Seuil à partir duquel la couleur passe en warning (50%)")]
         [SerializeField] private float warningThreshold = 0.5f;
-        [SerializeField] private float criticalThreshold = 0.25f;
+        [Tooltip("Seuil à partir duquel la couleur passe en danger (75%)")]
+        [SerializeField] private float dangerThreshold = 0.75f;
 
         [Header("Animation")]
         [SerializeField] private bool animateHealthChange = true;
@@ -42,9 +44,9 @@ namespace PlayerControl
             playerHealth.OnHealthChanged.AddListener(OnHealthChanged);
             GameManager.OnInfiltrationModeChanged += OnInfiltrationModeChanged;
 
-            // Initialiser l'affichage
+            // Initialiser l'affichage (barre vide au départ)
             UpdateHealthBar(playerHealth.CurrentHealth, playerHealth.MaxHealth);
-            targetFillAmount = playerHealth.HealthPercentage;
+            targetFillAmount = playerHealth.DetectionPercentage;
             currentFillAmount = targetFillAmount;
 
             // Afficher selon l'état actuel du mode infiltration
@@ -64,7 +66,7 @@ namespace PlayerControl
 
         private void Update()
         {
-            // Animer le changement de la barre de vie
+            // Animer le changement de la barre de détection
             if (animateHealthChange && healthBarFill != null)
             {
                 currentFillAmount = Mathf.Lerp(currentFillAmount, targetFillAmount, Time.deltaTime * animationSpeed);
@@ -73,11 +75,11 @@ namespace PlayerControl
         }
 
         /// <summary>
-        /// Appelé quand la santé change
+        /// Appelé quand la détection change
         /// </summary>
-        private void OnHealthChanged(float currentHealth, float maxHealth)
+        private void OnHealthChanged(float currentDetection, float maxDetection)
         {
-            UpdateHealthBar(currentHealth, maxHealth);
+            UpdateHealthBar(currentDetection, maxDetection);
         }
 
 
@@ -91,42 +93,45 @@ namespace PlayerControl
         }
 
         /// <summary>
-        /// Met à jour l'affichage de la barre de vie
+        /// Met à jour l'affichage de la barre de détection
         /// </summary>
-        private void UpdateHealthBar(float currentHealth, float maxHealth)
+        private void UpdateHealthBar(float currentDetection, float maxDetection)
         {
-            float healthPercentage = currentHealth / maxHealth;
-            targetFillAmount = healthPercentage;
+            float detectionPercentage = currentDetection / maxDetection;
+            targetFillAmount = detectionPercentage;
 
-            // Mettre à jour la couleur selon le pourcentage et le texte
-            healthBarFill.color = GetHealthColor(healthPercentage);
-            healthText.text = $"{Mathf.CeilToInt(currentHealth)} / {Mathf.CeilToInt(maxHealth)}";
+            // Mettre à jour la couleur selon le pourcentage de détection
+            healthBarFill.color = GetDetectionColor(detectionPercentage);
 
+            // Afficher le pourcentage de détection
+            int percentDisplay = Mathf.RoundToInt(detectionPercentage * 100f);
+            healthText.text = $"Detección: {percentDisplay}%";
         }
 
         /// <summary>
-        /// Retourne la couleur appropriée selon le pourcentage de santé
+        /// Retourne la couleur appropriée selon le pourcentage de détection
+        /// Plus la détection est haute, plus c'est dangereux (rouge)
         /// </summary>
-        private Color GetHealthColor(float healthPercentage)
+        private Color GetDetectionColor(float detectionPercentage)
         {
-            if (healthPercentage <= criticalThreshold)
+            if (detectionPercentage >= dangerThreshold)
             {
-                return criticalColor;
+                return dangerColor;
             }
-            else if (healthPercentage <= warningThreshold)
+            else if (detectionPercentage >= warningThreshold)
             {
-                float t = (healthPercentage - criticalThreshold) / (warningThreshold - criticalThreshold);
-                return Color.Lerp(criticalColor, warningColor, t);
+                float t = (detectionPercentage - warningThreshold) / (dangerThreshold - warningThreshold);
+                return Color.Lerp(warningColor, dangerColor, t);
             }
             else
             {
-                float t = (healthPercentage - warningThreshold) / (1f - warningThreshold);
-                return Color.Lerp(warningColor, healthyColor, t);
+                float t = detectionPercentage / warningThreshold;
+                return Color.Lerp(safeColor, warningColor, t);
             }
         }
 
         /// <summary>
-        /// Affiche ou masque manuellement la barre de vie
+        /// Affiche ou masque manuellement la barre de détection
         /// </summary>
         public void SetVisible(bool visible)
         {

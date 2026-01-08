@@ -133,6 +133,10 @@ public class ConceptualSpecificationDesign : MonoBehaviour
     private IEnumerator StartCrosswordGameWithDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
+
+        // Quitter le mode infiltration avant de lancer le mot fléché
+        GameManager.Instance.SetInfiltrationMode(false);
+
         CrossGamePanel.SetActive(true);
         GridManager.Instance.StartGame(2);
     }

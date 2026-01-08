@@ -4,58 +4,81 @@ using UnityEngine.Events;
 namespace PlayerControl
 {
     /// <summary>
-    /// Gère la santé du joueur avec perte de vie progressive pendant la détection
+    /// Gère la barre de détection du joueur qui se remplit quand il est détecté
+    /// et diminue progressivement quand il n'est plus détecté
     /// </summary>
     public class PlayerHealth : MonoBehaviour
     {
-        [Header("Paramètres de santé")]
-        [SerializeField] private float maxHealth = 100f;
-        [SerializeField] private float currentHealth;
+        [Header("Paramètres de détection")]
+        [SerializeField] private float maxDetection = 100f;
+        [SerializeField] private float currentDetection = 0f;
 
-        [Header("Perte de vie en infiltration")]
-        [Tooltip("Points de vie perdus par seconde quand détecté")]
-        [SerializeField] private float healthLossPerSecond = 5f;
+        [Header("Augmentation de détection")]
+        [Tooltip("Points de détection gagnés par seconde quand détecté")]
+        [SerializeField] private float detectionGainPerSecond = 10f;
+
+        [Header("Diminution de détection")]
+        [Tooltip("Points de détection perdus par seconde quand non détecté")]
+        [SerializeField] private float detectionLossPerSecond = 5f;
+        [Tooltip("Délai avant que la détection commence à diminuer")]
+        [SerializeField] private float detectionCooldownDelay = 1f;
 
         [Header("État")]
         [SerializeField] private bool isDetected = false;
-        [SerializeField] private bool canLoseHealth = false;
-        [SerializeField] private int detectorCount = 0; // Nombre d'ennemis qui détectent actuellement
+        [SerializeField] private bool canDetect = false;
+        [SerializeField] private int detectorCount = 0;
+
+        private float timeSinceLastDetection = 0f;
 
         // Événements
-        public UnityEvent<float, float> OnHealthChanged; // currentHealth, maxHealth
-        public UnityEvent OnPlayerDeath;
-        public UnityEvent<bool> OnDetectionStateChanged; // isDetected
+        public UnityEvent<float, float> OnHealthChanged; // currentDetection, maxDetection
+        public UnityEvent OnPlayerDeath; // Appelé quand détection = max
+        public UnityEvent<bool> OnDetectionStateChanged;
 
         // Propriétés publiques
-        public float CurrentHealth => currentHealth;
-        public float MaxHealth => maxHealth;
-        public float HealthPercentage => currentHealth / maxHealth;
+        public float CurrentHealth => currentDetection;
+        public float MaxHealth => maxDetection;
+        public float HealthPercentage => currentDetection / maxDetection;
+        public float DetectionPercentage => currentDetection / maxDetection;
         public bool IsDetected => isDetected;
-        public bool IsDead => currentHealth <= 0;
+        public bool IsFullyDetected => currentDetection >= maxDetection;
+        public bool IsDead => currentDetection >= maxDetection;
         public int DetectorCount => detectorCount;
 
         private void Awake()
         {
-            currentHealth = maxHealth;
+            currentDetection = 0f;
         }
 
         private void Update()
         {
-            // Les dégâts se cumulent avec le nombre de détecteurs
-            if (canLoseHealth && isDetected && !IsDead && detectorCount > 0)
+            if (!canDetect) return;
+
+            if (isDetected && detectorCount > 0 && !IsFullyDetected)
             {
-                LoseHealth(healthLossPerSecond * detectorCount * Time.deltaTime);
+                // Augmenter la détection (cumulative avec le nombre de détecteurs)
+                GainDetection(detectionGainPerSecond * detectorCount * Time.deltaTime);
+                timeSinceLastDetection = 0f;
+            }
+            else if (!isDetected && currentDetection > 0)
+            {
+                // Diminuer la détection après le délai
+                timeSinceLastDetection += Time.deltaTime;
+
+                if (timeSinceLastDetection >= detectionCooldownDelay)
+                {
+                    LoseDetection(detectionLossPerSecond * Time.deltaTime);
+                }
             }
         }
 
         /// <summary>
-        /// Active ou désactive la perte de vie (appelé par GameManager)
+        /// Active ou désactive le système de détection (appelé par GameManager)
         /// </summary>
         public void EnableHealthLoss(bool enable)
         {
-            canLoseHealth = enable;
+            canDetect = enable;
 
-            // Si on désactive, réinitialiser la détection
             if (!enable)
             {
                 detectorCount = 0;
@@ -72,45 +95,64 @@ namespace PlayerControl
             {
                 isDetected = detected;
                 OnDetectionStateChanged?.Invoke(isDetected);
+
+                if (!detected)
+                {
+                    timeSinceLastDetection = 0f;
+                }
             }
         }
 
         /// <summary>
-        /// Fait perdre de la vie au joueur
+        /// Augmente la détection du joueur
         /// </summary>
-        private void LoseHealth(float amount)
+        private void GainDetection(float amount)
         {
-            if (IsDead) return;
+            if (IsFullyDetected) return;
 
-            currentHealth -= amount;
-            currentHealth = Mathf.Max(0, currentHealth);
+            currentDetection += amount;
+            currentDetection = Mathf.Min(currentDetection, maxDetection);
 
-            OnHealthChanged?.Invoke(currentHealth, maxHealth);
+            OnHealthChanged?.Invoke(currentDetection, maxDetection);
 
-            if (currentHealth <= 0)
+            if (currentDetection >= maxDetection)
             {
-                Die();
+                OnFullyDetected();
             }
         }
 
         /// <summary>
-        /// Appelé quand le joueur meurt
+        /// Diminue la détection du joueur
         /// </summary>
-        private void Die()
+        private void LoseDetection(float amount)
+        {
+            if (currentDetection <= 0) return;
+
+            currentDetection -= amount;
+            currentDetection = Mathf.Max(0, currentDetection);
+
+            OnHealthChanged?.Invoke(currentDetection, maxDetection);
+        }
+
+        /// <summary>
+        /// Appelé quand la détection atteint le maximum
+        /// </summary>
+        private void OnFullyDetected()
         {
             OnPlayerDeath?.Invoke();
             isDetected = false;
         }
 
         /// <summary>
-        /// Réinitialise la santé du joueur (appelé après respawn)
+        /// Réinitialise la détection du joueur (appelé après respawn)
         /// </summary>
         public void ResetHealth()
         {
-            currentHealth = maxHealth;
+            currentDetection = 0f;
             isDetected = false;
             detectorCount = 0;
-            OnHealthChanged?.Invoke(currentHealth, maxHealth);
+            timeSinceLastDetection = 0f;
+            OnHealthChanged?.Invoke(currentDetection, maxDetection);
         }
 
         /// <summary>
@@ -118,7 +160,7 @@ namespace PlayerControl
         /// </summary>
         public void OnDetectedByEnemy()
         {
-            if (canLoseHealth)
+            if (canDetect)
             {
                 detectorCount++;
                 SetDetected(true);
@@ -132,7 +174,6 @@ namespace PlayerControl
         {
             detectorCount = Mathf.Max(0, detectorCount - 1);
 
-            // Ne désactiver la détection que si plus aucun ennemi ne détecte
             if (detectorCount == 0)
             {
                 SetDetected(false);
@@ -142,8 +183,7 @@ namespace PlayerControl
 #if UNITY_EDITOR
         private void OnValidate()
         {
-            // S'assurer que la santé actuelle ne dépasse pas la santé max
-            currentHealth = Mathf.Min(currentHealth, maxHealth);
+            currentDetection = Mathf.Clamp(currentDetection, 0, maxDetection);
         }
 #endif
     }

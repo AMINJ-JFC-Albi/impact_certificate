@@ -752,11 +752,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerControl.HealthBarUI
   healthBarFill: {fileID: 1835021597}
   healthText: {fileID: 429683649}
-  healthyColor: {r: 0, g: 1, b: 0, a: 1}
+  safeColor: {r: 0, g: 1, b: 0, a: 1}
   warningColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  criticalColor: {r: 1, g: 0, b: 0, a: 1}
+  dangerColor: {r: 1, g: 0, b: 0, a: 1}
   warningThreshold: 0.5
-  criticalThreshold: 0.25
+  dangerThreshold: 0.75
   animateHealthChange: 1
   animationSpeed: 3
 --- !u!223 &186212799
@@ -13149,6 +13149,10 @@ PrefabInstance:
     - target: {fileID: 4097275809151719555, guid: 1b264661f8621c143b47a0d7c52a6a97, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4457179146467975329, guid: 1b264661f8621c143b47a0d7c52a6a97, type: 3}
+      propertyPath: maxDetection
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5357156900216421079, guid: 1b264661f8621c143b47a0d7c52a6a97, type: 3}
       propertyPath: m_Resource
