@@ -1877,11 +1877,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 654771194}
   m_CullTransparentMesh: 1
---- !u!1 &730718474 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2999882582675747575, guid: 65ece3fc9b86b744cae5910b114769ca, type: 3}
-  m_PrefabInstance: {fileID: 27263753058964271}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &762414960
 GameObject:
   m_ObjectHideFlags: 0
@@ -2085,7 +2080,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e548c5a9bcf2674b928795dfa26026a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Grid.GridManager
-  gamePanel: {fileID: 730718474}
+  gamePanel: {fileID: 1426813432}
   delayBeforeClose: 1.5
   inkDialogueLevel1: {fileID: 4900000, guid: 3a14155e4e3929941a20835f44430b8a, type: 3}
   inkDialogueLevel2: {fileID: 4900000, guid: 3a14155e4e3929941a20835f44430b8a, type: 3}
@@ -5039,7 +5034,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f082328f02ca7844e88f0d21e8b6967a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ToolTipObject
-  text: Teleporteur
+  text: Teletransportador
 --- !u!23 &1728843827
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -5123,7 +5118,7 @@ MonoBehaviour:
   - {fileID: 1728843822}
   delayBeforeDeactivate: 4
   actionName: teleport_to_mission2
-  objective: "r\xE9cup\xE9rer les diff\xE9rents accessoirs pour la VR"
+  objective: Recuperar los distintos accesorios para la VR
   isCheckpoint: 1
   spawnPoint: {fileID: 395937551}
 --- !u!64 &1728843830
