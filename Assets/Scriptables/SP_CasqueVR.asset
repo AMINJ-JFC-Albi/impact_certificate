@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2ea132ff4d0c7f4bac675fef79a4092, type: 3}
+  m_Name: SP_CasqueVR
+  m_EditorClassIdentifier: Assembly-CSharp::ProductSpecification
+  conceptualDesignSpecificationTitle: "SPECIFICACI\xD3N DEL DISE\xD1O DE CONCEPTO:"
+  productName: Casco de realidad virtual (HMD - Head Mounted Display)
+  productDescriptionTitle: "Descripci\xF3n general "
+  productDescription: "Dispositivo que se lleva en la cabeza y permite la visualizaci\xF3n
+    estereosc\xF3pica de un entorno virtual en 3D a 360\xB0, con seguimiento de los
+    movimientos de la cabeza.\r\nEjemplos: Meta Quest 2/3, HTC Vive, Valve Index,
+    Pico 4"
+  keyUtilityFunctionsTitle: Funciones utilitarias
+  keyUtilityFunctions: "- Visualizaci\xF3n inmersiva de contenidos pedag\xF3gicos\r\n-
+    Aislamiento visual del mundo real\r\n- Punto de entrada principal al entorno
+    de realidad virtual"
+  pedagogicalAspectsTitle: "Aspectos pedag\xF3gicos"
+  pedagogicalAspects: "- Inmersi\xF3n cognitiva: favorece el compromiso y la concentraci\xF3n\r\n-
+    Aprendizaje experiencial: el aprendiz vive la situaci\xF3n en lugar de observarla\r\n-
+    Simulaci\xF3n de contextos complejos o peligrosos (laboratorios, obras, quir\xF3fanos)\r\n-
+    Aumento de la memorizaci\xF3n gracias a la implicaci\xF3n sensorial\r\n"
+  productPicture: {fileID: 21300000, guid: b3b985ff659f23f478545da1997d7f1e, type: 3}
+  pedagogicalUsesTitle: "Tipos de usos pedag\xF3gicos"
+  pedagogicalUses: "- Simulaciones profesionales\r\n- Serious games educativos\r\n-
+    Puestas en situaci\xF3n (toma de decisiones, gesti\xF3n de crisis)\r\n- Formaci\xF3n
+    a distancia inmersiva"
+  pedagogicalAdvantagesTitle: "Ventajas pedag\xF3gicas"
+  pedagogicalAdvantages: "- Alta motivaci\xF3n de los aprendices\r\n- Reducci\xF3n
+    de costos y de riesgos reales\r\n- Adaptable a numerosos \xE1mbitos"
+  usageLimitsTitle: Limitaciones de uso
+  usageLimits: "- Posible fatiga visual\r\n- Requiere un tiempo de adaptaci\xF3n\r\n-
+    Dependencia de la calidad del contenido pedag\xF3gico"

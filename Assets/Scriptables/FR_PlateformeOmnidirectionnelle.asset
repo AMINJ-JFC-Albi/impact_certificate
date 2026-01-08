@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e2ea132ff4d0c7f4bac675fef79a4092, type: 3}
-  m_Name: PlateformeOmnidirectionnelle
+  m_Name: FR_PlateformeOmnidirectionnelle
   m_EditorClassIdentifier: Assembly-CSharp::ProductSpecification
   conceptualDesignSpecificationTitle: 'SPECIFICATION DU DESIGN DE CONCEPT:'
-  productName: "Syst\xE8mes de tracking de mouvements (Full Body Tracking)"
+  productName: Plateforme omnidirectionnelle (Omnidirectional Treadmill)
   productDescriptionTitle: "Description g\xE9n\xE9rale"
   productDescription: "Dispositifs permettant \xE0 l\u2019utilisateur de marcher
     physiquement tout en restant statique, avec retranscription des d\xE9placements

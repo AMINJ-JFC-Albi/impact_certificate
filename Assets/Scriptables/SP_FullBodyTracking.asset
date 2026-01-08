@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2ea132ff4d0c7f4bac675fef79a4092, type: 3}
+  m_Name: SP_FullBodyTracking
+  m_EditorClassIdentifier: Assembly-CSharp::ProductSpecification
+  conceptualDesignSpecificationTitle: "SPECIFICACI\xD3N DEL DISE\xD1O DE CONCEPTO:"
+  productName: Sistemas de tracking de movimiento (Full Body Tracking)
+  productDescriptionTitle: "Descripci\xF3n general "
+  productDescription: 'Sistemas de sensores que permiten seguir los movimientos del
+    cuerpo completo del usuario dentro del entorno virtual.
+
+    Ejemplos: Vive
+    Trackers, OptiTrack, Perception Neuron'
+  keyUtilityFunctionsTitle: Funciones utilitarias
+  keyUtilityFunctions: "- Captura de posturas y desplazamientos\r\n- An\xE1lisis
+    de movimientos\r\n- Reproducci\xF3n fiel del cuerpo en realidad virtual"
+  pedagogicalAspectsTitle: "Aspectos pedag\xF3gicos"
+  pedagogicalAspects: "- An\xE1lisis postural y gestual\r\n- Correcci\xF3n de errores
+    en tiempo real\r\n- Aprendizaje ergon\xF3mico\r\n- Desarrollo de la conciencia
+    corporal"
+  productPicture: {fileID: 21300000, guid: aa1620ed7fed27a47a0f467d1e491e26, type: 3}
+  pedagogicalUsesTitle: "Tipos de usos pedag\xF3gicos"
+  pedagogicalUses: "- Formaci\xF3n deportiva\r\n- Prevenci\xF3n de trastornos musculoesquel\xE9ticos\r\n-
+    Seguridad en el trabajo\r\n- Danza, teatro, expresi\xF3n corporal"
+  pedagogicalAdvantagesTitle: "Ventajas pedag\xF3gicas"
+  pedagogicalAdvantages: "- Feedback preciso y medible\r\n- Seguimiento de la progresi\xF3n\r\n-
+    Personalizaci\xF3n del aprendizaje"
+  usageLimitsTitle: Limitaciones de uso
+  usageLimits: "- Necesidad de calibraci\xF3n\r\n- Sensibilidad a las condiciones
+    del entorno\r\n- Complejidad del hardware"

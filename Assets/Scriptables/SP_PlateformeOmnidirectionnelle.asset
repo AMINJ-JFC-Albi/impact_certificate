@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2ea132ff4d0c7f4bac675fef79a4092, type: 3}
+  m_Name: SP_PlateformeOmnidirectionnelle
+  m_EditorClassIdentifier: Assembly-CSharp::ProductSpecification
+  conceptualDesignSpecificationTitle: "SPECIFICACI\xD3N DEL DISE\xD1O DE CONCEPTO:"
+  productName: Plataforma omnidireccional (Omnidirectional Treadmill)
+  productDescriptionTitle: "Descripci\xF3n general "
+  productDescription: "Dispositivos que permiten al usuario caminar f\xEDsicamente
+    mientras permanece est\xE1tico, con la retranscripci\xF3n de los desplazamientos
+    en realidad virtual.\r\nEjemplos: Virtuix Omni, Kat Walk"
+  keyUtilityFunctionsTitle: Funciones utilitarias
+  keyUtilityFunctions: "- Desplazamiento natural dentro del entorno virtual\r\n-
+    Simulaci\xF3n de la marcha o la carrera\r\n- Reducci\xF3n de los desplazamientos
+    virtuales artificiales"
+  pedagogicalAspectsTitle: "Aspectos pedag\xF3gicos"
+  pedagogicalAspects: "- Aprendizaje espacial y contextual\r\n- Realismo de los desplazamientos\r\n-
+    Mejor comprensi\xF3n de entornos complejos\r\n- Entrenamiento en escenarios din\xE1micos"
+  productPicture: {fileID: 21300000, guid: 305938f4d8c7f834d81e4c52ad02c0fe, type: 3}
+  pedagogicalUsesTitle: "Tipos de usos pedag\xF3gicos"
+  pedagogicalUses: "- Ejercicios de evacuaci\xF3n\r\n- Formaci\xF3n militar o de
+    seguridad civil\r\n- Exploraci\xF3n de sitios o edificios\r\n- Simulaciones urbanas"
+  pedagogicalAdvantagesTitle: "Ventajas pedag\xF3gicas"
+  pedagogicalAdvantages: "- Inmersi\xF3n f\xEDsica reforzada\r\n- Reducci\xF3n del
+    motion sickness\r\n- Compromiso corporal total"
+  usageLimitsTitle: Limitaciones de uso
+  usageLimits: '- Equipamiento voluminoso
+
+    - Alto costo
+
+    - Necesidad de
+    aprendizaje del equilibrio'

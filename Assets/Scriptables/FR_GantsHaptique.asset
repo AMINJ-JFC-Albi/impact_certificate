@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e2ea132ff4d0c7f4bac675fef79a4092, type: 3}
-  m_Name: GantsHaptique
+  m_Name: FR_GantsHaptique
   m_EditorClassIdentifier: Assembly-CSharp::ProductSpecification
   conceptualDesignSpecificationTitle: 'SPECIFICATION DU DESIGN DE CONCEPT:'
-  productName: "Contr\xF4leurs VR (Manettes de mouvement) "
+  productName: Gants Haptique (Haptic Gloves)
   productDescriptionTitle: "Description g\xE9n\xE9rale"
   productDescription: "Gants \xE9quip\xE9s de capteurs et de syst\xE8mes de retour
     de force permettant de ressentir des sensations tactiles dans l\u2019environnement
