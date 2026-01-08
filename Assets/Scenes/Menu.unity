@@ -288,10 +288,10 @@ MonoBehaviour:
   textLabel: {fileID: 2099997638}
   texts:
   - Space spies
-  - A serious game made \n by \n Kouromo, Losio, \n Skyblue and Enivort
-  - Your mission
-  - Learn how to design a \n virtual reality \n learning environment
-  - Let's start our travel
+  - Un juego serio hecho \n por \n Kouromo, Losio, \n Skyblue y Enivort
+  - "Su misi\xF3n"
+  - "Aprender c\xF3mo dise\xF1ar un \\n entorno de aprendizaje \\n en realidad virtual"
+  - Comencemos nuestro viaje
   fadeDuration: 0.5
   displayDuration: 3
   startFontSize: 16
