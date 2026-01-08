@@ -1,13 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class TextSequenceAnimator : MonoBehaviour
-{
-    [Header("Loading Manager")]
-    public LoadingManager loadingManager;
-    
+{    
     [Header("UI Components")]
     public Text textLabel;
 
@@ -20,6 +18,7 @@ public class TextSequenceAnimator : MonoBehaviour
 
     [Header("Optional")]
     public AnimationCurve scaleCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
+    public UnityEvent onSequenceFinished;
 
     private void Start()
     {
@@ -75,9 +74,6 @@ public class TextSequenceAnimator : MonoBehaviour
             canvasGroup.alpha = 0f;
             textLabel.fontSize = startFontSize;
         }
-        loadingManager.ActivateScene();
-
-        // Optionally repeat the sequence:
-        // StartCoroutine(AnimateTexts());
+        onSequenceFinished.Invoke();
     }
 }

@@ -11,7 +11,8 @@ public class LoadingManager : MonoBehaviour
     [Header("Activation Control")]
     public bool allowActivationOnLoad = false; // Inspector toggle
 
-    [Header("Progress Bar Shader Material")]
+    [Header("Progress Bar")]
+    public GameObject progressBar;
     public Material progressBarMaterial;
 
     [Header("Optional Settings")]
@@ -65,5 +66,11 @@ public class LoadingManager : MonoBehaviour
 
         // Optional brief delay so the player sees full bar
         yield return new WaitForSeconds(minDisplayTime);
+        progressBar.SetActive(false);
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
     }
 }
