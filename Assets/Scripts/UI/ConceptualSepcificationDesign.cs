@@ -1,7 +1,9 @@
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Grid;
 
 public class ConceptualSpecificationDesign : MonoBehaviour
 {
@@ -9,6 +11,14 @@ public class ConceptualSpecificationDesign : MonoBehaviour
 
     [Header("Canvas")]
     [SerializeField] private GameObject ficheCanvas;
+
+    [Header("Mot Fléché")]
+    [SerializeField] private GameObject CrossGamePanel;
+
+    // Tracking des fiches vues
+    private HashSet<int> viewedFiches = new HashSet<int>();
+    private bool crosswordStarted = false;
+    private const int TOTAL_FICHES = 6;
 
     [Header("ProductSpecifications")]
     [Range(0, 5)]
@@ -76,6 +86,13 @@ public class ConceptualSpecificationDesign : MonoBehaviour
             {
                 ficheCanvas.SetActive(true);
             }
+
+            // Tracker cette fiche comme vue
+            if (!viewedFiches.Contains(productIndex))
+            {
+                viewedFiches.Add(productIndex);
+                Debug.Log($"Fiche {productIndex} vue. Total: {viewedFiches.Count}/{TOTAL_FICHES}");
+            }
         }
         else
         {
@@ -92,7 +109,34 @@ public class ConceptualSpecificationDesign : MonoBehaviour
         {
             ficheCanvas.SetActive(false);
         }
+
+        CheckAllFichesViewed();
     }
+
+    /// <summary>
+    /// Vérifie si toutes les fiches ont été vues et lance le mot fléché
+    /// </summary>
+    private void CheckAllFichesViewed()
+    {
+        if (crosswordStarted) return;
+
+        if (viewedFiches.Count >= TOTAL_FICHES)
+        {
+            crosswordStarted = true;
+            StartCoroutine(StartCrosswordGameWithDelay(3f));
+        }
+    }
+
+    /// <summary>
+    /// Lance le jeu de mot fléché
+    /// </summary>
+    private IEnumerator StartCrosswordGameWithDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        CrossGamePanel.SetActive(true);
+        GridManager.Instance.StartGame(2);
+    }
+
 
     public void SetProductSpecifications(int scriptebleId)
     {

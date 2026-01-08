@@ -429,7 +429,6 @@ public class ActionManager : MonoBehaviour
         if (ConceptualSpecificationDesign.Instance != null)
         {
             ConceptualSpecificationDesign.Instance.ShowFiche(productIndex);
-            Debug.Log($"Affichage de la fiche de conception pour le produit index {productIndex}");
         }
         else
         {
