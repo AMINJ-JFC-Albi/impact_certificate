@@ -2051,7 +2051,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &762414961
 Transform:
   m_ObjectHideFlags: 0
@@ -2091,7 +2091,7 @@ MonoBehaviour:
   delayBeforeDeactivate: 5
   actionName: telescope_action
   objective: "obtenga informaci\xF3n sobre la realidad virtual"
-  isCheckpoint: 1
+  isCheckpoint: 0
   spawnPoint: {fileID: 0}
 --- !u!136 &762414963
 CapsuleCollider:
@@ -2343,8 +2343,8 @@ MonoBehaviour:
   buttonHint: {fileID: 158666470}
   loadingImage: {fileID: 1271278434}
   buttonCooldown: 10
-  autoStartOnEnable: 1
-  startingLevel: 2
+  autoStartOnEnable: 0
+  startingLevel: 1
 --- !u!4 &774679762
 Transform:
   m_ObjectHideFlags: 0
@@ -2882,6 +2882,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 555398236967125274, guid: 1059cfe63aad82547ad4196d4357644f, type: 3}
+      propertyPath: teleporterController
+      value: 
+      objectReference: {fileID: 1728843831}
+    - target: {fileID: 555398236967125274, guid: 1059cfe63aad82547ad4196d4357644f, type: 3}
       propertyPath: teleportMission2Position
       value: 
       objectReference: {fileID: 395937551}
@@ -3327,7 +3331,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8185425352640080945, guid: 1059cfe63aad82547ad4196d4357644f, type: 3}
       propertyPath: allowedInteractables.Array.size
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8185425352640080945, guid: 1059cfe63aad82547ad4196d4357644f, type: 3}
       propertyPath: 'allowedInteractables.Array.data[0]'
@@ -4724,7 +4728,7 @@ Transform:
   m_GameObject: {fileID: 1633519671}
   serializedVersion: 2
   m_LocalRotation: {x: 0.5, y: 0, z: 0, w: 0.8660254}
-  m_LocalPosition: {x: 0, y: -306.2, z: 100}
+  m_LocalPosition: {x: 0, y: -289, z: 100}
   m_LocalScale: {x: 250, y: 250, z: 250}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -5268,7 +5272,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1728843823
 Transform:
   m_ObjectHideFlags: 0
@@ -5438,6 +5442,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TeleporterController
   teleporterRenderer: {fileID: 1721041983}
   transitionTime: 1.5
+  activateOnEnable: 1
 --- !u!1 &1729499762
 GameObject:
   m_ObjectHideFlags: 0

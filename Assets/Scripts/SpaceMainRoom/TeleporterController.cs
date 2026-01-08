@@ -9,6 +9,10 @@ public class TeleporterController : MonoBehaviour
     [Header("Timing")]
     [SerializeField] private float transitionTime = 1.5f;
 
+    [Header("Auto Activation")]
+    [Tooltip("Si true, lance l'animation d'ouverture automatiquement quand l'objet est activé")]
+    [SerializeField] private bool activateOnEnable = true;
+
     private Material _material;
     private Coroutine _currentRoutine;
 
@@ -16,6 +20,14 @@ public class TeleporterController : MonoBehaviour
     {
         _material = teleporterRenderer.material;
         _material.SetFloat("_Open", 0f); // fermé au départ
+    }
+
+    void OnEnable()
+    {
+        if (activateOnEnable && _material != null)
+        {
+            ActivateTeleporter();
+        }
     }
 
     // ---------- PUBLIC API ----------

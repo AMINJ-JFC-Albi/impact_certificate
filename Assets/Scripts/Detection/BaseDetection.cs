@@ -102,17 +102,22 @@ namespace Detection
             else
             {
                 // Créer un matériau par défaut transparent
-                Material defaultMat = new Material(Shader.Find("Standard"));
-                defaultMat.SetFloat("_Mode", 3); // Transparent mode
-                defaultMat.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
-                defaultMat.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
-                defaultMat.SetInt("_ZWrite", 0);
-                defaultMat.DisableKeyword("_ALPHATEST_ON");
-                defaultMat.EnableKeyword("_ALPHABLEND_ON");
-                defaultMat.DisableKeyword("_ALPHAPREMULTIPLY_ON");
-                defaultMat.renderQueue = 3000;
+                // Utiliser Sprites/Default qui est toujours inclus dans les builds
+                Shader transparentShader = Shader.Find("Sprites/Default");
+                if (transparentShader == null)
+                {
+                    // Fallback sur Legacy Shaders si Sprites/Default n'est pas disponible
+                    transparentShader = Shader.Find("Legacy Shaders/Transparent/Diffuse");
+                }
+                if (transparentShader == null)
+                {
+                    // Dernier fallback
+                    transparentShader = Shader.Find("Unlit/Transparent");
+                }
+                
+                Material defaultMat = new Material(transparentShader);
                 defaultMat.color = normalColor;
-                defaultMat.SetInt("_Cull", 0);
+                defaultMat.renderQueue = 3000;
                 meshRenderer.material = defaultMat;
             }
 
