@@ -85,6 +85,7 @@ public class ConceptualSpecificationDesign : MonoBehaviour
             if (ficheCanvas != null)
             {
                 ficheCanvas.SetActive(true);
+                Time.timeScale = 0f; // Pause le jeu
             }
 
             // Tracker cette fiche comme vue
@@ -108,6 +109,7 @@ public class ConceptualSpecificationDesign : MonoBehaviour
         if (ficheCanvas != null)
         {
             ficheCanvas.SetActive(false);
+            Time.timeScale = 1f; // Reprend le jeu
         }
 
         CheckAllFichesViewed();
