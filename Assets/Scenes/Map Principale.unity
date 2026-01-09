@@ -212,69 +212,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3929429523116631274, guid: c4d2b3baa4ae7514181f38dc115e0f90, type: 3}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3929429523116631274, guid: c4d2b3baa4ae7514181f38dc115e0f90, type: 3}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SetVolume
-      objectReference: {fileID: 0}
-    - target: {fileID: 4143947324060594713, guid: c4d2b3baa4ae7514181f38dc115e0f90, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4143947324060594713, guid: c4d2b3baa4ae7514181f38dc115e0f90, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ShowMainPanel
-      objectReference: {fileID: 0}
     - target: {fileID: 4753720657338111209, guid: c4d2b3baa4ae7514181f38dc115e0f90, type: 3}
       propertyPath: m_Name
       value: Canvas-menu
-      objectReference: {fileID: 0}
-    - target: {fileID: 4804666749018224560, guid: c4d2b3baa4ae7514181f38dc115e0f90, type: 3}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4804666749018224560, guid: c4d2b3baa4ae7514181f38dc115e0f90, type: 3}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SetLanguage
-      objectReference: {fileID: 0}
-    - target: {fileID: 5358787246056332645, guid: c4d2b3baa4ae7514181f38dc115e0f90, type: 3}
-      propertyPath: m_SortingOrder
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 6042921545036408984, guid: c4d2b3baa4ae7514181f38dc115e0f90, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6042921545036408984, guid: c4d2b3baa4ae7514181f38dc115e0f90, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ShowOptionsPanel
-      objectReference: {fileID: 0}
-    - target: {fileID: 6990464864982348050, guid: c4d2b3baa4ae7514181f38dc115e0f90, type: 3}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6990464864982348050, guid: c4d2b3baa4ae7514181f38dc115e0f90, type: 3}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SetResolution
-      objectReference: {fileID: 0}
-    - target: {fileID: 8621120918362996075, guid: c4d2b3baa4ae7514181f38dc115e0f90, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8621120918362996075, guid: c4d2b3baa4ae7514181f38dc115e0f90, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: QuitGame
-      objectReference: {fileID: 0}
-    - target: {fileID: 8774476917655355704, guid: c4d2b3baa4ae7514181f38dc115e0f90, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8774476917655355704, guid: c4d2b3baa4ae7514181f38dc115e0f90, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ResumeGame
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4443,7 +4383,7 @@ Transform:
   m_GameObject: {fileID: 1633519671}
   serializedVersion: 2
   m_LocalRotation: {x: 0.5, y: 0, z: 0, w: 0.8660254}
-  m_LocalPosition: {x: 0, y: -289, z: 100}
+  m_LocalPosition: {x: 20, y: -289, z: 100}
   m_LocalScale: {x: 250, y: 250, z: 250}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -6261,6 +6201,10 @@ PrefabInstance:
     - target: {fileID: 7289169570128204607, guid: 65ece3fc9b86b744cae5910b114769ca, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9214936840013157055, guid: 65ece3fc9b86b744cae5910b114769ca, type: 3}
+      propertyPath: m_text
+      value: Obtener una letra
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

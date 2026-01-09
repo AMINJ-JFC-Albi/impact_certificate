@@ -288,7 +288,8 @@ MonoBehaviour:
   textLabel: {fileID: 2099997638}
   texts:
   - Space spies
-  - Un juego serio hecho \n por \n Kouromo, Losio, \n Skyblue y Enivort
+  - "Un juego serio hecho \\n por \\n ALVES Mat\xE9o,\\n PAUVERT Lo\xEFc,\\nCARIAT
+    baptiste\\nDELMAS Mathis"
   - "Su misi\xF3n"
   - "Aprender c\xF3mo dise\xF1ar un \\n entorno de aprendizaje \\n en realidad virtual"
   - Comencemos nuestro viaje
@@ -1082,7 +1083,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Start
+  m_text: Empezar
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cbef506a010a21f4390797e6debb24db, type: 2}
   m_sharedMaterial: {fileID: 369447867136484835, guid: cbef506a010a21f4390797e6debb24db, type: 2}
@@ -5649,7 +5650,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Quit
+  m_text: Salir
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cbef506a010a21f4390797e6debb24db, type: 2}
   m_sharedMaterial: {fileID: 369447867136484835, guid: cbef506a010a21f4390797e6debb24db, type: 2}
