@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2ea132ff4d0c7f4bac675fef79a4092, type: 3}
+  m_Name: SP_CasqueAudio
+  m_EditorClassIdentifier: Assembly-CSharp::ProductSpecification
+  conceptualDesignSpecificationTitle: "SPECIFICACI\xD3N DEL DISE\xD1O DE CONCEPTO:"
+  productName: Auriculares de audio espacializado (Audio 3D)
+  productDescriptionTitle: "Descripci\xF3n general "
+  productDescription: Sistemas de audio capaces de reproducir un sonido posicional
+    en tres dimensiones, sincronizado con el entorno virtual.
+  keyUtilityFunctionsTitle: Funciones utilitarias
+  keyUtilityFunctions: "- Restituci\xF3n sonora realista\r\n- Localizaci\xF3n de
+    las fuentes sonoras\r\n- Ambiente inmersivo"
+  pedagogicalAspectsTitle: "Aspectos pedag\xF3gicos"
+  pedagogicalAspects: "- Aprendizaje mediante la escucha activa\r\n- Desarrollo de
+    la percepci\xF3n espacial\r\n- Refuerzo del realismo de los escenarios\r\n- Ayuda
+    a la toma de decisiones en contexto"
+  productPicture: {fileID: 21300000, guid: 90cc71d5d8bbe3b4cb4ceef7fc76ff48, type: 3}
+  pedagogicalUsesTitle: "Tipos de usos pedag\xF3gicos"
+  pedagogicalUses: "- Formaci\xF3n en seguridad (detecci\xF3n de peligros)\r\n- Simulaciones
+    de crisis\r\n- Aprendizaje ling\xFC\xEDstico inmersivo\r\n- Formaci\xF3n militar
+    o aeron\xE1utica"
+  pedagogicalAdvantagesTitle: "Ventajas pedag\xF3gicas"
+  pedagogicalAdvantages: "- Mayor inmersi\xF3n a bajo costo\r\n- Complemento esencial
+    de la imagen\r\n- Poco intrusivo para el usuario"
+  usageLimitsTitle: Limitaciones de uso
+  usageLimits: "- Menos impactante por s\xED solo sin VR visual\r\n- Depende en gran
+    medida de la calidad de la mezcla de audio"

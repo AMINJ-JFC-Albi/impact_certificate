@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2ea132ff4d0c7f4bac675fef79a4092, type: 3}
+  m_Name: SP_ControlleursVR
+  m_EditorClassIdentifier: Assembly-CSharp::ProductSpecification
+  conceptualDesignSpecificationTitle: "SPECIFICACI\xD3N DEL DISE\xD1O DE CONCEPTO:"
+  productName: Controladores VR (Mandos de movimiento)
+  productDescriptionTitle: "Descripci\xF3n general "
+  productDescription: Dispositivos que se llevan en las manos y permiten seguir los
+    movimientos e interactuar con el entorno virtual.
+  keyUtilityFunctionsTitle: Funciones utilitarias
+  keyUtilityFunctions: "- Manipulaci\xF3n de objetos virtuales\r\n- Interacci\xF3n
+    con interfaces\r\n- Activaci\xF3n de acciones"
+  pedagogicalAspectsTitle: "Aspectos pedag\xF3gicos"
+  pedagogicalAspects: "- Aprendizaje mediante la acci\xF3n (learning by doing)\r\n-
+    Desarrollo de competencias procedimentales\r\n- Coordinaci\xF3n ojo-mano\r\n-
+    Refuerzo de la autonom\xEDa del aprendiz\r\n"
+  productPicture: {fileID: 21300000, guid: 854dee7842e73ff4188c782a2a5f7f07, type: 3}
+  pedagogicalUsesTitle: "Tipos de usos pedag\xF3gicos"
+  pedagogicalUses: "- Manipulaci\xF3n de herramientas t\xE9cnicas\r\n- Ejercicios
+    pr\xE1cticos simulados\r\n- Juegos pedag\xF3gicos basados en la interacci\xF3n"
+  pedagogicalAdvantagesTitle: "Ventajas pedag\xF3gicas"
+  pedagogicalAdvantages: "- Intuitivo y accesible\r\n- Transposici\xF3n de gestos
+    reales al entorno virtual\r\n- Favorece el compromiso activo"
+  usageLimitsTitle: Limitaciones de uso
+  usageLimits: "- Precisi\xF3n variable seg\xFAn el hardware\r\n- Necesidad de aprendizaje
+    inicial de los controles"
